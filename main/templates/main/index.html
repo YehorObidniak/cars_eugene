@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+<script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body{
+  overflow: hidden;
+}
+
+#filters-container{
+  position: absolute;
+  display: none;
+  z-index: 10;
+  height: 40%;
+  width: 100%;
+  background-color: #ffffff;
+}
+
+.cl{
+  overflow-y: scroll;
+  height: 890px;
+}
+
+.filters-form-dubicars, .filters-form-dubizzle, .filters-form-yallamotor{
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.column {
+  float: left;
+  padding: 100px;
+  align-items: center;
+}
+
+.btn_dubicars {
+  float: left;
+  padding: 100px;
+  align-items: center;
+}
+
+.cardDb, .cardDz, .cardYl{
+  width: 400px; 
+  border-width: 2px; 
+  border-color: blue; 
+  border-radius: 8px;
+  border-style: solid;
+  margin-top: 15px;
+  font-size: 20px;
+  text-align: center;
+}
+
+.custom-btn {
+  width: 130px;
+  height: 40px;
+  color: #ffffff;
+  border-radius: 5px;
+  padding: 10px 25px;
+  font-family: 'Lato', sans-serif;
+  font-weight: 500;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  display: inline-block;
+   box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5),
+   7px 7px 20px 0px rgba(0,0,0,.1),
+   4px 4px 5px 0px rgba(0,0,0,.1);
+  outline: none;
+}
+.btn-5 {
+  width: 130px;
+  height: 40px;
+  line-height: 42px;
+  padding: 0;
+  border: none;
+  background: blue;
+background: linear-gradient(0deg, blue 0%, blue 100%);
+}
+.btn-5:hover {
+  color: blue;
+  background: transparent;
+  box-shadow:none;
+}
+.btn-5:before,
+.btn-5:after{
+  content:'';
+  position:absolute;
+  top:0;
+  right:0;
+  height:2px;
+  width:0;
+  background: blue;
+  box-shadow:
+   -1px -1px 5px 0px #fff,
+   7px 7px 20px 0px #0003,
+   4px 4px 5px 0px #0002;
+  transition:400ms ease all;
+}
+.btn-5:after{
+  right:inherit;
+  top:inherit;
+  left:0;
+  bottom:0;
+}
+.btn-5:hover:before,
+.btn-5:hover:after{
+  width:100%;
+  transition:800ms ease all;
+}
+</style>
+</head>
+<body>
+  <button id="filters-visible" style="font-size: 20px;">Filters</button>
+  <div id="filters-container">
+    <form class="filters-form-dubicars" method="get">
+      <b style="font-size: 20px;">Dubicars</b>
+      {{dubicarsFilter.as_p}}
+      <button class="btn" type="submit">Submit</button>
+    </form>
+
+    <form class="filters-form-dubizzle" method="get">
+      <b style="font-size: 20px;">Dubizzle</b>
+      {{dubizzleFilter.as_p}}
+      <button class="btn" type="submit">Submit</button>
+    </form>
+
+    <form class="filters-form-yallamotor" method="get">
+      <b style="font-size: 20px;">Yallamotor</b>
+      {{yallamotorFilter.as_p}}
+      <button class="btn" type="submit">Submit</button>
+    </form>
+  </div>
+
+  <div class="row">
+    <div style="float: left; text-align: center;" class="cl" id="db">
+        <div class="column" id="dubicars">
+          <h3 style="text-align: center; position: relative;">Dubicars</h3>
+              {%for car in dubicarsFilterQs%}
+                  <div class="cardDb">
+                      <img src={{car.photo}} class="card-img-top" style="width: 100%; height: 100%;">
+                      <div class="card-body">
+                        <h5 class="card-title"><a href={{car.url}}>{{car.brand}} {{car.model}}<a></h5>
+                          <p class="card-text">color: {{car.color}}</p>
+                          <p class="card-text">price: {{car.price}}</p>
+                          <p class="card-text">mileage: {{car.kms}}</p>
+                          <p class="card-text">phone number: {{car.phone}}</p>
+                      </div>
+                    </div>
+              {%endfor%}
+          </div>
+        <div>
+          <button type="button" id="btn_dubicars" class="custom-btn btn-5">Load more</button>
+        </div>
+      </div>
+    <!-- {{total_obj_dubicars|json_script:"json-total-dubicars"}} -->
+    <div style="float: left; text-align: center;" class="cl" id="dz">
+      <div class="column" id="dubizzle">
+        <h3 style="text-align: center; position: relative;">Dubizzle</h3>
+            {%for car in dubizzleFilterQs%}
+                <div class="cardDz" style="width: 400px;">
+                    <img src={{car.photo}} class="card-img-top" style="width: 90%; height: 80%; padding-top: 6px;">
+                    <div class="card-body">
+                        <h5 class="card-title"><a href={{car.url}}>{{car.make}} {{car.model}}<a></h5>
+                        <p class="card-text">color: {{car.color}}</p>
+                        <p class="card-text">price: {{car.price}}</p>
+                        <p class="card-text">mileage: {{car.kilometers}}</p>
+                        <p class="card-text">location: {{car.location}}</p>
+                        <p class="card-text">posted: {{car.posted}}</p>
+                        <p class="card-text">active listings count: {{car.active_listings_count}}</p>
+                    </div>
+                  </div>
+            {%endfor%}
+      </div>
+      <div>
+        <button type="button" id="btn_dubizzle" class="custom-btn btn-5">Load more</button>
+      </div>
+    </div>
+    <!-- {{total_obj_dubicars|json_script:"json-total-dubicars"}} -->
+    <div style="float: left; text-align: center;" class="cl" id="yl">
+      <div class="column" id="yallamotor">
+        <h3 style="text-align: center; position: relative;">Yallamotor</h3>
+            {%for car in yallamotorFilterQs%}
+                <div class="cardYl" style="width: 400px;">
+                    <img src={{car.photo}} class="card-img-top" style="width: 90%; height: 80%; padding-top: 6px;">
+                    <div class="card-body">
+                        <h5 class="card-title"><a href={{car.url}}>{{car.brand}} {{car.model}}<a></h5>
+                        <p class="card-text">color: {{car.color}}</p>
+                        <p class="card-text">price: {{car.price}}</p>
+                        <p class="card-text">mileage: {{car.kms}}</p>
+                        <p class="card-text">phone number: {{car.contact}}</p>
+                    </div>
+                  </div>
+            {%endfor%}
+      </div>
+
+      <div>
+        <button type="button" id="btn_yallamotor" class="custom-btn btn-5">Load more</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- {{total_obj_dubicars|json_script:"json-total-dubicars"}} -->
+
+<script>
+  const loadBtnDubicars = document.getElementById('btn_dubicars');
+  const loadBtnDubizzle = document.getElementById('btn_dubizzle');
+  const loadBtnYallamotor = document.getElementById('btn_yallamotor');
+  const showBtn = document.getElementById('filters-visible');
+  
+  function loadMoreCarsDubicars(){
+    var _current_item = $('.cardDb').length
+    const container = document.getElementById('dubicars');
+    var filter_data = $('.filters-form-dubicars').serialize()
+    filter_data += "&total_item=" + _current_item;
+
+    $.ajax({
+      url:'{% url "load_dubicars" %}',
+      type:'GET',
+      data:filter_data, 
+      beforeSend:function(){
+        
+      }, 
+      success:function(response){
+        const data = response.dubicars
+
+        data.map(car =>{
+          container.innerHTML += `<div class="cardDb">
+              <img src=${car.photo} class="card-img-top" style="width: 100%; height: 100%;">
+              <div class="card-body">
+                <h5 class="card-title"><a href=${car.url}>${car.brand} ${car.model}$<a></h5>
+                  <p class="card-text">color: ${car.color}</p>
+                  <p class="card-text">price: ${car.price}</p>
+                  <p class="card-text">mileage: ${car.kms}</p>
+                  <p class="card-text">phone number: ${car.phone}</p>
+              </div>
+            </div>`
+        })
+      },
+      error:function(err){
+        console.log(err)
+      }
+    });
+  }
+
+  function loadMoreCarsDubizzle(){
+    var _current_item = $('.cardDz').length
+    const container = document.getElementById('dubizzle');
+    var filter_data = $('.filters-form-dubizzle').serialize()
+    filter_data += "&total_item=" + _current_item;
+
+    $.ajax({
+      url:'{% url "load_dubizzle" %}',
+      type:'GET',
+      data:filter_data, 
+      beforeSend:function(){
+
+      }, 
+      success:function(response){
+        const data = response.dubizzle
+
+        data.map(car =>{
+          container.innerHTML += `<div class="cardDz" style="width: 400px;">
+                <img src=${car.photo} class="card-img-top" style="width: 90%; height: 80%; padding-top: 6px;">
+                <div class="card-body">
+                    <h5 class="card-title"><a href=${car.url}>${car.make} ${car.model}<a></h5>
+                    <p class="card-text">color: ${car.color}</p>
+                    <p class="card-text">price: ${car.price}</p>
+                    <p class="card-text">mileage: ${car.kilometers}</p>
+                    <p class="card-text">location: ${car.location}</p>
+                    <p class="card-text">posted: ${car.posted}</p>
+                    <p class="card-text">active listings count: ${car.active_listings_count}</p>
+                </div>
+              </div>`
+        })
+      },
+      error:function(err){
+        console.log(err)
+      }
+    });
+  }
+
+  function loadMoreCarsYallamotor(){
+    var _current_item = $('.cardYl').length
+    console.log(_current_item)
+    const container = document.getElementById('yallamotor');
+    var filter_data = $('.filters-form-yallamotor').serialize()
+    filter_data += "&total_item=" + _current_item;
+
+    $.ajax({
+      url:'{% url "load_yallamotor" %}',
+      type:'GET',
+      data:filter_data, 
+      beforeSend:function(){
+
+      }, 
+      success:function(response){
+        const data = response.yallamotor
+
+        data.map(car =>{
+          container.innerHTML += `<div class="cardYl" style="width: 400px;">
+                <img src=${car.photo} class="card-img-top" style="width: 90%; height: 80%; padding-top: 6px;">
+                <div class="card-body">
+                    <h5 class="card-title"><a href=${car.url}>${car.brand} ${car.model}<a></h5>
+                    <p class="card-text">color: ${car.color}</p>
+                    <p class="card-text">price: ${car.price}</p>
+                    <p class="card-text">mileage: ${car.kms}</p>
+                    <p class="card-text">phone number: ${car.contact}</p>
+                </div>
+              </div>`
+        })
+      },
+      error:function(err){
+        console.log(err)
+      }
+    });
+  }
+
+  loadBtnDubicars.addEventListener('click', () => {
+    loadMoreCarsDubicars()
+  });
+  loadBtnDubizzle.addEventListener('click', () => {
+    loadMoreCarsDubizzle()
+  });
+  loadBtnYallamotor.addEventListener('click', () => {
+    loadMoreCarsYallamotor()
+  });
+  showBtn.addEventListener("click", function(){
+    var filters = document.getElementById('filters-container')
+    if (filters.style.display == "none"){ 
+      filters.style.display = "block";
+    }
+    else {
+      filters.style.display = "none";
+    }
+  });
+</script>
+
+</body>
+</html>
