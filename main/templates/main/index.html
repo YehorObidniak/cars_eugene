@@ -22,19 +22,24 @@ body{
 }
 
 .cl{
+  display: inline-block;
   overflow-y: scroll;
-  height: 890px;
+  width: 33%;
+  height: 95vh;
+  text-align:center;
 }
 
 .filters-form-dubicars, .filters-form-dubizzle, .filters-form-yallamotor{
+  width:32%;
   display: inline-block;
   margin-right: 10px;
 }
 
 .column {
+  width: 100%;
   float: left;
-  padding: 100px;
-  align-items: center;
+  padding: 10px;
+  text-align:center;
 }
 
 .btn_dubicars {
@@ -44,7 +49,8 @@ body{
 }
 
 .cardDb, .cardDz, .cardYl{
-  width: 400px; 
+  position:relative;
+  width: 100%; 
   border-width: 2px; 
   border-color: blue; 
   border-radius: 8px;
@@ -137,9 +143,9 @@ background: linear-gradient(0deg, blue 0%, blue 100%);
   </div>
 
   <div class="row">
-    <div style="float: left; text-align: center;" class="cl" id="db">
+    <div class="cl" id="db">
         <div class="column" id="dubicars">
-          <h3 style="text-align: center; position: relative;">Dubicars</h3>
+          <h3 style="top:0; text-align: center; position: sticky; z-index:9; background-color: #ffffff;">Dubicars</h3>
               {%for car in dubicarsFilterQs%}
                   <div class="cardDb">
                       <img src={{car.photo}} class="card-img-top" style="width: 100%; height: 100%;">
@@ -158,11 +164,11 @@ background: linear-gradient(0deg, blue 0%, blue 100%);
         </div>
       </div>
     <!-- {{total_obj_dubicars|json_script:"json-total-dubicars"}} -->
-    <div style="float: left; text-align: center;" class="cl" id="dz">
+    <div class="cl" id="dz">
       <div class="column" id="dubizzle">
-        <h3 style="text-align: center; position: relative;">Dubizzle</h3>
+        <h3 style="top:0; text-align: center; position: sticky; z-index:9; background-color: #ffffff;">Dubizzle</h3>
             {%for car in dubizzleFilterQs%}
-                <div class="cardDz" style="width: 400px;">
+                <div class="cardDz">
                     <img src={{car.photo}} class="card-img-top" style="width: 90%; height: 80%; padding-top: 6px;">
                     <div class="card-body">
                         <h5 class="card-title"><a href={{car.url}}>{{car.make}} {{car.model}}<a></h5>
@@ -170,6 +176,7 @@ background: linear-gradient(0deg, blue 0%, blue 100%);
                         <p class="card-text">price: {{car.price}}</p>
                         <p class="card-text">mileage: {{car.kilometers}}</p>
                         <p class="card-text">location: {{car.location}}</p>
+                        <p class="card-text">region specifications: {{car.reg_specs}}</p>
                         <p class="card-text">posted: {{car.posted}}</p>
                         <p class="card-text">active listings count: {{car.active_listings_count}}</p>
                     </div>
@@ -181,11 +188,11 @@ background: linear-gradient(0deg, blue 0%, blue 100%);
       </div>
     </div>
     <!-- {{total_obj_dubicars|json_script:"json-total-dubicars"}} -->
-    <div style="float: left; text-align: center;" class="cl" id="yl">
+    <div class="cl" id="yl">
       <div class="column" id="yallamotor">
-        <h3 style="text-align: center; position: relative;">Yallamotor</h3>
+        <h3 style="top:0; text-align: center; position: sticky; z-index:9; background-color: #ffffff;">Yallamotor</h3>
             {%for car in yallamotorFilterQs%}
-                <div class="cardYl" style="width: 400px;">
+                <div class="cardYl">
                     <img src={{car.photo}} class="card-img-top" style="width: 90%; height: 80%; padding-top: 6px;">
                     <div class="card-body">
                         <h5 class="card-title"><a href={{car.url}}>{{car.brand}} {{car.model}}<a></h5>
@@ -264,7 +271,7 @@ background: linear-gradient(0deg, blue 0%, blue 100%);
         const data = response.dubizzle
 
         data.map(car =>{
-          container.innerHTML += `<div class="cardDz" style="width: 400px;">
+          container.innerHTML += `<div class="cardDz">
                 <img src=${car.photo} class="card-img-top" style="width: 90%; height: 80%; padding-top: 6px;">
                 <div class="card-body">
                     <h5 class="card-title"><a href=${car.url}>${car.make} ${car.model}<a></h5>
@@ -272,6 +279,7 @@ background: linear-gradient(0deg, blue 0%, blue 100%);
                     <p class="card-text">price: ${car.price}</p>
                     <p class="card-text">mileage: ${car.kilometers}</p>
                     <p class="card-text">location: ${car.location}</p>
+                    <p class="card-text">region specifications: ${car.reg_specs}</p>
                     <p class="card-text">posted: ${car.posted}</p>
                     <p class="card-text">active listings count: ${car.active_listings_count}</p>
                 </div>
@@ -302,7 +310,7 @@ background: linear-gradient(0deg, blue 0%, blue 100%);
         const data = response.yallamotor
 
         data.map(car =>{
-          container.innerHTML += `<div class="cardYl" style="width: 400px;">
+          container.innerHTML += `<div class="cardYl">
                 <img src=${car.photo} class="card-img-top" style="width: 90%; height: 80%; padding-top: 6px;">
                 <div class="card-body">
                     <h5 class="card-title"><a href=${car.url}>${car.brand} ${car.model}<a></h5>
