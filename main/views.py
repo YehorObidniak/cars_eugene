@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import JsonResponse
-from utils import DubicarsCar, DubizzleCar, YallamotorCar
+from main.models import DubicarsCar, DubizzleCar, YallamotorCar
 from .filters import DubicarsCarFilter, DubizzleCarFilter, YallamotorCarFilter
 
 # Create your views here.
