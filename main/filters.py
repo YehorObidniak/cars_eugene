@@ -14,7 +14,12 @@ class DubizzleCarFilter(django_filters.FilterSet):
         fields = {'price':{'range'}, 'make':{'contains'}, 'kilometers':{'range'}, 'model':{'contains'}, 'reg_specs':{'contains'}}
 
 class YallamotorCarFilter(django_filters.FilterSet):
+    price = django_filters.RangeFilter(
+        lookup_expr="range",
+        label="Type min and max"
+    )
+
 
     class Meta:
         model = YallamotorCar
-        fields = {'price':{'range'}, 'brand':{'contains'}, 'kms':{'range'}, 'model':{'contains'}}
+        fields = {'brand':{'contains'}, 'kms':{'range'}, 'model':{'contains'}}

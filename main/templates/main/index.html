@@ -24,15 +24,20 @@ body{
 .cl{
   display: inline-block;
   overflow-y: scroll;
-  width: 33%;
-  height: 95vh;
+  width: 30%;
+  height: 93vh;
   text-align:center;
+  margin: 1%;
 }
 
 .filters-form-dubicars, .filters-form-dubizzle, .filters-form-yallamotor{
   width:32%;
   display: inline-block;
   margin-right: 10px;
+}
+.row{
+  margin-left: 4%;
+  margin-right: 1%;
 }
 
 .column {
@@ -48,18 +53,71 @@ body{
   align-items: center;
 }
 
-.cardDb, .cardDz, .cardYl{
+ .cardDb, .cardDz, .cardYl{
   position:relative;
   width: 100%; 
-  border-width: 2px; 
-  border-color: blue; 
+  border-width: 0px; 
+  /* border-color: #FF595A;   */
   border-radius: 8px;
   border-style: solid;
-  margin-top: 15px;
-  font-size: 20px;
+  cursor: pointer;
+  transition: all 0.5s;
+  justify-content: center;
+  margin-top: 30px;
+  font-size: 22px;
   text-align: center;
+  border-radius: 30px; 
+ 
+ background: #ffffff;
+ 
+ 
+}
+#names{
+  top:0; 
+  text-align: center; 
+  position: sticky; z-index:9; 
+  font-size: 30px; 
+  background-color:rgb(237, 241, 248); 
+  font-weight: bold;
+} 
+
+
+
+.cardDb:hover, .cardDz:hover, .cardYl:hover{
+  background: rgb(240, 240, 240);
+  transform: scale(1.02);
+  box-shadow: rgb(95, 95, 99) 0px 2px 4px, rgb(141, 144, 149) 0px 7px 13px -3px, rgb(99, 99, 103) 0px -3px 0px inset;
+  
+}
+.cardDb:active {
+  transform: scale(0.95) rotateZ(1.7deg);
 }
 
+.img{
+  width: 25px; 
+  height: 25px; 
+  margin-right: 5px;
+  
+}
+
+.textcols {
+	white-space: 10px;
+}
+
+.textcols-item {
+	white-space: normal;	
+	display: inline-block;
+	width: 46%;
+  line-height: 2;
+	vertical-align: top;
+  text-align: left;
+}
+.textcols .textcols-item:first-child {
+	margin-left: 20px;
+  
+}
+
+/* Custom button "Load more" */
 .custom-btn {
   width: 130px;
   height: 40px;
@@ -120,11 +178,11 @@ background: linear-gradient(0deg, blue 0%, blue 100%);
 }
 </style>
 </head>
-<body>
+<body style="background-color: rgb(237, 241, 248)"> 
   <button id="filters-visible" style="font-size: 20px;">Filters</button>
-  <div id="filters-container">
+  <div id="filters-container">    
     <form class="filters-form-dubicars" method="get">
-      <b style="font-size: 20px;">Dubicars</b>
+      <b style="font-size: 20px; ">Dubicars</b>
       {{dubicarsFilter.as_p}}
       <button class="btn" type="submit">Submit</button>
     </form>
@@ -144,21 +202,50 @@ background: linear-gradient(0deg, blue 0%, blue 100%);
 
   <div class="row">
     <div class="cl" id="db">
+      <div id="names" >Dubicars</div>
         <div class="column" id="dubicars">
-          <h3 style="top:0; text-align: center; position: sticky; z-index:9; background-color: #ffffff;">Dubicars</h3>
+          
               {%for car in dubicarsFilterQs%}
-                  <div class="cardDb">
-                      <img src={{car.photo}} class="card-img-top" style="width: 100%; height: 100%;">
+                  <div class="cardDb" onclick="location.href='{{car.url}}';">
+                      <img src={{car.photo}} class="card-img-top" style="width: 80%; height: 80%;">
                       <div class="card-body">
                         <h5 class="card-title"><a href={{car.url}}>{{car.brand}} {{car.model}}<a></h5>
-                          <p class="card-text">year: {{car.year}}</p>
-                          <p class="card-text">color: {{car.color}}</p>
-                          <p class="card-text">price: {{car.price}}</p>
-                          <p class="card-text">mileage: {{car.kms}}</p>
-                          <p class="card-text">phone number: {{car.phone}}</p>
-                          <p class="card-text">location: {{car.location}}</p>
-                          <p class="card-text">region specifications: {{car.regSpecs}}</p>
-                          <p class="card-text">active active listings count: {{car.activeListings}}</p>
+                          <!-- 1 -->
+                            <div class="textcols">
+                              <div class="textcols-item">
+                                <img src="/media/calendar.png" class="img"><b>{{car.year}}</b>  
+                              </div>
+                              <div class="textcols-item">
+                                <img src="/media/pallete.png" class="img"><b>{{car.color}}</b>
+                              </div>
+                            </div>
+                            <!-- 2 -->
+                            <div class="textcols">
+                              <div class="textcols-item">
+                                <img src="/media/wallet.png" class="img"><b>{{car.price}} AED</b>  
+                              </div>
+                              <div class="textcols-item">
+                                <img src="/media/dashboard.png" class="img"><b>{{car.kms}} kms</b>
+                              </div>
+                            </div>
+                            <!-- 3 -->
+                            <div class="textcols">
+                              <div class="textcols-item">
+                                  <img src="/media/location.png" class="img"><b>{{car.location}}</b>
+                              </div>
+                              <div class="textcols-item">
+                                <img src="/media/telephone-call.png" class="img"><b>{{car.phone}}</b>
+                              </div>
+                            </div>
+                          <!-- 4 -->
+                          <div class="textcols">
+                            <div class="textcols-item">
+                              <img src="/media/earth.png" class="img"><b>{{car.regSpecs}}</b>  
+                            </div>
+                            <div class="textcols-item">
+                              <img src="/media/clipboard.png" class="img"><b>{{car.activeListings}}</b>
+                            </div>
+                          </div> 
                       </div>
                     </div>
               {%endfor%}
@@ -169,14 +256,14 @@ background: linear-gradient(0deg, blue 0%, blue 100%);
       </div>
     <!-- {{total_obj_dubicars|json_script:"json-total-dubicars"}} -->
     <div class="cl" id="dz">
-      <div class="column" id="dubizzle">
-        <h3 style="top:0; text-align: center; position: sticky; z-index:9; background-color: #ffffff;">Dubizzle</h3>
+       <div id="names">Dubizzle</div>
+        <div class="column" id="dubizzle">
             {%for car in dubizzleFilterQs%}
-                <div class="cardDz">
+                <div class="cardDz" onclick="location.href='{{car.url}}';">
                     <img src={{car.photo}} class="card-img-top" style="width: 90%; height: 80%; padding-top: 6px;">
                     <div class="card-body">
                         <h5 class="card-title"><a href={{car.url}}>{{car.make}} {{car.model}}<a></h5>
-                        <p class="card-text">year: {{car.year}}</p>
+                        <p class="card-text"><img src="{{MEDIA_URL}}calendar.png" style="width: 5px; height: 5px;" > {{car.year}}</p>
                         <p class="card-text">color: {{car.color}}</p>
                         <p class="card-text">price: {{car.price}}</p>
                         <p class="card-text">mileage: {{car.kilometers}}</p>
@@ -194,21 +281,49 @@ background: linear-gradient(0deg, blue 0%, blue 100%);
     </div>
     <!-- {{total_obj_dubicars|json_script:"json-total-dubicars"}} -->
     <div class="cl" id="yl">
+      <div id="names">Yallamotor</div>
       <div class="column" id="yallamotor">
-        <h3 style="top:0; text-align: center; position: sticky; z-index:9; background-color: #ffffff;">Yallamotor</h3>
             {%for car in yallamotorFilterQs%}
-                <div class="cardYl">
+                <div class="cardYl" onclick="location.href='{{car.url}}';">
                     <img src={{car.photo}} class="card-img-top" style="width: 90%; height: 80%; padding-top: 6px;">
                     <div class="card-body">
-                        <h5 class="card-title"><a href={{car.url}}>{{car.brand}} {{car.model}}<a></h5>
-                        <p class="card-text">year: {{car.year}}</p>
-                        <p class="card-text">color: {{car.color}}</p>
-                        <p class="card-text">price: {{car.price}}</p>
-                        <p class="card-text">mileage: {{car.kms}}</p>
-                        <p class="card-text">phone number: {{car.contact}}</p>
-                        <p class="card-text">location: {{car.location}}</p>
-                        <p class="card-text">region specifications: {{car.regSpecs}}</p>
-                        <p class="card-text">active active listings count: {{car.activeListings}}</p>
+                      <h5 class="card-title"><a href={{car.url}}>{{car.brand}} {{car.model}}<a></h5>
+                        <!-- 1 -->
+                          <div class="textcols">
+                            <div class="textcols-item">
+                              <img src="/media/calendar.png" class="img"><b>{{car.year}}</b>  
+                            </div>
+                            <div class="textcols-item">
+                              <img src="/media/pallete.png" class="img"><b>{{car.color}}</b>
+                            </div>
+                          </div>
+                          <!-- 2 -->
+                          <div class="textcols">
+                            <div class="textcols-item">
+                              <img src="/media/wallet.png" class="img"><b>{{car.price}} AED</b>  
+                            </div>
+                            <div class="textcols-item">
+                              <img src="/media/dashboard.png" class="img"><b>{{car.kms}} kms</b>
+                            </div>
+                          </div>
+                          <!-- 3 -->
+                          <div class="textcols">
+                            <div class="textcols-item">
+                                <img src="/media/location.png" class="img"><b>{{car.location}}</b>
+                            </div>
+                            <div class="textcols-item">
+                              <img src="/media/telephone-call.png" class="img"><b>{{car.contact}}</b>
+                            </div>
+                          </div>
+                        <!-- 4 -->
+                        <div class="textcols">
+                          <div class="textcols-item">
+                            <img src="/media/earth.png" class="img"><b>{{car.regSpecs}}</b>  
+                          </div>
+                          <div class="textcols-item">
+                            <img src="/media/clipboard.png" class="img"><b>{{car.activeListings}}</b>
+                          </div>
+                        </div> 
                     </div>
                   </div>
             {%endfor%}
@@ -245,18 +360,46 @@ background: linear-gradient(0deg, blue 0%, blue 100%);
         const data = response.dubicars
 
         data.map(car =>{
-          container.innerHTML += `<div class="cardDb">
-              <img src=${car.photo} class="card-img-top" style="width: 100%; height: 100%;">
+          container.innerHTML += `<div class="cardDb" onclick="location.href='${car.url}';">
+              <img src=${car.photo} class="card-img-top" style="width: 80%; height: 80%;">
               <div class="card-body">
-                <h5 class="card-title"><a href=${car.url}>${car.brand} ${car.model}$<a></h5>
-                  <p class="card-text">year: ${car.year}</p>
-                  <p class="card-text">color: ${car.color}</p>
-                  <p class="card-text">price: ${car.price}</p>
-                  <p class="card-text">mileage: ${car.kms}</p>
-                  <p class="card-text">phone number: ${car.phone}</p>
-                  <p class="card-text">location: ${car.location}</p>
-                  <p class="card-text">region specifications: ${car.regSpecs}</p>
-                  <p class="card-text">active active listings count: ${car.activeListings}</p>
+                <h5 class="card-title"><a href=${car.url}>${car.brand} ${car.model}<a></h5>
+                  <!-- 1 -->
+                    <div class="textcols">
+                      <div class="textcols-item">
+                        <img src="/media/calendar.png" class="img"><b>${car.year}</b>  
+                      </div>
+                      <div class="textcols-item">
+                        <img src="/media/pallete.png" class="img"><b>${car.color}</b>
+                      </div>
+                    </div>
+                    <!-- 2 -->
+                    <div class="textcols">
+                      <div class="textcols-item">
+                        <img src="/media/wallet.png" class="img"><b>${car.price} AED</b>  
+                      </div>
+                      <div class="textcols-item">
+                        <img src="/media/dashboard.png" class="img"><b>${car.kms} kms</b>
+                      </div>
+                    </div>
+                    <!-- 3 -->
+                    <div class="textcols">
+                      <div class="textcols-item">
+                        <img src="/media/telephone-call.png" class="img"><b>${car.phone}</b>  
+                      </div>
+                      <div class="textcols-item">
+                        <img src="/media/location.png" class="img"><b>${car.location}</b>
+                      </div>
+                    </div>
+                  <!-- 4 -->
+                  <div class="textcols">
+                    <div class="textcols-item">
+                      <img src="/media/earth.png" class="img"><b>${car.regSpecs}</b>  
+                    </div>
+                    <div class="textcols-item">
+                      <img src="/media/clipboard.png" class="img"><b>${car.activeListings}</b>
+                    </div>
+                  </div> 
               </div>
             </div>`
         })
@@ -327,17 +470,45 @@ background: linear-gradient(0deg, blue 0%, blue 100%);
           container.innerHTML += `<div class="cardYl">
                 <img src=${car.photo} class="card-img-top" style="width: 90%; height: 80%; padding-top: 6px;">
                 <div class="card-body">
-                    <h5 class="card-title"><a href=${car.url}>${car.brand} ${car.model}<a></h5>
-                    <p class="card-text">year: ${car.year}</p>
-                    <p class="card-text">color: ${car.color}</p>
-                    <p class="card-text">price: ${car.price}</p>
-                    <p class="card-text">mileage: ${car.kms}</p>
-                    <p class="card-text">phone number: ${car.contact}</p>
-                    <p class="card-text">location: ${car.location}</p>
-                    <p class="card-text">region specifications: ${car.regSpecs}</p>
-                    <p class="card-text">active active listings count: ${car.activeListings}</p>
-                </div>
-              </div>`
+                <h5 class="card-title"><a href=${car.url}>${car.brand} ${car.model}<a></h5>
+                  <!-- 1 -->
+                    <div class="textcols">
+                      <div class="textcols-item">
+                        <img src="/media/calendar.png" class="img"><b>${car.year}</b>  
+                      </div>
+                      <div class="textcols-item">
+                        <img src="/media/pallete.png" class="img"><b>${car.color}</b>
+                      </div>
+                    </div>
+                    <!-- 2 -->
+                    <div class="textcols">
+                      <div class="textcols-item">
+                        <img src="/media/wallet.png" class="img"><b>${car.price} AED</b>  
+                      </div>
+                      <div class="textcols-item">
+                        <img src="/media/dashboard.png" class="img"><b>${car.kms} kms</b>
+                      </div>
+                    </div>
+                    <!-- 3 -->
+                    <div class="textcols">
+                      <div class="textcols-item">
+                        <img src="/media/telephone-call.png" class="img"><b>${car.contact}</b>  
+                      </div>
+                      <div class="textcols-item">
+                        <img src="/media/location.png" class="img"><b>${car.location}</b>
+                      </div>
+                    </div>
+                  <!-- 4 -->
+                  <div class="textcols">
+                    <div class="textcols-item">
+                      <img src="/media/earth.png" class="img"><b>${car.regSpecs}</b>  
+                    </div>
+                    <div class="textcols-item">
+                      <img src="/media/clipboard.png" class="img"><b>${car.activeListings}</b>
+                    </div>
+                  </div> 
+              </div>
+            </div>`
         })
       },
       error:function(err){
@@ -365,6 +536,5 @@ background: linear-gradient(0deg, blue 0%, blue 100%);
     }
   });
 </script>
-
 </body>
 </html>

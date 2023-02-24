@@ -15,6 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from . import settings
+from django.conf.urls.static import static
 from main.views import index, load_more_dubicars, load_more_dubizzle, load_more_yallamotor
 
 urlpatterns = [
@@ -25,3 +27,6 @@ urlpatterns = [
     path('load_yallamotor/', load_more_yallamotor, name='load_yallamotor'),
     # path('index/', index, name='index')
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

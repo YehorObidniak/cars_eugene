@@ -53,9 +53,9 @@ def add_to_database_dubizzle():
 
 def add_to_database_yallamotor():
     YallamotorCar.objects.all().delete()
-    cars = []
-    data = json.load(open("yallamotors.json", 'r', encoding='utf-8'))
-    for info in data:
+    cars = []      
+    data = json.load(open("yallamotors.json", 'r', encoding='utf-8'))                                                                                                                    
+    for info in data:                                                                                                    
         if str(info) == "Error" or info == None:
             print(info)
             continue
