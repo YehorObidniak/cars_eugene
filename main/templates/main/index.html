@@ -25,7 +25,7 @@ body{
   display: inline-block;
   overflow-y: scroll;
   width: 30%;
-  height: 93vh;
+  height: 91vh;
   text-align:center;
   margin: 1%;
 }
@@ -47,12 +47,93 @@ body{
   text-align:center;
 }
 
+/* Filter Button */
+.button {
+  background-color: #fff;
+  border: 0 solid #e2e8f0;
+  border-radius: 1.5rem;
+  box-sizing: border-box;
+  color: #0d172a;
+  cursor: pointer;
+  display: inline-block;
+  font-family: "Basier circle",-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+  font-weight: 600;
+  line-height: 1;
+  padding: 1rem 1.6rem;
+  text-align: center;
+  text-decoration: none #0d172a solid;
+  transition: all .1s cubic-bezier(.4, 0, .2, 1);
+  box-shadow: 0px 1px 2px rgba(166, 175, 195, 0.25);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  margin-top: auto;
+  margin-bottom: auto;
+  
+}
+.button:hover {
+  background-color: #717171;
+  color: #fff;
+}
+
+@media (min-width: 768px) {
+  .button {
+    font-size: 1.125rem;
+    padding: 1rem 2rem;
+  }
+}
+/* Loader */
+.loader, .loader:before, .loader:after {
+  border-radius: 50%;
+  width: 2.5em;
+  height: 2.5em;
+  animation-fill-mode: both;
+  animation: bblFadInOut 1.8s infinite ease-in-out;
+}
+.loader {
+  color: #001eff;
+  font-size: 7px;
+  position: relative;
+  text-indent: -9999em;
+  transform: translateZ(0);
+  animation-delay: -0.16s;
+}
+.loader:before,.loader:after {
+  content: '';
+  position: relative;
+  top: 0;
+}
+.loader:before {
+  left: -3.5em;
+  animation-delay: -0.32s;
+}
+.loader:after {
+  left: 3.5em;
+}
+@keyframes bblFadInOut {
+  0%, 80%, 100% { box-shadow: 0 2.5em 0 -1.3em }
+  40% { box-shadow: 0 2.5em 0 0 }
+}
+
+
+/* scrollbar */
+.cl::-webkit-scrollbar {
+width: 10px;
+}     
+.cl::-webkit-scrollbar-track {
+ border-radius: 8px;
+ background-color: #f5f5f5;
+ border: 1px solid #e0e0e0;
+}      
+ .cl::-webkit-scrollbar-thumb {
+border-radius: 8px;
+background-color: #717171;
+}
 .btn_dubicars {
   float: left;
   padding: 100px;
   align-items: center;
 }
-
  .cardDb, .cardDz, .cardYl{
   position:relative;
   width: 100%; 
@@ -72,6 +153,8 @@ body{
  
  
 }
+
+/*Names of sites */
 #names{
   top:0; 
   text-align: center; 
@@ -81,29 +164,25 @@ body{
   font-weight: bold;
 } 
 
-
-
+/* Cards */
 .cardDb:hover, .cardDz:hover, .cardYl:hover{
-  background: rgb(240, 240, 240);
+  background: rgb(248, 248, 248);
   transform: scale(1.02);
-  box-shadow: rgb(95, 95, 99) 0px 2px 4px, rgb(141, 144, 149) 0px 7px 13px -3px, rgb(99, 99, 103) 0px -3px 0px inset;
+  box-shadow: rgb(95, 95, 99) 0px 2px 4px, rgb(255, 255, 255) 0px 7px 13px -3px, rgb(99, 99, 103) 0px -3px 0px inset;
   
 }
 .cardDb:active {
   transform: scale(0.95) rotateZ(1.7deg);
 }
-
 .img{
   width: 25px; 
   height: 25px; 
   margin-right: 5px;
   
 }
-
 .textcols {
 	white-space: 10px;
 }
-
 .textcols-item {
 	white-space: normal;	
 	display: inline-block;
@@ -131,9 +210,9 @@ body{
   transition: all 0.3s ease;
   position: relative;
   display: inline-block;
-   box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5),
-   7px 7px 20px 0px rgba(0,0,0,.1),
-   4px 4px 5px 0px rgba(0,0,0,.1);
+  box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5),
+  7px 7px 20px 0px rgba(0,0,0,.1),
+  4px 4px 5px 0px rgba(0,0,0,.1);
   outline: none;
 }
 .btn-5 {
@@ -150,8 +229,7 @@ background: linear-gradient(0deg, blue 0%, blue 100%);
   background: transparent;
   box-shadow:none;
 }
-.btn-5:before,
-.btn-5:after{
+.btn-5:before,.btn-5:after{
   content:'';
   position:absolute;
   top:0;
@@ -171,23 +249,22 @@ background: linear-gradient(0deg, blue 0%, blue 100%);
   left:0;
   bottom:0;
 }
-.btn-5:hover:before,
-.btn-5:hover:after{
+.btn-5:hover:before,.btn-5:hover:after{
   width:100%;
   transition:800ms ease all;
 }
 </style>
 </head>
 <body style="background-color: rgb(237, 241, 248)"> 
-  <button id="filters-visible" style="font-size: 20px;">Filters</button>
+  <button id="filters-visible" class="button" style="font-size: 20px;">Filters</button>
   <div id="filters-container">    
-    <form class="filters-form-dubicars" method="get">
-      <b style="font-size: 20px; ">Dubicars</b>
-      {{dubicarsFilter.as_p}}
+    <form class="filters-form" method="get">
+      <b style="font-size: 20px; ">Filters</b>
+      {{filter.as_p}}
       <button class="btn" type="submit">Submit</button>
     </form>
 
-    <form class="filters-form-dubizzle" method="get">
+    <!-- <form class="filters-form-dubizzle" method="get">
       <b style="font-size: 20px;">Dubizzle</b>
       {{dubizzleFilter.as_p}}
       <button class="btn" type="submit">Submit</button>
@@ -197,7 +274,7 @@ background: linear-gradient(0deg, blue 0%, blue 100%);
       <b style="font-size: 20px;">Yallamotor</b>
       {{yallamotorFilter.as_p}}
       <button class="btn" type="submit">Submit</button>
-    </form>
+    </form> -->
   </div>
 
   <div class="row">
@@ -225,7 +302,7 @@ background: linear-gradient(0deg, blue 0%, blue 100%);
                                 <img src="/media/wallet.png" class="img"><b>{{car.price}} AED</b>  
                               </div>
                               <div class="textcols-item">
-                                <img src="/media/dashboard.png" class="img"><b>{{car.kms}} kms</b>
+                                <img src="/media/dashboard.png" class="img"><b>{{car.kms}} km</b>
                               </div>
                             </div>
                             <!-- 3 -->
@@ -234,7 +311,7 @@ background: linear-gradient(0deg, blue 0%, blue 100%);
                                   <img src="/media/location.png" class="img"><b>{{car.location}}</b>
                               </div>
                               <div class="textcols-item">
-                                <img src="/media/telephone-call.png" class="img"><b>{{car.phone}}</b>
+                                <img src="/media/telephone-call.png" class="img"><b>{{car.contact}}</b>
                               </div>
                             </div>
                           <!-- 4 -->
@@ -259,20 +336,48 @@ background: linear-gradient(0deg, blue 0%, blue 100%);
        <div id="names">Dubizzle</div>
         <div class="column" id="dubizzle">
             {%for car in dubizzleFilterQs%}
-                <div class="cardDz" onclick="location.href='{{car.url}}';">
-                    <img src={{car.photo}} class="card-img-top" style="width: 90%; height: 80%; padding-top: 6px;">
-                    <div class="card-body">
-                        <h5 class="card-title"><a href={{car.url}}>{{car.make}} {{car.model}}<a></h5>
-                        <p class="card-text"><img src="{{MEDIA_URL}}calendar.png" style="width: 5px; height: 5px;" > {{car.year}}</p>
-                        <p class="card-text">color: {{car.color}}</p>
-                        <p class="card-text">price: {{car.price}}</p>
-                        <p class="card-text">mileage: {{car.kilometers}}</p>
-                        <p class="card-text">location: {{car.location}}</p>
-                        <p class="card-text">region specifications: {{car.reg_specs}}</p>
-                        <p class="card-text">posted: {{car.posted}}</p>
-                        <p class="card-text">active listings count: {{car.active_listings_count}}</p>
+            <div class="cardDz" onclick="location.href='{{car.url}}';">
+              <img src={{car.photo}} class="card-img-top" style="width: 90%; height: 80%; padding-top: 6px;">
+              <div class="card-body">
+                <h5 class="card-title"><a href={{car.url}}>{{car.brand}} {{car.model}}<a></h5>
+                  <!-- 1 -->
+                    <div class="textcols">
+                      <div class="textcols-item">
+                        <img src="/media/calendar.png" class="img"><b>{{car.year}}</b>  
+                      </div>
+                      <div class="textcols-item">
+                        <img src="/media/pallete.png" class="img"><b>{{car.color}}</b>
+                      </div>
                     </div>
-                  </div>
+                    <!-- 2 -->
+                    <div class="textcols">
+                      <div class="textcols-item">
+                        <img src="/media/wallet.png" class="img"><b>{{car.price}} AED</b>  
+                      </div>
+                      <div class="textcols-item">
+                        <img src="/media/dashboard.png" class="img"><b>{{car.kms}} km</b>
+                      </div>
+                    </div>
+                    <!-- 3 -->
+                    <div class="textcols">
+                      <div class="textcols-item">
+                          <img src="/media/location.png" class="img"><b>{{car.location}}</b>
+                      </div>
+                      <div class="textcols-item">
+                        <img src="/media/clock.png" class="img"><b>{{car.posted}}</b>
+                      </div>
+                    </div>
+                  <!-- 4 -->
+                  <div class="textcols">
+                    <div class="textcols-item">
+                      <img src="/media/earth.png" class="img"><b>{{car.regSpecs}}</b>  
+                    </div>
+                    <div class="textcols-item">
+                      <img src="/media/clipboard.png" class="img"><b>{{car.activeListings}}</b>
+                    </div>
+                  </div> 
+              </div>
+            </div>
             {%endfor%}
       </div>
       <div>
@@ -280,7 +385,7 @@ background: linear-gradient(0deg, blue 0%, blue 100%);
       </div>
     </div>
     <!-- {{total_obj_dubicars|json_script:"json-total-dubicars"}} -->
-    <div class="cl" id="yl">
+    <div class="cl" id="yl">s
       <div id="names">Yallamotor</div>
       <div class="column" id="yallamotor">
             {%for car in yallamotorFilterQs%}
@@ -303,7 +408,7 @@ background: linear-gradient(0deg, blue 0%, blue 100%);
                               <img src="/media/wallet.png" class="img"><b>{{car.price}} AED</b>  
                             </div>
                             <div class="textcols-item">
-                              <img src="/media/dashboard.png" class="img"><b>{{car.kms}} kms</b>
+                              <img src="/media/dashboard.png" class="img"><b>{{car.kms}} km</b>
                             </div>
                           </div>
                           <!-- 3 -->
@@ -346,7 +451,7 @@ background: linear-gradient(0deg, blue 0%, blue 100%);
   function loadMoreCarsDubicars(){
     var _current_item = $('.cardDb').length
     const container = document.getElementById('dubicars');
-    var filter_data = $('.filters-form-dubicars').serialize()
+    var filter_data = $('.filters-form').serialize()
     filter_data += "&total_item=" + _current_item;
 
     $.ajax({
@@ -385,7 +490,7 @@ background: linear-gradient(0deg, blue 0%, blue 100%);
                     <!-- 3 -->
                     <div class="textcols">
                       <div class="textcols-item">
-                        <img src="/media/telephone-call.png" class="img"><b>${car.phone}</b>  
+                        <img src="/media/telephone-call.png" class="img"><b>${car.contact}</b>  
                       </div>
                       <div class="textcols-item">
                         <img src="/media/location.png" class="img"><b>${car.location}</b>
@@ -413,7 +518,7 @@ background: linear-gradient(0deg, blue 0%, blue 100%);
   function loadMoreCarsDubizzle(){
     var _current_item = $('.cardDz').length
     const container = document.getElementById('dubizzle');
-    var filter_data = $('.filters-form-dubizzle').serialize()
+    var filter_data = $('.filters-form').serialize()
     filter_data += "&total_item=" + _current_item;
 
     $.ajax({
@@ -427,20 +532,48 @@ background: linear-gradient(0deg, blue 0%, blue 100%);
         const data = response.dubizzle
 
         data.map(car =>{
-          container.innerHTML += `<div class="cardDz">
-                <img src=${car.photo} class="card-img-top" style="width: 90%; height: 80%; padding-top: 6px;">
-                <div class="card-body">
-                    <h5 class="card-title"><a href=${car.url}>${car.make} ${car.model}<a></h5> 
-                    <p class="card-text">year: ${car.year}</p>
-                    <p class="card-text">color: ${car.color}</p>
-                    <p class="card-text">price: ${car.price}</p>
-                    <p class="card-text">mileage: ${car.kilometers}</p>
-                    <p class="card-text">location: ${car.location}</p>
-                    <p class="card-text">region specifications: ${car.reg_specs}</p>
-                    <p class="card-text">posted: ${car.posted}</p>
-                    <p class="card-text">active listings count: ${car.active_listings_count}</p>
-                </div>
-              </div>`
+          container.innerHTML += `<div class="cardDz" onclick="location.href='${car.url}';">
+              <img src=${car.photo} class="card-img-top" style="width: 80%; height: 80%;">
+              <div class="card-body">
+                <h5 class="card-title"><a href=${car.url}>${car.brand} ${car.model}<a></h5>
+                  <!-- 1 -->
+                    <div class="textcols">
+                      <div class="textcols-item">
+                        <img src="/media/calendar.png" class="img"><b>${car.year}</b>  
+                      </div>
+                      <div class="textcols-item">
+                        <img src="/media/pallete.png" class="img"><b>${car.color}</b>
+                      </div>
+                    </div>
+                    <!-- 2 -->
+                    <div class="textcols">
+                      <div class="textcols-item">
+                        <img src="/media/wallet.png" class="img"><b>${car.price} AED</b>  
+                      </div>
+                      <div class="textcols-item">
+                        <img src="/media/dashboard.png" class="img"><b>${car.kms} kms</b>
+                      </div>
+                    </div>
+                    <!-- 3 -->
+                    <div class="textcols">
+                      <div class="textcols-item">
+                        <img src="/media/telephone-call.png" class="img"><b>${car.posted}</b>  
+                      </div>
+                      <div class="textcols-item">
+                        <img src="/media/location.png" class="img"><b>${car.location}</b>
+                      </div>
+                    </div>
+                  <!-- 4 -->
+                  <div class="textcols">
+                    <div class="textcols-item">
+                      <img src="/media/earth.png" class="img"><b>${car.regSpecs}</b>  
+                    </div>
+                    <div class="textcols-item">
+                      <img src="/media/clipboard.png" class="img"><b>${car.activeListings}</b>
+                    </div>
+                  </div> 
+              </div>
+            </div>`
         })
       },
       error:function(err){
@@ -453,7 +586,7 @@ background: linear-gradient(0deg, blue 0%, blue 100%);
     var _current_item = $('.cardYl').length
     console.log(_current_item)
     const container = document.getElementById('yallamotor');
-    var filter_data = $('.filters-form-yallamotor').serialize()
+    var filter_data = $('.filters-form').serialize()
     filter_data += "&total_item=" + _current_item;
 
     $.ajax({
@@ -467,7 +600,7 @@ background: linear-gradient(0deg, blue 0%, blue 100%);
         const data = response.yallamotor
 
         data.map(car =>{
-          container.innerHTML += `<div class="cardYl">
+          container.innerHTML += `<div class="cardYl" onclick="location.href='${car.url}';">
                 <img src=${car.photo} class="card-img-top" style="width: 90%; height: 80%; padding-top: 6px;">
                 <div class="card-body">
                 <h5 class="card-title"><a href=${car.url}>${car.brand} ${car.model}<a></h5>
