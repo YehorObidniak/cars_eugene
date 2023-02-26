@@ -14,20 +14,21 @@ body{
 
 #filters-container{
   position: absolute;
-  display: none;
+  display: block;
   z-index: 10;
-  height: 40%;
+  height: 10vh;
   width: 100%;
-  background-color: #ffffff;
+  /* background-color: #ffffff; */
 }
 
 .cl{
   display: inline-block;
   overflow-y: scroll;
   width: 30%;
-  height: 91vh;
+  height: 85vh;
   text-align:center;
   margin: 1%;
+  margin-top: 100px;
 }
 
 .filters-form-dubicars, .filters-form-dubizzle, .filters-form-yallamotor{
@@ -256,25 +257,12 @@ background: linear-gradient(0deg, blue 0%, blue 100%);
 </style>
 </head>
 <body style="background-color: rgb(237, 241, 248)"> 
-  <button id="filters-visible" class="button" style="font-size: 20px;">Filters</button>
+  <!-- <button id="filters-visible" class="button" style="font-size: 20px;">Filters</button> -->
   <div id="filters-container">    
     <form class="filters-form" method="get">
       <b style="font-size: 20px; ">Filters</b>
-      {{filter.as_p}}
-      <button class="btn" type="submit">Submit</button>
+      <p>Price {{filter.price}} Brand {{filter.brand}} Model {{filter.model}} Mileage {{filter.kms}} Location {{filter.location}}<button class="btn" type="submit">Submit</button></p>
     </form>
-
-    <!-- <form class="filters-form-dubizzle" method="get">
-      <b style="font-size: 20px;">Dubizzle</b>
-      {{dubizzleFilter.as_p}}
-      <button class="btn" type="submit">Submit</button>
-    </form>
-
-    <form class="filters-form-yallamotor" method="get">
-      <b style="font-size: 20px;">Yallamotor</b>
-      {{yallamotorFilter.as_p}}
-      <button class="btn" type="submit">Submit</button>
-    </form> -->
   </div>
 
   <div class="row">
@@ -446,7 +434,7 @@ background: linear-gradient(0deg, blue 0%, blue 100%);
   const loadBtnDubicars = document.getElementById('btn_dubicars');
   const loadBtnDubizzle = document.getElementById('btn_dubizzle');
   const loadBtnYallamotor = document.getElementById('btn_yallamotor');
-  const showBtn = document.getElementById('filters-visible');
+  // const showBtn = document.getElementById('filters-visible');
   
   function loadMoreCarsDubicars(){
     var _current_item = $('.cardDb').length
@@ -659,15 +647,15 @@ background: linear-gradient(0deg, blue 0%, blue 100%);
   loadBtnYallamotor.addEventListener('click', () => {
     loadMoreCarsYallamotor()
   });
-  showBtn.addEventListener("click", function(){
-    var filters = document.getElementById('filters-container')
-    if (filters.style.display == "none"){ 
-      filters.style.display = "block";
-    }
-    else {
-      filters.style.display = "none";
-    }
-  });
+  // showBtn.addEventListener("click", function(){
+  //   var filters = document.getElementById('filters-container')
+  //   if (filters.style.display == "none"){ 
+  //     filters.style.display = "block";
+  //   }
+  //   else {
+  //     filters.style.display = "none";
+  //   }
+  // });
 </script>
 </body>
 </html>

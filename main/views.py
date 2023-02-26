@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import JsonResponse
 from main.models import DubicarsCar, DubizzleCar, YallamotorCar, Car_any
-from .filters import DubicarsCarFilter, DubizzleCarFilter, YallamotorCarFilter, CarFilter
+from .filters import CarFilter
 
 # Create your views here.
 def index(request):
