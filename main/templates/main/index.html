@@ -1,425 +1,638 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
-<script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
-<style>
-* {
-  box-sizing: border-box;
-}
+  <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+  <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+  <style>
+   * {
+      box-sizing: border-box;
+      font-family: "Basier circle", -apple-system, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    }
 
-body{
-  overflow: hidden;
-}
+    body {
+      overflow: hidden;
+    }
 
-#filters-container{
-  position: absolute;
-  display: block;
-  z-index: 10;
-  height: 10vh;
-  width: 100%;
-  /* background-color: #ffffff; */
-}
+    #filters-container {
+      position: absolute;
+      display: block;
+      z-index: 10;
+      height: 20vh;
+      width: 100%;
+    }
 
-.cl{
-  display: inline-block;
-  overflow-y: scroll;
-  width: 30%;
-  height: 85vh;
-  text-align:center;
-  margin: 1%;
-  margin-top: 100px;
-}
+    .cl {
+      display: inline-block;
+      overflow-y: scroll;
+      width: 30%;
+      height: 85vh;
+      text-align: center;
+      margin: 1%;
+    }
 
-.filters-form-dubicars, .filters-form-dubizzle, .filters-form-yallamotor{
-  width:32%;
-  display: inline-block;
-  margin-right: 10px;
-}
-.row{
-  margin-left: 4%;
-  margin-right: 1%;
-}
+    .row {
+      margin-left: 4%;
+      margin-right: 1%;
+    }
 
-.column {
-  width: 100%;
-  float: left;
-  padding: 10px;
-  text-align:center;
-}
+    .column {
+      width: 100%;
+      float: left;
+      padding: 10px;
+      text-align: center;
+    }
 
-/* Filter Button */
-.button {
-  background-color: #fff;
-  border: 0 solid #e2e8f0;
-  border-radius: 1.5rem;
-  box-sizing: border-box;
-  color: #0d172a;
-  cursor: pointer;
-  display: inline-block;
-  font-family: "Basier circle",-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
-  font-weight: 600;
-  line-height: 1;
-  padding: 1rem 1.6rem;
-  text-align: center;
-  text-decoration: none #0d172a solid;
-  transition: all .1s cubic-bezier(.4, 0, .2, 1);
-  box-shadow: 0px 1px 2px rgba(166, 175, 195, 0.25);
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  margin-top: auto;
-  margin-bottom: auto;
-  
-}
-.button:hover {
-  background-color: #717171;
-  color: #fff;
-}
+    /* scrollbar */
+    .cl::-webkit-scrollbar {
+      width: 10px;
+    }
 
-@media (min-width: 768px) {
-  .button {
-    font-size: 1.125rem;
-    padding: 1rem 2rem;
-  }
-}
-/* Loader */
-.loader, .loader:before, .loader:after {
-  border-radius: 50%;
-  width: 2.5em;
-  height: 2.5em;
-  animation-fill-mode: both;
-  animation: bblFadInOut 1.8s infinite ease-in-out;
-}
-.loader {
-  color: #001eff;
-  font-size: 7px;
-  position: relative;
-  text-indent: -9999em;
-  transform: translateZ(0);
-  animation-delay: -0.16s;
-}
-.loader:before,.loader:after {
-  content: '';
-  position: relative;
-  top: 0;
-}
-.loader:before {
-  left: -3.5em;
-  animation-delay: -0.32s;
-}
-.loader:after {
-  left: 3.5em;
-}
-@keyframes bblFadInOut {
-  0%, 80%, 100% { box-shadow: 0 2.5em 0 -1.3em }
-  40% { box-shadow: 0 2.5em 0 0 }
-}
+    .cl::-webkit-scrollbar-track {
+      border-radius: 8px;
+      background-color: #f5f5f5;
+      border: 1px solid #e0e0e0;
+    }
+
+    .cl::-webkit-scrollbar-thumb {
+      border-radius: 8px;
+      background-color: #717171;
+    }
+
+    .btn_dubicars {
+      float: left;
+      padding: 100px;
+      align-items: center;
+    }
 
 
-/* scrollbar */
-.cl::-webkit-scrollbar {
-width: 10px;
-}     
-.cl::-webkit-scrollbar-track {
- border-radius: 8px;
- background-color: #f5f5f5;
- border: 1px solid #e0e0e0;
-}      
- .cl::-webkit-scrollbar-thumb {
-border-radius: 8px;
-background-color: #717171;
-}
-.btn_dubicars {
-  float: left;
-  padding: 100px;
-  align-items: center;
-}
- .cardDb, .cardDz, .cardYl{
-  position:relative;
-  width: 100%; 
-  border-width: 0px; 
-  /* border-color: #FF595A;   */
-  border-radius: 8px;
-  border-style: solid;
-  cursor: pointer;
-  transition: all 0.5s;
-  justify-content: center;
-  margin-top: 30px;
-  font-size: 22px;
-  text-align: center;
-  border-radius: 30px; 
- 
- background: #ffffff;
- 
- 
-}
 
-/*Names of sites */
-#names{
-  top:0; 
-  text-align: center; 
-  position: sticky; z-index:9; 
-  font-size: 30px; 
-  background-color:rgb(237, 241, 248); 
-  font-weight: bold;
-} 
+    /*Names of sites */
+    #names {
+      top: 0;
+      text-align: center;
+      position: sticky;
+      z-index: 9;
+      font-size: 30px;
+      background-color: rgb(237, 241, 248);
+      font-weight: bold;
+    }
 
-/* Cards */
-.cardDb:hover, .cardDz:hover, .cardYl:hover{
-  background: rgb(248, 248, 248);
-  transform: scale(1.02);
-  box-shadow: rgb(95, 95, 99) 0px 2px 4px, rgb(255, 255, 255) 0px 7px 13px -3px, rgb(99, 99, 103) 0px -3px 0px inset;
-  
-}
-.cardDb:active {
-  transform: scale(0.95) rotateZ(1.7deg);
-}
-.img{
-  width: 25px; 
-  height: 25px; 
-  margin-right: 5px;
-  
-}
-.textcols {
-	white-space: 10px;
-}
-.textcols-item {
-	white-space: normal;	
-	display: inline-block;
-	width: 46%;
-  line-height: 2;
-	vertical-align: top;
-  text-align: left;
-}
-.textcols .textcols-item:first-child {
-	margin-left: 20px;
-  
-}
+    /* Cards */
+    .cardDb:hover,
+    .cardDz:hover,
+    .cardYl:hover {
+      background: rgb(248, 248, 248);
+      transform: scale(1.02);
+      box-shadow: rgb(95, 95, 99) 0px 2px 4px, rgb(255, 255, 255) 0px 7px 13px -3px, rgb(99, 99, 103) 0px -3px 0px inset;
 
-/* Custom button "Load more" */
-.custom-btn {
-  width: 130px;
-  height: 40px;
-  color: #ffffff;
-  border-radius: 5px;
-  padding: 10px 25px;
-  font-family: 'Lato', sans-serif;
-  font-weight: 500;
-  background: transparent;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  position: relative;
-  display: inline-block;
-  box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5),
-  7px 7px 20px 0px rgba(0,0,0,.1),
-  4px 4px 5px 0px rgba(0,0,0,.1);
-  outline: none;
-}
-.btn-5 {
-  width: 130px;
-  height: 40px;
-  line-height: 42px;
-  padding: 0;
-  border: none;
-  background: blue;
-background: linear-gradient(0deg, blue 0%, blue 100%);
-}
-.btn-5:hover {
-  color: blue;
-  background: transparent;
-  box-shadow:none;
-}
-.btn-5:before,.btn-5:after{
-  content:'';
-  position:absolute;
-  top:0;
-  right:0;
-  height:2px;
-  width:0;
-  background: blue;
-  box-shadow:
-   -1px -1px 5px 0px #fff,
-   7px 7px 20px 0px #0003,
-   4px 4px 5px 0px #0002;
-  transition:400ms ease all;
-}
-.btn-5:after{
-  right:inherit;
-  top:inherit;
-  left:0;
-  bottom:0;
-}
-.btn-5:hover:before,.btn-5:hover:after{
-  width:100%;
-  transition:800ms ease all;
-}
-</style>
+    }
+
+    .cardDb,
+    .cardDz,
+    .cardYl {
+      position: relative;
+      width: 100%;
+      border-width: 0px;
+      border-radius: 8px;
+      border-style: solid;
+      cursor: pointer;
+      transition: all 0.5s;
+      justify-content: center;
+      margin-top: 2%;
+      font-size: 20px;
+      text-align: center;
+      border-radius: 30px;
+      background: #ffffff;
+
+    }
+
+    .img {
+      width: 20px;
+      height: 20px;
+      margin-right: 5px;
+
+    }
+
+    .textcols {
+      white-space: 10px;
+    }
+
+    .textcols-item {
+      white-space: normal;
+      display: inline-block;
+      width: 46%;
+      line-height: 2;
+      vertical-align: top;
+      text-align: left;
+    }
+
+    .textcols .textcols-item:first-child {
+      margin-left: 20px;
+
+    }
+
+    /* Custom button "Load more" */
+    .custom-btn {
+      width: 130px;
+      height: 40px;
+      color: #ffffff;
+      border-radius: 5px;
+      padding: 10px 25px;
+      font-family: 'Lato', sans-serif;
+      font-weight: 500;
+      background: transparent;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      display: inline-block;
+      box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, .5),
+        7px 7px 20px 0px rgba(0, 0, 0, .1),
+        4px 4px 5px 0px rgba(0, 0, 0, .1);
+      outline: none;
+    }
+
+    .btn-5 {
+      width: 130px;
+      height: 40px;
+      line-height: 42px;
+      padding: 0;
+      border: none;
+      background: blue;
+      background: linear-gradient(0deg, blue 0%, blue 100%);
+    }
+
+    .btn-5:hover {
+      color: blue;
+      background: transparent;
+      box-shadow: none;
+    }
+
+    .btn-5:before,
+    .btn-5:after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 2px;
+      width: 0;
+      background: blue;
+      box-shadow:
+        -1px -1px 5px 0px #fff,
+        7px 7px 20px 0px #0003,
+        4px 4px 5px 0px #0002;
+      transition: 400ms ease all;
+    }
+
+    .btn-5:after {
+      right: inherit;
+      top: inherit;
+      left: 0;
+      bottom: 0;
+    }
+
+    .btn-5:hover:before,
+    .btn-5:hover:after {
+      width: 100%;
+      transition: 800ms ease all;
+    }
+
+
+    .filter {
+      width: 80%;
+      box-shadow: none;
+      margin-top: 20px;
+      margin-left: 10%;
+      margin-right: auto;
+      display: flex;
+      letter-spacing: 0;
+      font-family: proxima-nova, ProximaNova, noto, GESS, GE-SS, sans-serif;
+      font-weight: 400;
+      font-size: 1rem;
+      line-height: 1.5;
+      height: 8vh;
+    }
+
+    .spec,
+    .year,
+    .prise,
+    .location,
+    .brand,
+    .mileage,
+    .model {
+      border-right: #8c8c8c 1px solid;
+      border-bottom: #8c8c8c 1px solid;
+      border-top: #434343 1px solid;
+      height: 100%;
+      width: 15%;
+      position: relative;
+      text-align: center;
+      color: #23262A;
+      letter-spacing: 0;
+      font-family: proxima-nova, ProximaNova, noto, GESS, GE-SS, sans-serif;
+      font-weight: 400;
+      box-shadow: rgb(99, 99, 103) 0px -1px 0px inset;
+
+
+    }
+
+    .location {
+      border-top-left-radius: 20px;
+      border-bottom-left-radius: 20px;
+      border-left: #8c8c8c 1px solid;
+
+    }
+
+
+    .spec:hover,
+    .year:hover,
+    .location:hover,
+    .model:hover,
+    .brand:hover,
+    .mileage:hover,
+    .prise:hover {
+      background: rgba(224, 225, 227, 0.525);
+    }
+
+    .inp {
+      border: 1px rgb(236, 236, 236);
+      border-radius: 5px;
+      width: 88%;
+      text-align: left;
+      font-size: 15px;
+    }
+
+    .inp_year,
+    .inp_kms,
+    .inp_price {
+      border: 1px rgb(236, 236, 236);
+      border-radius: 5px;
+      width: 45%;
+      text-align: left;
+    }
+
+    .spisok_year,
+    .spisok_price,
+    .spisok_mil {
+      width: 300px;
+      height: 100px;
+      text-align: center;
+      padding: 10px 5px;
+      margin-left: -40%;
+      position: absolute;
+      z-index: 10;
+      margin-top: 10px;
+      border: #8c8c8c 0.5px solid;
+      background-color: rgb(237, 241, 248);
+      box-shadow: rgb(99, 99, 103) 0px -1px 0px inset;
+      border-radius: 20px;
+    }
+
+    .invisible {
+      display: none;
+    }
+
+    .visible {
+      display: block;
+    }
+
+    .textfilter {
+      font-size: 15px;
+      font-weight: bold;
+      text-align: left;
+      margin-left: 7%;
+      margin-top: 5%;
+    }
+
+    .textfilter_under {
+      font-size: 15px;
+      text-align: left;
+      margin-left: 7%;
+      color: #858484;
+    }
+
+    .textfilter_menu {
+      font-size: 15px;
+      font-weight: bold;
+      text-align: left;
+    }
+
+    ::placeholder {
+      color: #858484;
+      font-size: 15px;
+    }
+
+    .btn {
+      background-color: #fff;
+      border-radius: 5px;
+      box-sizing: border-box;
+      cursor: pointer;
+      display: inline-block;
+      font-family: "Basier circle", -apple-system, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+      font-weight: 600;
+      line-height: 1;
+      text-align: center;
+      text-decoration: none #0d172a solid;
+      transition: all .1s cubic-bezier(.4, 0, .2, 1);
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: manipulation;
+      height: 100%;
+      border: 0px solid;
+      margin-left: 3%;
+      margin-top: 2%;
+    }
+
+    .btnsub {
+      cursor: pointer;
+      border-top-right-radius: 20px;
+      border-bottom-right-radius: 20px;
+      height: 100%;
+      width: 15%;
+      border: #8c8c8c 1px solid;
+      border-left: none;
+      background-color: rgb(49, 49, 49);
+      color: white;
+      font-family: "Basier circle", -apple-system, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+      font-weight: 600;
+      text-align: center;
+      font-size: 15px;
+      
+    }
+
+    .btnsub:hover{
+      background-color: rgb(73, 73, 73);
+    }
+  </style>
 </head>
-<body style="background-color: rgb(237, 241, 248)"> 
-  <!-- <button id="filters-visible" class="button" style="font-size: 20px;">Filters</button> -->
-  <div id="filters-container">    
-    <form class="filters-form" method="get">
-      <b style="font-size: 20px; ">Filters</b>
-      <p>Price {{filter.price}} Brand {{filter.brand}} Model {{filter.model}} Mileage {{filter.kms}} Location {{filter.location}}<button class="btn" type="submit">Submit</button></p>
-    </form>
-  </div>
+
+
+<body style="background-color: rgb(237, 241, 248)">
+  <form class="filter">
+    <div class="location">
+      <div class="textfilter">Location</div>
+      {{filter.location}}
+    </div>
+    <div class="model">
+      <div class="textfilter">Model</div>
+      {{filter.model}}
+    </div>
+
+    <div class="brand">
+      <div class="textfilter">Brand </div>{{filter.brand}}
+    </div>
+    <div class="spec">
+      <div class="textfilter">Specs </div>{{filter.regSpecs}}
+    </div>
+
+    <div class="mileage">
+      <div onclick="showFilterMil()" style="width: 100%; height: 100%;">
+        <div class="textfilter">Mileage</div>
+        <div class="textfilter_under">Select </div>
+      </div>
+
+      <div class="spisok_mil invisible" id="spisok_mil123">
+        <div style="display: flex;">
+          <div style="margin-left: 3%; " class="textfilter_menu">From</div>
+          <div style="margin-left: 36%;" class="textfilter_menu">To</div>
+        </div>
+        {{filter.kms}}
+        <div style="text-align: left; height: 40%;">
+          <button class="btn"
+            style="margin-left: 3%; background-color: black; color: white; width: 30%;">Submit</button>
+            <script>
+            </script>
+        </div>
+      </div>
+    </div>
+
+    <div class=" prise">
+      <div onclick="showFilterPrice()" style="width: 100%; height: 100%;">
+        <div class="textfilter">Price</div>
+        <div class="textfilter_under">Select </div>
+      </div>
+
+      <div class="spisok_price invisible" id="spisok_price123">
+        <div style="display: flex;">
+          <div style="margin-left: 3%; " class="textfilter_menu">From</div>
+          <div style="margin-left: 36%;" class="textfilter_menu">To</div>
+        </div>
+        {{filter.price}}
+        <div style="text-align: left; height: 40%;">
+          <button class="btn"
+            style="margin-left: 3%; background-color: black; color: white; width: 30%;">Submit</button>
+        </div>
+      </div>
+      <!-- <button class="btn" type="submit" >Submit</button> -->
+    </div>
+
+    <div class="year">
+      <div onclick="showFilterYear()" style="width: 100%; height: 100%;">
+        <div class="textfilter">Year</div>
+        <div class="textfilter_under">Select </div>
+      </div>
+
+      <div class="spisok_year invisible" id="spisok_year123">
+        <div style="display: flex;">
+          <div style="margin-left: 3%;" class="textfilter_menu">From</div>
+          <div style="margin-left: 36%;" class="textfilter_menu">To</div>
+        </div>
+        {{filter.year}}
+        <div style="text-align: left; height: 40%;">
+          <button class="btn"
+            style="margin-left: 3%; background-color: black; color: white; width: 30%;">Submit</button>
+        </div>
+      </div>
+      <!-- <button class="btn" type="submit" >Submit</button> -->
+    </div>
+    <button class="btnsub">Submit</button>
+  </form>
+  <!-- <button onclick="Clear()">aaaaaaa</button> -->
+
+
+  <!-- </div> -->
 
   <div class="row">
     <div class="cl" id="db">
-      <div id="names" >Dubicars</div>
-        <div class="column" id="dubicars">
-          
-              {%for car in dubicarsFilterQs%}
-                  <div class="cardDb" onclick="location.href='{{car.url}}';">
-                      <img src={{car.photo}} class="card-img-top" style="width: 80%; height: 80%;">
-                      <div class="card-body">
-                        <h5 class="card-title"><a href={{car.url}}>{{car.brand}} {{car.model}}<a></h5>
-                          <!-- 1 -->
-                            <div class="textcols">
-                              <div class="textcols-item">
-                                <img src="/media/calendar.png" class="img"><b>{{car.year}}</b>  
-                              </div>
-                              <div class="textcols-item">
-                                <img src="/media/pallete.png" class="img"><b>{{car.color}}</b>
-                              </div>
-                            </div>
-                            <!-- 2 -->
-                            <div class="textcols">
-                              <div class="textcols-item">
-                                <img src="/media/wallet.png" class="img"><b>{{car.price}} AED</b>  
-                              </div>
-                              <div class="textcols-item">
-                                <img src="/media/dashboard.png" class="img"><b>{{car.kms}} km</b>
-                              </div>
-                            </div>
-                            <!-- 3 -->
-                            <div class="textcols">
-                              <div class="textcols-item">
-                                  <img src="/media/location.png" class="img"><b>{{car.location}}</b>
-                              </div>
-                              <div class="textcols-item">
-                                <img src="/media/telephone-call.png" class="img"><b>{{car.contact}}</b>
-                              </div>
-                            </div>
-                          <!-- 4 -->
-                          <div class="textcols">
-                            <div class="textcols-item">
-                              <img src="/media/earth.png" class="img"><b>{{car.regSpecs}}</b>  
-                            </div>
-                            <div class="textcols-item">
-                              <img src="/media/clipboard.png" class="img"><b>{{car.activeListings}}</b>
-                            </div>
-                          </div> 
-                      </div>
-                    </div>
-              {%endfor%}
+      <div id="names">Dubicars</div>
+      <div class="column" id="dubicars">
+        {%for car in dubicarsFilterQs%}
+
+        <div class="cardDb">
+          <div style="font-size: 20px; margin: 1%; width: 40%; ">
+            <b style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif">
+              <a href={{car.url}}>{{car.brand}} {{car.model}}</a></b>
           </div>
-        <div>
-          <button type="button" id="btn_dubicars" class="custom-btn btn-5">Load more</button>
+          <div style=" display: flex;">
+            <div style="width: 50%; margin: 1%;text-align: left; ">
+              <img src={{car.photo}} class="card-img-top"
+                style="width: 180px; height: 180px; border-radius: 30px; object-fit: cover; object-position: center;">
+            </div>
+
+            <div style="width: 60%;">
+
+              <div style="margin-top: 10%;">
+                <div style="display: flex;">
+                  <div style="text-align: left;  width: 40%;">
+                    <img src="/media/calendar.png" class="img"><b>{{car.year}}</b>
+                  </div>
+                  <div style="text-align: right; width: 60%; margin-right: 10%;">
+                    <img src="/media/dashboard.png" class="img"><b>{{car.kms}} km</b>
+                  </div>
+                </div>
+              </div>
+
+              <div style="margin-top: 10%;">
+                <div style="display: flex;">
+                  <div style="text-align: left;  width: 40%;">
+                    <img src="/media/location.png" class="img"><b>{{car.location}}</b>
+                  </div>
+                  <div style="text-align: right; width: 60%; margin-right: 10%;">
+                    <img src="/media/wallet.png" class="img"><b>{{car.price}} AED</b>
+                  </div>
+                </div>
+              </div>
+
+              <div style="margin-top: 10%; margin-bottom: 2%;">
+                <div style="display: flex;">
+                  <div style="text-align: left;  width: 60%;">
+                    <img src="/media/earth.png" class="img"><b>{{car.regSpecs}}</b>
+                  </div>
+                  <div style="text-align: right; width: 40%; margin-right: 10%; ">
+                    <img src="/media/clipboard.png" class="img"><b>{{car.activeListings}}</b>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
         </div>
+
+        {%endfor%}
       </div>
+      <div>
+        <button type="button" id="btn_dubicars" class="custom-btn btn-5">Load more</button>
+      </div>
+    </div>
     <!-- {{total_obj_dubicars|json_script:"json-total-dubicars"}} -->
     <div class="cl" id="dz">
-       <div id="names">Dubizzle</div>
-        <div class="column" id="dubizzle">
-            {%for car in dubizzleFilterQs%}
-            <div class="cardDz" onclick="location.href='{{car.url}}';">
-              <img src={{car.photo}} class="card-img-top" style="width: 90%; height: 80%; padding-top: 6px;">
-              <div class="card-body">
-                <h5 class="card-title"><a href={{car.url}}>{{car.brand}} {{car.model}}<a></h5>
-                  <!-- 1 -->
-                    <div class="textcols">
-                      <div class="textcols-item">
-                        <img src="/media/calendar.png" class="img"><b>{{car.year}}</b>  
-                      </div>
-                      <div class="textcols-item">
-                        <img src="/media/pallete.png" class="img"><b>{{car.color}}</b>
-                      </div>
-                    </div>
-                    <!-- 2 -->
-                    <div class="textcols">
-                      <div class="textcols-item">
-                        <img src="/media/wallet.png" class="img"><b>{{car.price}} AED</b>  
-                      </div>
-                      <div class="textcols-item">
-                        <img src="/media/dashboard.png" class="img"><b>{{car.kms}} km</b>
-                      </div>
-                    </div>
-                    <!-- 3 -->
-                    <div class="textcols">
-                      <div class="textcols-item">
-                          <img src="/media/location.png" class="img"><b>{{car.location}}</b>
-                      </div>
-                      <div class="textcols-item">
-                        <img src="/media/clock.png" class="img"><b>{{car.posted}}</b>
-                      </div>
-                    </div>
-                  <!-- 4 -->
-                  <div class="textcols">
-                    <div class="textcols-item">
-                      <img src="/media/earth.png" class="img"><b>{{car.regSpecs}}</b>  
-                    </div>
-                    <div class="textcols-item">
-                      <img src="/media/clipboard.png" class="img"><b>{{car.activeListings}}</b>
-                    </div>
-                  </div> 
-              </div>
+      <div id="names">Dubizzle</div>
+      <div class="column" id="dubizzle">
+        {%for car in dubizzleFilterQs%}
+
+        <div class="cardDz">
+          <div style="font-size: 20px; margin: 1%; width: 40%; ">
+            <b style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif">
+              <a href={{car.url}}>{{car.brand}} {{car.model}}</a></b>
+          </div>
+          <div style=" display: flex;">
+            <div style="width: 50%; margin: 1%;text-align: left; ">
+              <img src={{car.photo}} class="card-img-top"
+                style="width: 180px; height: 180px; border-radius: 30px; object-fit: cover; object-position: center;">
             </div>
-            {%endfor%}
+
+            <div style="width: 60%;">
+
+              <div style="margin-top: 10%;">
+                <div style="display: flex;">
+                  <div style="text-align: left;  width: 40%;">
+                    <img src="/media/calendar.png" class="img"><b>{{car.year}}</b>
+                  </div>
+                  <div style="text-align: right; width: 60%; margin-right: 10%;">
+                    <img src="/media/dashboard.png" class="img"><b>{{car.kms}} km</b>
+                  </div>
+                </div>
+              </div>
+
+              <div style="margin-top: 10%;">
+                <div style="display: flex;">
+                  <div style="text-align: left;  width: 40%;">
+                    <img src="/media/location.png" class="img"><b>{{car.location}}</b>
+                  </div>
+                  <div style="text-align: right; width: 60%; margin-right: 10%;">
+                    <img src="/media/wallet.png" class="img"><b>{{car.price}} AED</b>
+                  </div>
+                </div>
+              </div>
+
+              <div style="margin-top: 10%; margin-bottom: 2%;">
+                <div style="display: flex;">
+                  <div style="text-align: left;  width: 60%;">
+                    <img src="/media/earth.png" class="img"><b>{{car.regSpecs}}</b>
+                  </div>
+                  <div style="text-align: right; width: 40%; margin-right: 10%; ">
+                    <img src="/media/clipboard.png" class="img"><b>{{car.activeListings}}</b>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+
+
+        {%endfor%}
       </div>
       <div>
         <button type="button" id="btn_dubizzle" class="custom-btn btn-5">Load more</button>
       </div>
     </div>
     <!-- {{total_obj_dubicars|json_script:"json-total-dubicars"}} -->
-    <div class="cl" id="yl">s
+    <div class="cl" id="yl">
       <div id="names">Yallamotor</div>
       <div class="column" id="yallamotor">
-            {%for car in yallamotorFilterQs%}
-                <div class="cardYl" onclick="location.href='{{car.url}}';">
-                    <img src={{car.photo}} class="card-img-top" style="width: 90%; height: 80%; padding-top: 6px;">
-                    <div class="card-body">
-                      <h5 class="card-title"><a href={{car.url}}>{{car.brand}} {{car.model}}<a></h5>
-                        <!-- 1 -->
-                          <div class="textcols">
-                            <div class="textcols-item">
-                              <img src="/media/calendar.png" class="img"><b>{{car.year}}</b>  
-                            </div>
-                            <div class="textcols-item">
-                              <img src="/media/pallete.png" class="img"><b>{{car.color}}</b>
-                            </div>
-                          </div>
-                          <!-- 2 -->
-                          <div class="textcols">
-                            <div class="textcols-item">
-                              <img src="/media/wallet.png" class="img"><b>{{car.price}} AED</b>  
-                            </div>
-                            <div class="textcols-item">
-                              <img src="/media/dashboard.png" class="img"><b>{{car.kms}} km</b>
-                            </div>
-                          </div>
-                          <!-- 3 -->
-                          <div class="textcols">
-                            <div class="textcols-item">
-                                <img src="/media/location.png" class="img"><b>{{car.location}}</b>
-                            </div>
-                            <div class="textcols-item">
-                              <img src="/media/telephone-call.png" class="img"><b>{{car.contact}}</b>
-                            </div>
-                          </div>
-                        <!-- 4 -->
-                        <div class="textcols">
-                          <div class="textcols-item">
-                            <img src="/media/earth.png" class="img"><b>{{car.regSpecs}}</b>  
-                          </div>
-                          <div class="textcols-item">
-                            <img src="/media/clipboard.png" class="img"><b>{{car.activeListings}}</b>
-                          </div>
-                        </div> 
-                    </div>
+        {%for car in yallamotorFilterQs%}
+        <div class="cardYl">
+          <div style="font-size: 20px; margin: 1%; width: 40%; ">
+            <b style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif">
+              <a href={{car.url}}>{{car.brand}} {{car.model}}</a></b>
+          </div>
+          <div style=" display: flex;">
+            <div style="width: 50%; margin: 1%;text-align: left; ">
+              <img src={{car.photo}} class="card-img-top"
+                style="width: 180px; height: 180px; border-radius: 30px; object-fit: cover; object-position: center;">
+            </div>
+
+            <div style="width: 60%;">
+
+              <div style="margin-top: 10%;">
+                <div style="display: flex;">
+                  <div style="text-align: left;  width: 40%;">
+                    <img src="/media/calendar.png" class="img"><b>{{car.year}}</b>
                   </div>
-            {%endfor%}
+                  <div style="text-align: right; width: 60%; margin-right: 10%;">
+                    <img src="/media/dashboard.png" class="img"><b>{{car.kms}} km</b>
+                  </div>
+                </div>
+              </div>
+
+              <div style="margin-top: 10%;">
+                <div style="display: flex;">
+                  <div style="text-align: left;  width: 40%;">
+                    <img src="/media/location.png" class="img"><b>{{car.location}}</b>
+                  </div>
+                  <div style="text-align: right; width: 60%; margin-right: 10%;">
+                    <img src="/media/wallet.png" class="img"><b>{{car.price}} AED</b>
+                  </div>
+                </div>
+              </div>
+
+              <div style="margin-top: 10%; margin-bottom: 2%;">
+                <div style="display: flex;">
+                  <div style="text-align: left;  width: 60%;">
+                    <img src="/media/earth.png" class="img"><b>{{car.regSpecs}}</b>
+                  </div>
+                  <div style="text-align: right; width: 40%; margin-right: 10%; ">
+                    <img src="/media/clipboard.png" class="img"><b>{{car.activeListings}}</b>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        {%endfor%}
       </div>
 
       <div>
@@ -427,235 +640,296 @@ background: linear-gradient(0deg, blue 0%, blue 100%);
       </div>
     </div>
   </div>
-  
+
   <!-- {{total_obj_dubicars|json_script:"json-total-dubicars"}} -->
 
-<script>
-  const loadBtnDubicars = document.getElementById('btn_dubicars');
-  const loadBtnDubizzle = document.getElementById('btn_dubizzle');
-  const loadBtnYallamotor = document.getElementById('btn_yallamotor');
-  // const showBtn = document.getElementById('filters-visible');
-  
-  function loadMoreCarsDubicars(){
-    var _current_item = $('.cardDb').length
-    const container = document.getElementById('dubicars');
-    var filter_data = $('.filters-form').serialize()
-    filter_data += "&total_item=" + _current_item;
+  <script>
+    const loadBtnDubicars = document.getElementById('btn_dubicars');
+    const loadBtnDubizzle = document.getElementById('btn_dubizzle');
+    const loadBtnYallamotor = document.getElementById('btn_yallamotor');
+    // const showBtn = document.getElementById('filters-visible');
 
-    $.ajax({
-      url:'{% url "load_dubicars" %}',
-      type:'GET',
-      data:filter_data, 
-      beforeSend:function(){
-        
-      }, 
-      success:function(response){
-        const data = response.dubicars
+    function loadMoreCarsDubicars() {
+      var _current_item = $('.cardDb').length
+      const container = document.getElementById('dubicars');
+      var filter_data = $('.filter').serialize()
+      filter_data += "&total_item=" + _current_item;
 
-        data.map(car =>{
-          container.innerHTML += `<div class="cardDb" onclick="location.href='${car.url}';">
-              <img src=${car.photo} class="card-img-top" style="width: 80%; height: 80%;">
-              <div class="card-body">
-                <h5 class="card-title"><a href=${car.url}>${car.brand} ${car.model}<a></h5>
-                  <!-- 1 -->
-                    <div class="textcols">
-                      <div class="textcols-item">
-                        <img src="/media/calendar.png" class="img"><b>${car.year}</b>  
-                      </div>
-                      <div class="textcols-item">
-                        <img src="/media/pallete.png" class="img"><b>${car.color}</b>
-                      </div>
-                    </div>
-                    <!-- 2 -->
-                    <div class="textcols">
-                      <div class="textcols-item">
-                        <img src="/media/wallet.png" class="img"><b>${car.price} AED</b>  
-                      </div>
-                      <div class="textcols-item">
-                        <img src="/media/dashboard.png" class="img"><b>${car.kms} kms</b>
-                      </div>
-                    </div>
-                    <!-- 3 -->
-                    <div class="textcols">
-                      <div class="textcols-item">
-                        <img src="/media/telephone-call.png" class="img"><b>${car.contact}</b>  
-                      </div>
-                      <div class="textcols-item">
-                        <img src="/media/location.png" class="img"><b>${car.location}</b>
-                      </div>
-                    </div>
-                  <!-- 4 -->
-                  <div class="textcols">
-                    <div class="textcols-item">
-                      <img src="/media/earth.png" class="img"><b>${car.regSpecs}</b>  
-                    </div>
-                    <div class="textcols-item">
-                      <img src="/media/clipboard.png" class="img"><b>${car.activeListings}</b>
-                    </div>
-                  </div> 
+      $.ajax({
+        url: '{% url "load_dubicars" %}',
+        type: 'GET',
+        data: filter_data,
+        beforeSend: function () {
+
+        },
+        success: function (response) {
+          const data = response.dubicars
+
+          data.map(car => {
+            container.innerHTML += `<div class="cardDb">
+          <div style="font-size: 20px; margin: 1%; width: 40%; ">
+            <b style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif">
+              <a href=${car.url}>${car.brand} ${car.model}</a></b>
+          </div>
+          <div style=" display: flex;">
+            <div style="width: 50%; margin: 1%;text-align: left; ">
+              <img src=${car.photo} class="card-img-top"
+                style="width: 180px; height: 180px; border-radius: 30px; object-fit: cover; object-position: center;">
+            </div>
+
+            <div style="width: 60%;">
+
+              <div style="margin-top: 10%;">
+                <div style="display: flex;">
+                  <div style="text-align: left;  width: 40%;">
+                    <img src="/media/calendar.png" class="img"><b>${car.year}</b>
+                  </div>
+                  <div style="text-align: right; width: 60%; margin-right: 10%;">
+                    <img src="/media/dashboard.png" class="img"><b>${car.kms} km</b>
+                  </div>
+                </div>
               </div>
-            </div>`
-        })
-      },
-      error:function(err){
-        console.log(err)
-      }
-    });
-  }
 
-  function loadMoreCarsDubizzle(){
-    var _current_item = $('.cardDz').length
-    const container = document.getElementById('dubizzle');
-    var filter_data = $('.filters-form').serialize()
-    filter_data += "&total_item=" + _current_item;
-
-    $.ajax({
-      url:'{% url "load_dubizzle" %}',
-      type:'GET',
-      data:filter_data, 
-      beforeSend:function(){
-
-      }, 
-      success:function(response){
-        const data = response.dubizzle
-
-        data.map(car =>{
-          container.innerHTML += `<div class="cardDz" onclick="location.href='${car.url}';">
-              <img src=${car.photo} class="card-img-top" style="width: 80%; height: 80%;">
-              <div class="card-body">
-                <h5 class="card-title"><a href=${car.url}>${car.brand} ${car.model}<a></h5>
-                  <!-- 1 -->
-                    <div class="textcols">
-                      <div class="textcols-item">
-                        <img src="/media/calendar.png" class="img"><b>${car.year}</b>  
-                      </div>
-                      <div class="textcols-item">
-                        <img src="/media/pallete.png" class="img"><b>${car.color}</b>
-                      </div>
-                    </div>
-                    <!-- 2 -->
-                    <div class="textcols">
-                      <div class="textcols-item">
-                        <img src="/media/wallet.png" class="img"><b>${car.price} AED</b>  
-                      </div>
-                      <div class="textcols-item">
-                        <img src="/media/dashboard.png" class="img"><b>${car.kms} kms</b>
-                      </div>
-                    </div>
-                    <!-- 3 -->
-                    <div class="textcols">
-                      <div class="textcols-item">
-                        <img src="/media/telephone-call.png" class="img"><b>${car.posted}</b>  
-                      </div>
-                      <div class="textcols-item">
-                        <img src="/media/location.png" class="img"><b>${car.location}</b>
-                      </div>
-                    </div>
-                  <!-- 4 -->
-                  <div class="textcols">
-                    <div class="textcols-item">
-                      <img src="/media/earth.png" class="img"><b>${car.regSpecs}</b>  
-                    </div>
-                    <div class="textcols-item">
-                      <img src="/media/clipboard.png" class="img"><b>${car.activeListings}</b>
-                    </div>
-                  </div> 
+              <div style="margin-top: 10%;">
+                <div style="display: flex;">
+                  <div style="text-align: left;  width: 40%;">
+                    <img src="/media/location.png" class="img"><b>${car.location}</b>
+                  </div>
+                  <div style="text-align: right; width: 60%; margin-right: 10%;">
+                    <img src="/media/wallet.png" class="img"><b>${car.price} AED</b>
+                  </div>
+                </div>
               </div>
-            </div>`
-        })
-      },
-      error:function(err){
-        console.log(err)
-      }
-    });
-  }
 
-  function loadMoreCarsYallamotor(){
-    var _current_item = $('.cardYl').length
-    console.log(_current_item)
-    const container = document.getElementById('yallamotor');
-    var filter_data = $('.filters-form').serialize()
-    filter_data += "&total_item=" + _current_item;
-
-    $.ajax({
-      url:'{% url "load_yallamotor" %}',
-      type:'GET',
-      data:filter_data, 
-      beforeSend:function(){
-
-      }, 
-      success:function(response){
-        const data = response.yallamotor
-
-        data.map(car =>{
-          container.innerHTML += `<div class="cardYl" onclick="location.href='${car.url}';">
-                <img src=${car.photo} class="card-img-top" style="width: 90%; height: 80%; padding-top: 6px;">
-                <div class="card-body">
-                <h5 class="card-title"><a href=${car.url}>${car.brand} ${car.model}<a></h5>
-                  <!-- 1 -->
-                    <div class="textcols">
-                      <div class="textcols-item">
-                        <img src="/media/calendar.png" class="img"><b>${car.year}</b>  
-                      </div>
-                      <div class="textcols-item">
-                        <img src="/media/pallete.png" class="img"><b>${car.color}</b>
-                      </div>
-                    </div>
-                    <!-- 2 -->
-                    <div class="textcols">
-                      <div class="textcols-item">
-                        <img src="/media/wallet.png" class="img"><b>${car.price} AED</b>  
-                      </div>
-                      <div class="textcols-item">
-                        <img src="/media/dashboard.png" class="img"><b>${car.kms} kms</b>
-                      </div>
-                    </div>
-                    <!-- 3 -->
-                    <div class="textcols">
-                      <div class="textcols-item">
-                        <img src="/media/telephone-call.png" class="img"><b>${car.contact}</b>  
-                      </div>
-                      <div class="textcols-item">
-                        <img src="/media/location.png" class="img"><b>${car.location}</b>
-                      </div>
-                    </div>
-                  <!-- 4 -->
-                  <div class="textcols">
-                    <div class="textcols-item">
-                      <img src="/media/earth.png" class="img"><b>${car.regSpecs}</b>  
-                    </div>
-                    <div class="textcols-item">
-                      <img src="/media/clipboard.png" class="img"><b>${car.activeListings}</b>
-                    </div>
-                  </div> 
+              <div style="margin-top: 10%; margin-bottom: 2%;">
+                <div style="display: flex;">
+                  <div style="text-align: left;  width: 60%;">
+                    <img src="/media/earth.png" class="img"><b>${car.regSpecs}</b>
+                  </div>
+                  <div style="text-align: right; width: 40%; margin-right: 10%; ">
+                    <img src="/media/clipboard.png" class="img"><b>${car.activeListings}</b>
+                  </div>
+                </div>
               </div>
-            </div>`
-        })
-      },
-      error:function(err){
-        console.log(err)
-      }
-    });
-  }
 
-  loadBtnDubicars.addEventListener('click', () => {
-    loadMoreCarsDubicars()
-  });
-  loadBtnDubizzle.addEventListener('click', () => {
-    loadMoreCarsDubizzle()
-  });
-  loadBtnYallamotor.addEventListener('click', () => {
-    loadMoreCarsYallamotor()
-  });
-  // showBtn.addEventListener("click", function(){
-  //   var filters = document.getElementById('filters-container')
-  //   if (filters.style.display == "none"){ 
-  //     filters.style.display = "block";
-  //   }
-  //   else {
-  //     filters.style.display = "none";
-  //   }
-  // });
-</script>
+            </div>
+          </div>
+        </div>`
+          })
+        },
+        error: function (err) {
+          console.log(err)
+        }
+      });
+    }
+
+    function loadMoreCarsDubizzle() {
+      var _current_item = $('.cardDz').length
+      const container = document.getElementById('dubizzle');
+      var filter_data = $('.filter').serialize()
+      filter_data += "&total_item=" + _current_item;
+
+      $.ajax({
+        url: '{% url "load_dubizzle" %}',
+        type: 'GET',
+        data: filter_data,
+        beforeSend: function () {
+
+        },
+        success: function (response) {
+          const data = response.dubizzle
+
+          data.map(car => {
+            container.innerHTML += `<div class="cardDz">
+          <div style="font-size: 20px; margin: 1%; width: 40%; ">
+            <b style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif">
+              <a href=${car.url}>${car.brand} ${car.model}</a></b>
+          </div>
+          <div style=" display: flex;">
+            <div style="width: 50%; margin: 1%;text-align: left; ">
+              <img src=${car.photo} class="card-img-top"
+                style="width: 180px; height: 180px; border-radius: 30px; object-fit: cover; object-position: center;">
+            </div>
+
+            <div style="width: 60%;">
+
+              <div style="margin-top: 10%;">
+                <div style="display: flex;">
+                  <div style="text-align: left;  width: 40%;">
+                    <img src="/media/calendar.png" class="img"><b>${car.year}</b>
+                  </div>
+                  <div style="text-align: right; width: 60%; margin-right: 10%;">
+                    <img src="/media/dashboard.png" class="img"><b>${car.kms} km</b>
+                  </div>
+                </div>
+              </div>
+
+              <div style="margin-top: 10%;">
+                <div style="display: flex;">
+                  <div style="text-align: left;  width: 40%;">
+                    <img src="/media/location.png" class="img"><b>${car.location}</b>
+                  </div>
+                  <div style="text-align: right; width: 60%; margin-right: 10%;">
+                    <img src="/media/wallet.png" class="img"><b>${car.price} AED</b>
+                  </div>
+                </div>
+              </div>
+
+              <div style="margin-top: 10%; margin-bottom: 2%;">
+                <div style="display: flex;">
+                  <div style="text-align: left;  width: 60%;">
+                    <img src="/media/earth.png" class="img"><b>${car.regSpecs}</b>
+                  </div>
+                  <div style="text-align: right; width: 40%; margin-right: 10%; ">
+                    <img src="/media/clipboard.png" class="img"><b>${car.activeListings}</b>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>`
+          })
+        },
+        error: function (err) {
+          console.log(err)
+        }
+      });
+    }
+
+    function loadMoreCarsYallamotor() {
+      var _current_item = $('.cardYl').length
+      console.log(_current_item)
+      const container = document.getElementById('yallamotor');
+      var filter_data = $('.filter').serialize()
+      filter_data += "&total_item=" + _current_item;
+
+      $.ajax({
+        url: '{% url "load_yallamotor" %}',
+        type: 'GET',
+        data: filter_data,
+        beforeSend: function () {
+
+        },
+        success: function (response) {
+          const data = response.yallamotor
+
+          data.map(car => {
+            container.innerHTML += `<div class="cardYl">
+          <div style="font-size: 20px; margin: 1%; width: 40%; ">
+            <b style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif">
+              <a href=${car.url}>${car.brand} ${car.model}</a></b>
+          </div>
+          <div style=" display: flex;">
+            <div style="width: 50%; margin: 1%;text-align: left; ">
+              <img src=${car.photo} class="card-img-top"
+                style="width: 180px; height: 180px; border-radius: 30px; object-fit: cover; object-position: center;">
+            </div>
+
+            <div style="width: 60%;">
+
+              <div style="margin-top: 10%;">
+                <div style="display: flex;">
+                  <div style="text-align: left;  width: 40%;">
+                    <img src="/media/calendar.png" class="img"><b>${car.year}</b>
+                  </div>
+                  <div style="text-align: right; width: 60%; margin-right: 10%;">
+                    <img src="/media/dashboard.png" class="img"><b>${car.kms} km</b>
+                  </div>
+                </div>
+              </div>
+
+              <div style="margin-top: 10%;">
+                <div style="display: flex;">
+                  <div style="text-align: left;  width: 40%;">
+                    <img src="/media/location.png" class="img"><b>${car.location}</b>
+                  </div>
+                  <div style="text-align: right; width: 60%; margin-right: 10%;">
+                    <img src="/media/wallet.png" class="img"><b>${car.price} AED</b>
+                  </div>
+                </div>
+              </div>
+
+              <div style="margin-top: 10%; margin-bottom: 2%;">
+                <div style="display: flex;">
+                  <div style="text-align: left;  width: 60%;">
+                    <img src="/media/earth.png" class="img"><b>${car.regSpecs}</b>
+                  </div>
+                  <div style="text-align: right; width: 40%; margin-right: 10%; ">
+                    <img src="/media/clipboard.png" class="img"><b>${car.activeListings}</b>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>`
+          })
+        },
+        error: function (err) {
+          console.log(err)
+        }
+      });
+    }
+
+    function showFilterMil() {
+      const milliageDiv = document.getElementById('spisok_mil123');
+      const priceDiv = document.getElementById('spisok_price123');
+      const yearDiv = document.getElementById('spisok_year123');
+      if (milliageDiv.classList == "spisok_mil visible") 
+      {
+        milliageDiv.classList = "spisok_mil invisible";
+      } 
+      else 
+      {
+        milliageDiv.classList = "spisok_mil visible";
+        priceDiv.classList = "spisok_price invisible";
+        yearDiv.classList = "spisok_year invisible";
+      }
+    }
+
+    function showFilterPrice() {
+      const priceDiv = document.getElementById('spisok_price123');
+      const milliageDiv = document.getElementById('spisok_mil123');
+      const yearDiv = document.getElementById('spisok_year123');
+      if (priceDiv.classList == "spisok_price visible") 
+      {
+        priceDiv.classList = "spisok_price invisible";
+      } 
+      else 
+      {
+        priceDiv.classList = "spisok_price visible";
+        milliageDiv.classList = "spisok_mil invisible";
+        yearDiv.classList = "spisok_year invisible";
+      }
+    }
+
+    function showFilterYear() {
+      const priceDiv = document.getElementById('spisok_price123');
+      const milliageDiv = document.getElementById('spisok_mil123');
+      const yearDiv = document.getElementById('spisok_year123');
+      if (yearDiv.classList == "spisok_year visible") 
+      {
+        yearDiv.classList = "spisok_year invisible";
+      } 
+      else 
+      {
+        yearDiv.classList = "spisok_year visible";
+        priceDiv.classList = "spisok_price invisible";
+        milliageDiv.classList = "spisok_mil invisible";
+      }
+    }
+
+    loadBtnDubicars.addEventListener('click', () => {
+      loadMoreCarsDubicars()
+    });
+    loadBtnDubizzle.addEventListener('click', () => {
+      loadMoreCarsDubizzle()
+    });
+    loadBtnYallamotor.addEventListener('click', () => {
+      loadMoreCarsYallamotor()
+    });
+  </script>
 </body>
+
 </html>

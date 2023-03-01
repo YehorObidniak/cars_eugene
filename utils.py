@@ -5,63 +5,9 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "cars_project.settings")
 django.setup()
 
 from django.db import transaction
-from main.models import DubicarsCar, DubizzleCar, YallamotorCar, Car_any
+from main.models import Car_any, Brands, regSpecs
 import json
 from time import time
-
-def add_to_database_dubicars():
-    DubicarsCar.objects.all().delete()
-    data = json.load(open("dubicars.json", 'r', encoding='utf-8'))
-    for info in data:
-            if str(info) == "Error" or info == None:
-                print(info)
-                continue
-            car = DubicarsCar(url=info['url'], brand=info['brand'], model=info['model'], color=info['color'], photo=info['photo'], price=int(''.join(c for c in info['price'] if c.isdigit())),kms=int(''.join(c for c in info['kms'] if c.isdigit())), phone=info['phone'], location=info['location'], regSpecs=info['regSpecs'], year=info['modelDate'], activeListings=info['activeListings'])
-            car.save()
-
-def add_to_database_dubizzle():
-    DubizzleCar.objects.all().delete()
-    data = json.load(open("dubizzle.json", 'r', encoding='utf-8'))
-    for info in data:
-        if str(info) == "Error" or info == None:
-            print(info)
-            continue
-
-        price = ''
-        try:
-            for c in info['price']:
-                if c == '.':
-                    break
-                price = price + c
-            
-            kms = ''
-            for c in info['kilometers']:
-                if c.isdigit():
-                    kms = kms + c
-            try:
-                kms = int(kms)
-            except:
-                kms = 0
-        except:
-            price = 0
-        
-        if info['photo'] == None:
-            car = DubizzleCar(url=info['url'], make=info['make'], model=info['model'], color=info['color'], photo='no photo', price=int(price),kilometers=kms, posted=info['posted'], active_listings_count=info['active_listings_count'], reg_specs=info['reg_specs'],location=info['location'], year=info['year'])
-            continue
-        car = DubizzleCar(url=info['url'], make=info['make'], model=info['model'], color=info['color'], photo=info['photo'], price=int(price),kilometers=kms, posted=info['posted'], active_listings_count=info['active_listings_count'], reg_specs=info['reg_specs'],location=info['location'], year=info['year'])
-        car.save()
-
-def add_to_database_yallamotor():
-    YallamotorCar.objects.all().delete()
-    cars = []      
-    data = json.load(open("yallamotors.json", 'r', encoding='utf-8'))                                                                                                                    
-    for info in data:                                                                                                    
-        if str(info) == "Error" or info == None:
-            print(info)
-            continue
-        car = YallamotorCar(url=info['url'], brand=info['brand'], model=info['model'], color=info['color'], photo=info['photo'], price=int(info['price']),kms=int(''.join(c for c in info['kms'] if c.isdigit())), contact=info['contact'], location=info['location'], regSpecs=info['regSpecs'], year=info['year'], activeListings=info['activeListings'])
-        cars.append(car)
-        car.save()
 
 class DataBaseManager:
     @transaction.atomic
@@ -73,6 +19,17 @@ class DataBaseManager:
                 if str(info) == "Error" or info == None:
                     print(info)
                     continue
+
+                car_brand = info['brand'].strip()
+                if not Brands.objects.all().filter(name=car_brand).exists():
+                    brand = Brands(name=car_brand)
+                    brand.save()
+                
+                car_spec = info['regSpecs'].replace('Specs', '').strip()
+                if not regSpecs.objects.all().filter(name=car_spec).exists():
+                    spec = regSpecs(name=car_spec)
+                    spec.save()
+
                 car = Car_any(url=info['url'], brand=info['brand'], model=info['model'], color=info['color'], photo=info['photo'], price=int(info['price']), kms=int(''.join(c for c in info['kms'] if c.isdigit())), contact=info['contact'], location=info['location'], regSpecs=info['regSpecs'], year=info['year'], activeListings=info['activeListings'], posted=time(), site="Yallamotor")
                 car.save()
 
@@ -84,9 +41,19 @@ class DataBaseManager:
                 if str(info) == "Error" or info == None:
                     print(info)
                     continue
+
+                car_brand = info['brand'].strip()
+                if not Brands.objects.all().filter(name=car_brand).exists():
+                    brand = Brands(name=car_brand)
+                    brand.save()
+                
+                car_spec = info['regSpecs'].replace('Specs', '').strip()
+                if not regSpecs.objects.all().filter(name=car_spec).exists():
+                    spec = regSpecs(name=car_spec)
+                    spec.save()
+
                 car = Car_any(url=info['url'], brand=info['brand'], model=info['model'], color=info['color'], photo=info['photo'], price=int(''.join(c for c in info['price'] if c.isdigit())),kms=int(''.join(c for c in info['kms'] if c.isdigit())), contact=info['phone'], location=info['location'], regSpecs=info['regSpecs'], year=info['modelDate'], activeListings=info['activeListings'], posted=time(), site="Dubicars")
                 car.save()
-                print("OK")
 
     @transaction.atomic
     def __add_dubizzle():
@@ -118,9 +85,19 @@ class DataBaseManager:
             if info['photo'] == None:
                 car = Car_any(url=info['url'], brand=info['make'], model=info['model'], color=info['color'], photo='no photo', price=int(price), kms=kms, posted=info['posted'], activeListings=info['active_listings_count'], regSpecs=info['reg_specs'],location=info['location'], year=info['year'], contact="", site="Dubizzle")
                 continue
+
+            car_brand = info['make'].strip()
+            if not Brands.objects.all().filter(name=car_brand).exists():
+                brand = Brands(name=car_brand)
+                brand.save()
+            
+            car_spec = info['reg_specs'].replace('Specs', '').strip()
+            if not regSpecs.objects.all().filter(name=car_spec).exists():
+                spec = regSpecs(name=car_spec)
+                spec.save()
+
             car = Car_any(url=info['url'], brand=info['make'], model=info['model'], color=info['color'], photo=info['photo'], price=int(price), kms=kms, posted=info['posted'], activeListings=info['active_listings_count'], regSpecs=info['reg_specs'],location=info['location'], year=info['year'], contact="", site="Dubizzle")
             car.save()
-            print("OK")
 
     __add_methods = {"Yallamotor":__add_yallamor, "Dubicars":__add_dubicars, "Dubizzle":__add_dubizzle}
 

@@ -58,3 +58,9 @@ class Car_any(models.Model):
     activeListings = models.IntegerField(null=True)
     posted = models.CharField(max_length=25, null=True)
     site = models.CharField(max_length=25, null=True)
+
+class Brands(models.Model):
+    name = models.CharField(max_length=25, unique=True)
+
+class regSpecs(models.Model):
+    name = models.CharField(max_length=127, unique=True)
