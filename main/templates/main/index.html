@@ -4,371 +4,16 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
   <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
-  <style>
-   * {
-      box-sizing: border-box;
-      font-family: "Basier circle", -apple-system, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-    }
-
-    body {
-      overflow: hidden;
-    }
-
-    #filters-container {
-      position: absolute;
-      display: block;
-      z-index: 10;
-      height: 20vh;
-      width: 100%;
-    }
-
-    .cl {
-      display: inline-block;
-      overflow-y: scroll;
-      width: 30%;
-      height: 85vh;
-      text-align: center;
-      margin: 1%;
-    }
-
-    .row {
-      margin-left: 4%;
-      margin-right: 1%;
-    }
-
-    .column {
-      width: 100%;
-      float: left;
-      padding: 10px;
-      text-align: center;
-    }
-
-    /* scrollbar */
-    .cl::-webkit-scrollbar {
-      width: 10px;
-    }
-
-    .cl::-webkit-scrollbar-track {
-      border-radius: 8px;
-      background-color: #f5f5f5;
-      border: 1px solid #e0e0e0;
-    }
-
-    .cl::-webkit-scrollbar-thumb {
-      border-radius: 8px;
-      background-color: #717171;
-    }
-
-    .btn_dubicars {
-      float: left;
-      padding: 100px;
-      align-items: center;
-    }
-
-
-
-    /*Names of sites */
-    #names {
-      top: 0;
-      text-align: center;
-      position: sticky;
-      z-index: 9;
-      font-size: 30px;
-      background-color: rgb(237, 241, 248);
-      font-weight: bold;
-    }
-
-    /* Cards */
-    .cardDb:hover,
-    .cardDz:hover,
-    .cardYl:hover {
-      background: rgb(248, 248, 248);
-      transform: scale(1.02);
-      box-shadow: rgb(95, 95, 99) 0px 2px 4px, rgb(255, 255, 255) 0px 7px 13px -3px, rgb(99, 99, 103) 0px -3px 0px inset;
-
-    }
-
-    .cardDb,
-    .cardDz,
-    .cardYl {
-      position: relative;
-      width: 100%;
-      border-width: 0px;
-      border-radius: 8px;
-      border-style: solid;
-      cursor: pointer;
-      transition: all 0.5s;
-      justify-content: center;
-      margin-top: 2%;
-      font-size: 20px;
-      text-align: center;
-      border-radius: 30px;
-      background: #ffffff;
-
-    }
-
-    .img {
-      width: 20px;
-      height: 20px;
-      margin-right: 5px;
-
-    }
-
-    .textcols {
-      white-space: 10px;
-    }
-
-    .textcols-item {
-      white-space: normal;
-      display: inline-block;
-      width: 46%;
-      line-height: 2;
-      vertical-align: top;
-      text-align: left;
-    }
-
-    .textcols .textcols-item:first-child {
-      margin-left: 20px;
-
-    }
-
-    /* Custom button "Load more" */
-    .custom-btn {
-      width: 130px;
-      height: 40px;
-      color: #ffffff;
-      border-radius: 5px;
-      padding: 10px 25px;
-      font-family: 'Lato', sans-serif;
-      font-weight: 500;
-      background: transparent;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      position: relative;
-      display: inline-block;
-      box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, .5),
-        7px 7px 20px 0px rgba(0, 0, 0, .1),
-        4px 4px 5px 0px rgba(0, 0, 0, .1);
-      outline: none;
-    }
-
-    .btn-5 {
-      width: 130px;
-      height: 40px;
-      line-height: 42px;
-      padding: 0;
-      border: none;
-      background: blue;
-      background: linear-gradient(0deg, blue 0%, blue 100%);
-    }
-
-    .btn-5:hover {
-      color: blue;
-      background: transparent;
-      box-shadow: none;
-    }
-
-    .btn-5:before,
-    .btn-5:after {
-      content: '';
-      position: absolute;
-      top: 0;
-      right: 0;
-      height: 2px;
-      width: 0;
-      background: blue;
-      box-shadow:
-        -1px -1px 5px 0px #fff,
-        7px 7px 20px 0px #0003,
-        4px 4px 5px 0px #0002;
-      transition: 400ms ease all;
-    }
-
-    .btn-5:after {
-      right: inherit;
-      top: inherit;
-      left: 0;
-      bottom: 0;
-    }
-
-    .btn-5:hover:before,
-    .btn-5:hover:after {
-      width: 100%;
-      transition: 800ms ease all;
-    }
-
-
-    .filter {
-      width: 80%;
-      box-shadow: none;
-      margin-top: 20px;
-      margin-left: 10%;
-      margin-right: auto;
-      display: flex;
-      letter-spacing: 0;
-      font-family: proxima-nova, ProximaNova, noto, GESS, GE-SS, sans-serif;
-      font-weight: 400;
-      font-size: 1rem;
-      line-height: 1.5;
-      height: 8vh;
-    }
-
-    .spec,
-    .year,
-    .prise,
-    .location,
-    .brand,
-    .mileage,
-    .model {
-      border-right: #8c8c8c 1px solid;
-      border-bottom: #8c8c8c 1px solid;
-      border-top: #434343 1px solid;
-      height: 100%;
-      width: 15%;
-      position: relative;
-      text-align: center;
-      color: #23262A;
-      letter-spacing: 0;
-      font-family: proxima-nova, ProximaNova, noto, GESS, GE-SS, sans-serif;
-      font-weight: 400;
-      box-shadow: rgb(99, 99, 103) 0px -1px 0px inset;
-
-
-    }
-
-    .location {
-      border-top-left-radius: 20px;
-      border-bottom-left-radius: 20px;
-      border-left: #8c8c8c 1px solid;
-
-    }
-
-
-    .spec:hover,
-    .year:hover,
-    .location:hover,
-    .model:hover,
-    .brand:hover,
-    .mileage:hover,
-    .prise:hover {
-      background: rgba(224, 225, 227, 0.525);
-    }
-
-    .inp {
-      border: 1px rgb(236, 236, 236);
-      border-radius: 5px;
-      width: 88%;
-      text-align: left;
-      font-size: 15px;
-    }
-
-    .inp_year,
-    .inp_kms,
-    .inp_price {
-      border: 1px rgb(236, 236, 236);
-      border-radius: 5px;
-      width: 45%;
-      text-align: left;
-    }
-
-    .spisok_year,
-    .spisok_price,
-    .spisok_mil {
-      width: 300px;
-      height: 100px;
-      text-align: center;
-      padding: 10px 5px;
-      margin-left: -40%;
-      position: absolute;
-      z-index: 10;
-      margin-top: 10px;
-      border: #8c8c8c 0.5px solid;
-      background-color: rgb(237, 241, 248);
-      box-shadow: rgb(99, 99, 103) 0px -1px 0px inset;
-      border-radius: 20px;
-    }
-
-    .invisible {
-      display: none;
-    }
-
-    .visible {
-      display: block;
-    }
-
-    .textfilter {
-      font-size: 15px;
-      font-weight: bold;
-      text-align: left;
-      margin-left: 7%;
-      margin-top: 5%;
-    }
-
-    .textfilter_under {
-      font-size: 15px;
-      text-align: left;
-      margin-left: 7%;
-      color: #858484;
-    }
-
-    .textfilter_menu {
-      font-size: 15px;
-      font-weight: bold;
-      text-align: left;
-    }
-
-    ::placeholder {
-      color: #858484;
-      font-size: 15px;
-    }
-
-    .btn {
-      background-color: #fff;
-      border-radius: 5px;
-      box-sizing: border-box;
-      cursor: pointer;
-      display: inline-block;
-      font-family: "Basier circle", -apple-system, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-      font-weight: 600;
-      line-height: 1;
-      text-align: center;
-      text-decoration: none #0d172a solid;
-      transition: all .1s cubic-bezier(.4, 0, .2, 1);
-      user-select: none;
-      -webkit-user-select: none;
-      touch-action: manipulation;
-      height: 100%;
-      border: 0px solid;
-      margin-left: 3%;
-      margin-top: 2%;
-    }
-
-    .btnsub {
-      cursor: pointer;
-      border-top-right-radius: 20px;
-      border-bottom-right-radius: 20px;
-      height: 100%;
-      width: 15%;
-      border: #8c8c8c 1px solid;
-      border-left: none;
-      background-color: rgb(49, 49, 49);
-      color: white;
-      font-family: "Basier circle", -apple-system, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-      font-weight: 600;
-      text-align: center;
-      font-size: 15px;
-      
-    }
-
-    .btnsub:hover{
-      background-color: rgb(73, 73, 73);
-    }
-  </style>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'desktop/styles.css' %}">
 </head>
 
 
 <body style="background-color: rgb(237, 241, 248)">
-  <form class="filter">
+
+  <button class="btn_filter" onclick="showFilter()" style="margin-top: 1vh; margin-left: 2vw;">Filters</button>
+
+  <form class="filter invisible" id="filter">
     <div class="location">
       <div class="textfilter">Location</div>
       {{filter.location}}
@@ -391,7 +36,7 @@
         <div class="textfilter_under">Select </div>
       </div>
 
-      <div class="spisok_mil invisible" id="spisok_mil123">
+      <div class="spisok_mil invisibleFil" id="spisok_mil123">
         <div style="display: flex;">
           <div style="margin-left: 3%; " class="textfilter_menu">From</div>
           <div style="margin-left: 36%;" class="textfilter_menu">To</div>
@@ -400,8 +45,8 @@
         <div style="text-align: left; height: 40%;">
           <button class="btn"
             style="margin-left: 3%; background-color: black; color: white; width: 30%;">Submit</button>
-            <script>
-            </script>
+          <script>
+          </script>
         </div>
       </div>
     </div>
@@ -412,7 +57,7 @@
         <div class="textfilter_under">Select </div>
       </div>
 
-      <div class="spisok_price invisible" id="spisok_price123">
+      <div class="spisok_price invisibleFil" id="spisok_price123">
         <div style="display: flex;">
           <div style="margin-left: 3%; " class="textfilter_menu">From</div>
           <div style="margin-left: 36%;" class="textfilter_menu">To</div>
@@ -423,7 +68,7 @@
             style="margin-left: 3%; background-color: black; color: white; width: 30%;">Submit</button>
         </div>
       </div>
-      <!-- <button class="btn" type="submit" >Submit</button> -->
+
     </div>
 
     <div class="year">
@@ -432,7 +77,7 @@
         <div class="textfilter_under">Select </div>
       </div>
 
-      <div class="spisok_year invisible" id="spisok_year123">
+      <div class="spisok_year invisibleFil" id="spisok_year123">
         <div style="display: flex;">
           <div style="margin-left: 3%;" class="textfilter_menu">From</div>
           <div style="margin-left: 36%;" class="textfilter_menu">To</div>
@@ -443,69 +88,39 @@
             style="margin-left: 3%; background-color: black; color: white; width: 30%;">Submit</button>
         </div>
       </div>
-      <!-- <button class="btn" type="submit" >Submit</button> -->
+
     </div>
     <button class="btnsub">Submit</button>
   </form>
-  <!-- <button onclick="Clear()">aaaaaaa</button> -->
 
-
-  <!-- </div> -->
 
   <div class="row">
     <div class="cl" id="db">
       <div id="names">Dubicars</div>
       <div class="column" id="dubicars">
         {%for car in dubicarsFilterQs%}
-
         <div class="cardDb">
-          <div style="font-size: 20px; margin: 1%; width: 40%; ">
-            <b style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif">
-              <a href={{car.url}}>{{car.brand}} {{car.model}}</a></b>
-          </div>
-          <div style=" display: flex;">
-            <div style="width: 50%; margin: 1%;text-align: left; ">
+
+          <div style=" display: flex; text-align: left;">
+            <div style="margin-left: 1%;">
               <img src={{car.photo}} class="card-img-top"
-                style="width: 180px; height: 180px; border-radius: 30px; object-fit: cover; object-position: center;">
+                style="width: 15vh; height: 15vh; object-fit: cover; object-position: center; margin-top: 5px;">
             </div>
-
-            <div style="width: 60%;">
-
-              <div style="margin-top: 10%;">
-                <div style="display: flex;">
-                  <div style="text-align: left;  width: 40%;">
-                    <img src="/media/calendar.png" class="img"><b>{{car.year}}</b>
-                  </div>
-                  <div style="text-align: right; width: 60%; margin-right: 10%;">
-                    <img src="/media/dashboard.png" class="img"><b>{{car.kms}} km</b>
-                  </div>
-                </div>
+            <div style="margin-left: 2vh;">
+              <div style="font-size: 2vh; width: 100%; height: 20%; margin-bottom: 2%;">
+                <b style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; text-align: center;">
+                  <a href={{car.url}}>{{car.brand}} {{car.model}}</a></b>
               </div>
 
-              <div style="margin-top: 10%;">
-                <div style="display: flex;">
-                  <div style="text-align: left;  width: 40%;">
-                    <img src="/media/location.png" class="img"><b>{{car.location}}</b>
-                  </div>
-                  <div style="text-align: right; width: 60%; margin-right: 10%;">
-                    <img src="/media/wallet.png" class="img"><b>{{car.price}} AED</b>
-                  </div>
-                </div>
+              <div>
+                <b>AED {{car.price}}</b>
               </div>
-
-              <div style="margin-top: 10%; margin-bottom: 2%;">
-                <div style="display: flex;">
-                  <div style="text-align: left;  width: 60%;">
-                    <img src="/media/earth.png" class="img"><b>{{car.regSpecs}}</b>
-                  </div>
-                  <div style="text-align: right; width: 40%; margin-right: 10%; ">
-                    <img src="/media/clipboard.png" class="img"><b>{{car.activeListings}}</b>
-                  </div>
-                </div>
+              <div style="font-size: 2vh; margin-top: 2%; color: rgb(90, 90, 90);">
+                {{car.year}}, {{car.location}}, {{car.regSpecs}}, {{car.kms}} km, ({{car.activeListings}}) {{car.contact}}
               </div>
-
             </div>
           </div>
+
         </div>
 
         {%endfor%}
@@ -519,59 +134,29 @@
       <div id="names">Dubizzle</div>
       <div class="column" id="dubizzle">
         {%for car in dubizzleFilterQs%}
-
         <div class="cardDz">
-          <div style="font-size: 20px; margin: 1%; width: 40%; ">
-            <b style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif">
-              <a href={{car.url}}>{{car.brand}} {{car.model}}</a></b>
-          </div>
-          <div style=" display: flex;">
-            <div style="width: 50%; margin: 1%;text-align: left; ">
+
+          <div style=" display: flex; text-align: left;">
+            <div style="margin-left: 1%;">
               <img src={{car.photo}} class="card-img-top"
-                style="width: 180px; height: 180px; border-radius: 30px; object-fit: cover; object-position: center;">
+                style="width: 15vh; height: 15vh; object-fit: cover; object-position: center; margin-top: 5px;">
             </div>
-
-            <div style="width: 60%;">
-
-              <div style="margin-top: 10%;">
-                <div style="display: flex;">
-                  <div style="text-align: left;  width: 40%;">
-                    <img src="/media/calendar.png" class="img"><b>{{car.year}}</b>
-                  </div>
-                  <div style="text-align: right; width: 60%; margin-right: 10%;">
-                    <img src="/media/dashboard.png" class="img"><b>{{car.kms}} km</b>
-                  </div>
-                </div>
+            <div style="margin-left: 2vh;">
+              <div style="font-size: 2vh; width: 100%; height: 20%; margin-bottom: 2%;">
+                <b style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; text-align: center;">
+                  <a href={{car.url}}>{{car.brand}} {{car.model}}</a></b>
               </div>
 
-              <div style="margin-top: 10%;">
-                <div style="display: flex;">
-                  <div style="text-align: left;  width: 40%;">
-                    <img src="/media/location.png" class="img"><b>{{car.location}}</b>
-                  </div>
-                  <div style="text-align: right; width: 60%; margin-right: 10%;">
-                    <img src="/media/wallet.png" class="img"><b>{{car.price}} AED</b>
-                  </div>
-                </div>
+              <div>
+                <b>AED {{car.price}}</b>
               </div>
-
-              <div style="margin-top: 10%; margin-bottom: 2%;">
-                <div style="display: flex;">
-                  <div style="text-align: left;  width: 60%;">
-                    <img src="/media/earth.png" class="img"><b>{{car.regSpecs}}</b>
-                  </div>
-                  <div style="text-align: right; width: 40%; margin-right: 10%; ">
-                    <img src="/media/clipboard.png" class="img"><b>{{car.activeListings}}</b>
-                  </div>
-                </div>
+              <div style="font-size: 2vh; margin-top: 2%; color: rgb(90, 90, 90);">
+                {{car.year}}, {{car.location}}, {{car.regSpecs}}, {{car.kms}} km, ({{car.activeListings}}) {{car.posted}}
               </div>
-
             </div>
           </div>
+
         </div>
-
-
-
         {%endfor%}
       </div>
       <div>
@@ -584,53 +169,27 @@
       <div class="column" id="yallamotor">
         {%for car in yallamotorFilterQs%}
         <div class="cardYl">
-          <div style="font-size: 20px; margin: 1%; width: 40%; ">
-            <b style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif">
-              <a href={{car.url}}>{{car.brand}} {{car.model}}</a></b>
-          </div>
-          <div style=" display: flex;">
-            <div style="width: 50%; margin: 1%;text-align: left; ">
+
+          <div style=" display: flex; text-align: left;">
+            <div style="margin-left: 1%;">
               <img src={{car.photo}} class="card-img-top"
-                style="width: 180px; height: 180px; border-radius: 30px; object-fit: cover; object-position: center;">
+                style="width: 15vh; height: 15vh; object-fit: cover; object-position: center; margin-top: 5px;">
             </div>
-
-            <div style="width: 60%;">
-
-              <div style="margin-top: 10%;">
-                <div style="display: flex;">
-                  <div style="text-align: left;  width: 40%;">
-                    <img src="/media/calendar.png" class="img"><b>{{car.year}}</b>
-                  </div>
-                  <div style="text-align: right; width: 60%; margin-right: 10%;">
-                    <img src="/media/dashboard.png" class="img"><b>{{car.kms}} km</b>
-                  </div>
-                </div>
+            <div style="margin-left: 2vh;">
+              <div style="font-size: 2vh; width: 100%; height: 20%; margin-bottom: 2%;">
+                <b style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; text-align: center;">
+                  <a href={{car.url}}>{{car.brand}} {{car.model}}</a></b>
               </div>
 
-              <div style="margin-top: 10%;">
-                <div style="display: flex;">
-                  <div style="text-align: left;  width: 40%;">
-                    <img src="/media/location.png" class="img"><b>{{car.location}}</b>
-                  </div>
-                  <div style="text-align: right; width: 60%; margin-right: 10%;">
-                    <img src="/media/wallet.png" class="img"><b>{{car.price}} AED</b>
-                  </div>
-                </div>
+              <div>
+                <b>AED {{car.price}}</b>
               </div>
-
-              <div style="margin-top: 10%; margin-bottom: 2%;">
-                <div style="display: flex;">
-                  <div style="text-align: left;  width: 60%;">
-                    <img src="/media/earth.png" class="img"><b>{{car.regSpecs}}</b>
-                  </div>
-                  <div style="text-align: right; width: 40%; margin-right: 10%; ">
-                    <img src="/media/clipboard.png" class="img"><b>{{car.activeListings}}</b>
-                  </div>
-                </div>
+              <div style="font-size: 2vh; margin-top: 2%; color: rgb(90, 90, 90);">
+                {{car.year}}, {{car.location}}, {{car.regSpecs}}, {{car.kms}} km, ({{car.activeListings}}) tel:{{car.contact}}
               </div>
-
             </div>
           </div>
+
         </div>
         {%endfor%}
       </div>
@@ -667,54 +226,28 @@
 
           data.map(car => {
             container.innerHTML += `<div class="cardDb">
-          <div style="font-size: 20px; margin: 1%; width: 40%; ">
-            <b style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif">
-              <a href=${car.url}>${car.brand} ${car.model}</a></b>
-          </div>
-          <div style=" display: flex;">
-            <div style="width: 50%; margin: 1%;text-align: left; ">
-              <img src=${car.photo} class="card-img-top"
-                style="width: 180px; height: 180px; border-radius: 30px; object-fit: cover; object-position: center;">
-            </div>
 
-            <div style="width: 60%;">
-
-              <div style="margin-top: 10%;">
-                <div style="display: flex;">
-                  <div style="text-align: left;  width: 40%;">
-                    <img src="/media/calendar.png" class="img"><b>${car.year}</b>
+              <div style=" display: flex; text-align: left;">
+                <div style="margin-left: 1%;">
+                  <img src=${car.photo} class="card-img-top"
+                    style="width: 15vh; height: 15vh; object-fit: cover; object-position: center; margin-top: 5px;">
+                </div>
+                <div style="margin-left: 2vh;">
+                  <div style="font-size: 2vh; width: 100%; height: 20%; margin-bottom: 2%;">
+                    <b style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; text-align: center;">
+                      <a href=${car.url}>${car.brand} ${car.model}</a></b>
                   </div>
-                  <div style="text-align: right; width: 60%; margin-right: 10%;">
-                    <img src="/media/dashboard.png" class="img"><b>${car.kms} km</b>
+
+                  <div>
+                    <b>AED ${car.price}</b>
+                  </div>
+                  <div style="font-size: 2vh; margin-top: 2%; color: rgb(90, 90, 90);">
+                    ${car.year}, ${car.location}, ${car.regSpecs}, ${car.kms} km, (${car.activeListings}) ${car.contact}
                   </div>
                 </div>
               </div>
 
-              <div style="margin-top: 10%;">
-                <div style="display: flex;">
-                  <div style="text-align: left;  width: 40%;">
-                    <img src="/media/location.png" class="img"><b>${car.location}</b>
-                  </div>
-                  <div style="text-align: right; width: 60%; margin-right: 10%;">
-                    <img src="/media/wallet.png" class="img"><b>${car.price} AED</b>
-                  </div>
-                </div>
-              </div>
-
-              <div style="margin-top: 10%; margin-bottom: 2%;">
-                <div style="display: flex;">
-                  <div style="text-align: left;  width: 60%;">
-                    <img src="/media/earth.png" class="img"><b>${car.regSpecs}</b>
-                  </div>
-                  <div style="text-align: right; width: 40%; margin-right: 10%; ">
-                    <img src="/media/clipboard.png" class="img"><b>${car.activeListings}</b>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-          </div>
-        </div>`
+              </div>`
           })
         },
         error: function (err) {
@@ -741,54 +274,27 @@
 
           data.map(car => {
             container.innerHTML += `<div class="cardDz">
-          <div style="font-size: 20px; margin: 1%; width: 40%; ">
-            <b style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif">
-              <a href=${car.url}>${car.brand} ${car.model}</a></b>
-          </div>
-          <div style=" display: flex;">
-            <div style="width: 50%; margin: 1%;text-align: left; ">
-              <img src=${car.photo} class="card-img-top"
-                style="width: 180px; height: 180px; border-radius: 30px; object-fit: cover; object-position: center;">
-            </div>
-
-            <div style="width: 60%;">
-
-              <div style="margin-top: 10%;">
-                <div style="display: flex;">
-                  <div style="text-align: left;  width: 40%;">
-                    <img src="/media/calendar.png" class="img"><b>${car.year}</b>
+              <div style=" display: flex; text-align: left;">
+                <div style="margin-left: 1%;">
+                  <img src=${car.photo} class="card-img-top"
+                    style="width: 15vh; height: 15vh; object-fit: cover; object-position: center; margin-top: 5px;">
+                </div>
+                <div style="margin-left: 2vh;">
+                  <div style="font-size: 2vh; width: 100%; height: 20%; margin-bottom: 2%;">
+                    <b style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; text-align: center;">
+                      <a href=${car.url}>${car.brand} ${car.model}</a></b>
                   </div>
-                  <div style="text-align: right; width: 60%; margin-right: 10%;">
-                    <img src="/media/dashboard.png" class="img"><b>${car.kms} km</b>
+
+                  <div>
+                    <b>AED ${car.price}</b>
+                  </div>
+                  <div style="font-size: 2vh; margin-top: 2%; color: rgb(90, 90, 90);">
+                    ${car.year}, ${car.location}, ${car.regSpecs}, ${car.kms} km, (${car.activeListings}) ${car.posted}
                   </div>
                 </div>
               </div>
 
-              <div style="margin-top: 10%;">
-                <div style="display: flex;">
-                  <div style="text-align: left;  width: 40%;">
-                    <img src="/media/location.png" class="img"><b>${car.location}</b>
-                  </div>
-                  <div style="text-align: right; width: 60%; margin-right: 10%;">
-                    <img src="/media/wallet.png" class="img"><b>${car.price} AED</b>
-                  </div>
-                </div>
-              </div>
-
-              <div style="margin-top: 10%; margin-bottom: 2%;">
-                <div style="display: flex;">
-                  <div style="text-align: left;  width: 60%;">
-                    <img src="/media/earth.png" class="img"><b>${car.regSpecs}</b>
-                  </div>
-                  <div style="text-align: right; width: 40%; margin-right: 10%; ">
-                    <img src="/media/clipboard.png" class="img"><b>${car.activeListings}</b>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-          </div>
-        </div>`
+              </div>`
           })
         },
         error: function (err) {
@@ -816,54 +322,28 @@
 
           data.map(car => {
             container.innerHTML += `<div class="cardYl">
-          <div style="font-size: 20px; margin: 1%; width: 40%; ">
-            <b style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif">
-              <a href=${car.url}>${car.brand} ${car.model}</a></b>
-          </div>
-          <div style=" display: flex;">
-            <div style="width: 50%; margin: 1%;text-align: left; ">
-              <img src=${car.photo} class="card-img-top"
-                style="width: 180px; height: 180px; border-radius: 30px; object-fit: cover; object-position: center;">
-            </div>
 
-            <div style="width: 60%;">
-
-              <div style="margin-top: 10%;">
-                <div style="display: flex;">
-                  <div style="text-align: left;  width: 40%;">
-                    <img src="/media/calendar.png" class="img"><b>${car.year}</b>
+              <div style=" display: flex; text-align: left;">
+                <div style="margin-left: 1%;">
+                  <img src=${car.photo} class="card-img-top"
+                    style="width: 15vh; height: 15vh; object-fit: cover; object-position: center; margin-top: 5px;">
+                </div>
+                <div style="margin-left: 2vh;">
+                  <div style="font-size: 2vh; width: 100%; height: 20%; margin-bottom: 2%;">
+                    <b style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; text-align: center;">
+                      <a href=${car.url}>${car.brand} ${car.model}</a></b>
                   </div>
-                  <div style="text-align: right; width: 60%; margin-right: 10%;">
-                    <img src="/media/dashboard.png" class="img"><b>${car.kms} km</b>
+
+                  <div>
+                    <b>AED ${car.price}</b>
+                  </div>
+                  <div style="font-size: 2vh; margin-top: 2%; color: rgb(90, 90, 90);">
+                    ${car.year}, ${car.location}, ${car.regSpecs}, ${car.kms} km, (${car.activeListings}) ${car.contact}
                   </div>
                 </div>
               </div>
 
-              <div style="margin-top: 10%;">
-                <div style="display: flex;">
-                  <div style="text-align: left;  width: 40%;">
-                    <img src="/media/location.png" class="img"><b>${car.location}</b>
-                  </div>
-                  <div style="text-align: right; width: 60%; margin-right: 10%;">
-                    <img src="/media/wallet.png" class="img"><b>${car.price} AED</b>
-                  </div>
-                </div>
-              </div>
-
-              <div style="margin-top: 10%; margin-bottom: 2%;">
-                <div style="display: flex;">
-                  <div style="text-align: left;  width: 60%;">
-                    <img src="/media/earth.png" class="img"><b>${car.regSpecs}</b>
-                  </div>
-                  <div style="text-align: right; width: 40%; margin-right: 10%; ">
-                    <img src="/media/clipboard.png" class="img"><b>${car.activeListings}</b>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-          </div>
-        </div>`
+              </div>`
           })
         },
         error: function (err) {
@@ -872,19 +352,47 @@
       });
     }
 
+    function showFilter() {
+      const filter = document.getElementById('filter');
+      const db = document.getElementById('db');
+      const dz = document.getElementById('dz');
+      const yl = document.getElementById('yl');
+
+      if (filter.classList == "filter visible") {
+        filter.classList = "filter invisible";
+        db.style.height = '97vh';
+        db.style.margin = '1%';
+
+        dz.style.height = '97vh';
+        dz.style.margin = '1%';
+
+        yl.style.height = '97vh';
+        yl.style.margin = '1%';
+
+      } else {
+        filter.classList = "filter visible";
+        db.style.height = '88vh';
+        db.style.marginTop = '9vh';
+
+        dz.style.height = '88vh';
+        dz.style.marginTop = '9vh';
+
+        yl.style.height = '88vh';
+        yl.style.marginTop = '9vh';
+
+      }
+    }
+
     function showFilterMil() {
       const milliageDiv = document.getElementById('spisok_mil123');
       const priceDiv = document.getElementById('spisok_price123');
       const yearDiv = document.getElementById('spisok_year123');
-      if (milliageDiv.classList == "spisok_mil visible") 
-      {
-        milliageDiv.classList = "spisok_mil invisible";
-      } 
-      else 
-      {
-        milliageDiv.classList = "spisok_mil visible";
-        priceDiv.classList = "spisok_price invisible";
-        yearDiv.classList = "spisok_year invisible";
+      if (milliageDiv.classList == "spisok_mil visibleFil") {
+        milliageDiv.classList = "spisok_mil invisibleFil";
+      } else {
+        milliageDiv.classList = "spisok_mil visibleFil";
+        priceDiv.classList = "spisok_price invisibleFil";
+        yearDiv.classList = "spisok_year invisibleFil";
       }
     }
 
@@ -892,15 +400,12 @@
       const priceDiv = document.getElementById('spisok_price123');
       const milliageDiv = document.getElementById('spisok_mil123');
       const yearDiv = document.getElementById('spisok_year123');
-      if (priceDiv.classList == "spisok_price visible") 
-      {
-        priceDiv.classList = "spisok_price invisible";
-      } 
-      else 
-      {
-        priceDiv.classList = "spisok_price visible";
-        milliageDiv.classList = "spisok_mil invisible";
-        yearDiv.classList = "spisok_year invisible";
+      if (priceDiv.classList == "spisok_price visibleFil") {
+        priceDiv.classList = "spisok_price invisibleFil";
+      } else {
+        priceDiv.classList = "spisok_price visibleFil";
+        milliageDiv.classList = "spisok_mil invisibleFil";
+        yearDiv.classList = "spisok_year invisibleFil";
       }
     }
 
@@ -908,15 +413,12 @@
       const priceDiv = document.getElementById('spisok_price123');
       const milliageDiv = document.getElementById('spisok_mil123');
       const yearDiv = document.getElementById('spisok_year123');
-      if (yearDiv.classList == "spisok_year visible") 
-      {
-        yearDiv.classList = "spisok_year invisible";
-      } 
-      else 
-      {
-        yearDiv.classList = "spisok_year visible";
-        priceDiv.classList = "spisok_price invisible";
-        milliageDiv.classList = "spisok_mil invisible";
+      if (yearDiv.classList == "spisok_year visibleFil") {
+        yearDiv.classList = "spisok_year invisibleFil";
+      } else {
+        yearDiv.classList = "spisok_year visibleFil";
+        priceDiv.classList = "spisok_price invisibleFil";
+        milliageDiv.classList = "spisok_mil invisibleFil";
       }
     }
 

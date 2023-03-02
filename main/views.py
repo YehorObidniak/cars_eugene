@@ -1,14 +1,10 @@
 from django.shortcuts import render
 from django.http import JsonResponse
-from main.models import DubicarsCar, DubizzleCar, YallamotorCar, Car_any
+from main.models import Car_any
 from .filters import CarFilter
 
 # Create your views here.
 def index(request):
-    # dubicarsFilter = DubicarsCarFilter(request.GET, queryset=DubicarsCar.objects.all(), prefix='dubicars')
-    # dubizzleFilter = DubizzleCarFilter(request.GET, queryset=DubizzleCar.objects.all(), prefix='dubizzle')
-    # yallamotorFilter = YallamotorCarFilter(request.GET, queryset=YallamotorCar.objects.all(), prefix='yallamotor')
-
     carFilter = CarFilter(request.GET, queryset=Car_any.objects.all())
 
     context = {

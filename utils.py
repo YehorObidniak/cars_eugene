@@ -26,11 +26,11 @@ class DataBaseManager:
                     brand.save()
                 
                 car_spec = info['regSpecs'].replace('Specs', '').strip()
-                if not regSpecs.objects.all().filter(name=car_spec).exists():
+                if not regSpecs.objects.all().filter(name=car_spec).exists() and car_spec != 'Yes' and car_spec != 'Does not apply':
                     spec = regSpecs(name=car_spec)
                     spec.save()
 
-                car = Car_any(url=info['url'], brand=info['brand'], model=info['model'], color=info['color'], photo=info['photo'], price=int(info['price']), kms=int(''.join(c for c in info['kms'] if c.isdigit())), contact=info['contact'], location=info['location'], regSpecs=info['regSpecs'], year=info['year'], activeListings=info['activeListings'], posted=time(), site="Yallamotor")
+                car = Car_any(url=info['url'], brand=info['brand'], model=info['model'], color=info['color'], photo=info['photo'], price=int(info['price']), kms=int(''.join(c for c in info['kms'] if c.isdigit())), contact=info['contact'], location=info['location'], regSpecs=car_spec, year=info['year'], posted=time(), site="Yallamotor", activeListings=info['activeListings'])
                 car.save()
 
     @transaction.atomic
@@ -48,11 +48,11 @@ class DataBaseManager:
                     brand.save()
                 
                 car_spec = info['regSpecs'].replace('Specs', '').strip()
-                if not regSpecs.objects.all().filter(name=car_spec).exists():
+                if not regSpecs.objects.all().filter(name=car_spec).exists() and car_spec != 'Yes' and car_spec != 'Does not apply':
                     spec = regSpecs(name=car_spec)
                     spec.save()
 
-                car = Car_any(url=info['url'], brand=info['brand'], model=info['model'], color=info['color'], photo=info['photo'], price=int(''.join(c for c in info['price'] if c.isdigit())),kms=int(''.join(c for c in info['kms'] if c.isdigit())), contact=info['phone'], location=info['location'], regSpecs=info['regSpecs'], year=info['modelDate'], activeListings=info['activeListings'], posted=time(), site="Dubicars")
+                car = Car_any(url=info['url'], brand=info['brand'], model=info['model'], color=info['color'], photo=info['photo'], price=int(''.join(c for c in info['price'] if c.isdigit())),kms=int(''.join(c for c in info['kms'] if c.isdigit())), contact=info['phone'], location=info['location'], regSpecs=car_spec, year=info['modelDate'], activeListings=info['activeListings'], posted=time(), site="Dubicars")
                 car.save()
 
     @transaction.atomic
@@ -83,7 +83,7 @@ class DataBaseManager:
                 price = 0
             
             if info['photo'] == None:
-                car = Car_any(url=info['url'], brand=info['make'], model=info['model'], color=info['color'], photo='no photo', price=int(price), kms=kms, posted=info['posted'], activeListings=info['active_listings_count'], regSpecs=info['reg_specs'],location=info['location'], year=info['year'], contact="", site="Dubizzle")
+                car = Car_any(url=info['url'], brand=info['make'], model=info['model'], color=info['color'], photo='no photo', price=int(price), kms=kms, posted=info['posted'], activeListings=info['active_listings_count'], regSpecs=car_spec,location=info['location'], year=info['year'], contact="", site="Dubizzle")
                 continue
 
             car_brand = info['make'].strip()
@@ -92,26 +92,28 @@ class DataBaseManager:
                 brand.save()
             
             car_spec = info['reg_specs'].replace('Specs', '').strip()
-            if not regSpecs.objects.all().filter(name=car_spec).exists():
+            if not regSpecs.objects.all().filter(name=car_spec).exists() and car_spec != 'Yes' and car_spec != 'Does not apply':
                 spec = regSpecs(name=car_spec)
                 spec.save()
 
-            car = Car_any(url=info['url'], brand=info['make'], model=info['model'], color=info['color'], photo=info['photo'], price=int(price), kms=kms, posted=info['posted'], activeListings=info['active_listings_count'], regSpecs=info['reg_specs'],location=info['location'], year=info['year'], contact="", site="Dubizzle")
+            car = Car_any(url=info['url'], brand=info['make'], model=info['model'], color=info['color'], photo=info['photo'], price=int(price), kms=kms, posted=info['posted'], activeListings=info['active_listings_count'], regSpecs=car_spec,location=info['location'], year=info['year'], contact="", site="Dubizzle")
             car.save()
 
     __add_methods = {"Yallamotor":__add_yallamor, "Dubicars":__add_dubicars, "Dubizzle":__add_dubizzle}
 
-    def add_car(self, site:str):
+    def add_one_car(self, site:str):
         try:
             self.__add_methods[site]()
         except Exception as e:
             raise e
             print("incorrect site name")
 
-# add_to_database_dubizzle()
-# add_to_database_yallamotor()
-# add_to_database_dubicars()
+    def add_cars(self):
+        Brands.objects.all().delete()
+        regSpecs.objects.all().delete()
+        self.__add_methods["Dubicars"]()
+        self.__add_methods["Yallamotor"]()
+        self.__add_methods["Dubizzle"]()
+            
 db_manager = DataBaseManager()
-# db_manager.add_car("Dubicars")
-# db_manager.add_car("Yallamotor")
-# db_manager.add_car("Dubizzle")
+db_manager.add_cars()
