@@ -14,13 +14,43 @@ def index(request):
         'yallamotorFilterQs':carFilter.qs.filter(site="Yallamotor")[0:50],
     }
 
-    return render(request, 'main/index.html', context)
+    return render(request, 'main/desktop/index.html', context)
+
+def dubicars(request):
+    carFilter = CarFilter(request.GET, queryset=Car_any.objects.filter(site="Dubicars").all())
+
+    context = {
+        'filter':carFilter.form,
+        'dubicarsFilterQs':carFilter.qs[0:50],
+    }
+
+    return render(request, 'main/mobile/dubicars.html', context)
+
+def dubizzle(request):
+    carFilter = CarFilter(request.GET, queryset=Car_any.objects.filter(site="Dubizzle").all())
+
+    context = {
+        'filter':carFilter.form,
+        'dubizzleFilterQs':carFilter.qs[0:50],
+    }
+
+    return render(request, 'main/mobile/dubizzle.html', context)
+
+def yallamotor(request):
+    carFilter = CarFilter(request.GET, queryset=Car_any.objects.filter(site="Yallamotor").all())
+
+    context = {
+        'filter':carFilter.form,
+        'yallamotorFilterQs':carFilter.qs[0:50],
+    }
+
+    return render(request, 'main/mobile/yallamotor.html', context)
 
 def load_more_dubicars(request):
-    total_item = int(request.GET.get('total_item'))
+    # total_item = int(request.GET.get('total_item'))
     limit = 30
     carFilter = CarFilter(request.GET, queryset=Car_any.objects.all())
-    post_obj = list(carFilter.qs.values().filter(site="Dubicars")[total_item:total_item+limit])
+    post_obj = list(carFilter.qs.values().filter(site="Dubicars")[50:50+limit])
     data = {
         'dubicars':post_obj
     }

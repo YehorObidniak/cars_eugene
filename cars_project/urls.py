@@ -17,15 +17,17 @@ from django.contrib import admin
 from django.urls import path
 from . import settings
 from django.conf.urls.static import static
-from main.views import index, load_more_dubicars, load_more_dubizzle, load_more_yallamotor
+from main.views import index, load_more_dubicars, load_more_dubizzle, load_more_yallamotor, dubicars, dubizzle, yallamotor
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index, name='index'),
+    path('dubicars/', dubicars, name='dubicars'),
+    path('dubizzle/', dubizzle, name='dubizzle'),
+    path('yallamotor/', yallamotor, name='yallamotor'),
     path('load_dubicars/', load_more_dubicars, name='load_dubicars'),
     path('load_dubizzle/', load_more_dubizzle, name='load_dubizzle'),
     path('load_yallamotor/', load_more_yallamotor, name='load_yallamotor'),
-    # path('index/', index, name='index')
 ]
 
 if settings.DEBUG:
