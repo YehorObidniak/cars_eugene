@@ -19,6 +19,7 @@ class CarFilter(django_filters.FilterSet):
         fields = ({'price', 'brand', 'model', 'kms', 'location', 'regSpecs'})
 
     def filter_exclude_spec(self, queryset, name, value):
+        # print(value)
         if value != 'GCC':
             return queryset.filter(Q(regSpecs__contains=value) | Q(regSpecs__contains='import'))
         return queryset.filter(regSpecs__contains='GCC')

@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+  <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+  {% load static %}
+  <style>
+  @media screen and (min-width: 900px){
+        * {
+        box-sizing: border-box;
+        font-family: "Basier circle", -apple-system, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+      }
+
+      body {
+        overflow: hidden;
+      }
+
+      #filters-container {
+        position: absolute;
+        display: block;
+        z-index: 10;
+        height: 20vh;
+        width: 100%;
+      }
+
+      .cl {
+        display: inline-block;
+        overflow-y: scroll;
+        width: 30%;
+        height: 97vh;
+        text-align: center;
+        margin: 1%;
+      }
+
+      .row {
+        margin-left: 4%;
+        margin-right: 1%;
+      }
+      
+      .new-column,
+      .column {
+        width: 100%;
+        float: left;
+        padding: 10px;
+        text-align: center;
+      }
+
+      /* scrollbar */
+      .cl::-webkit-scrollbar {
+        width: 0px;
+      }
+
+      .cl::-webkit-scrollbar-track {
+        border-radius: 8px;
+        background-color: #f5f5f5;
+        border: 1px solid #e0e0e0;
+      }
+
+      .cl::-webkit-scrollbar-thumb {
+        border-radius: 8px;
+        background-color: #717171;
+      }
+
+      .btn_dubicars {
+        float: left;
+        padding: 100px;
+        align-items: center;
+      }
+
+
+
+      /*Names of sites */
+      #names {
+        top: 0;
+        text-align: center;
+        position: sticky;
+        z-index: 9;
+        font-size: 30px;
+        background-color: rgb(237, 241, 248);
+        font-weight: bold;
+      }
+
+      /* Cards */
+      .cardDz_new:hover,
+      .cardDb_new:hover,
+      .cardYl_new:hover,
+      .cardDb:hover,
+      .cardDz:hover,
+      .cardYl:hover {
+        background: rgb(248, 248, 248);
+        transform: scale(1.02);
+        box-shadow: rgb(95, 95, 99) 0px 2px 4px, rgb(255, 255, 255) 0px 7px 13px -3px, rgb(99, 99, 103) 0px -3px 0px inset;
+
+      }
+
+      .cardDz_new,
+      .cardDb_new,
+      .cardYl_new,
+      .cardDb,
+      .cardDz,
+      .cardYl {
+        position: relative;
+        width: 100%;
+        border-width: 0px;
+        /* border-radius: 8px; */
+        border-style: solid;
+        cursor: pointer;
+        transition: all 0.5s;
+        justify-content: center;
+        margin-top: 2%;
+        font-size: 2.3vh;
+        text-align: center;
+        /* border-radius: 30px; */
+        background: #ffffff;
+      }
+
+      .img {
+        width: 2vh;
+        height: 2vh;
+        margin-right: 5px;
+
+      }
+
+      /* Custom button "Load more" */
+      .custom-btn {
+        width: 130px;
+        height: 40px;
+        color: #ffffff;
+        border-radius: 5px;
+        padding: 10px 25px;
+        font-family: 'Lato', sans-serif;
+        font-weight: 500;
+        background: transparent;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+        display: inline-block;
+        box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, .5),
+          7px 7px 20px 0px rgba(0, 0, 0, .1),
+          4px 4px 5px 0px rgba(0, 0, 0, .1);
+        outline: none;
+      }
+
+      .btn-5 {
+        width: 130px;
+        height: 40px;
+        line-height: 42px;
+        padding: 0;
+        border: none;
+        background: blue;
+        background: linear-gradient(0deg, blue 0%, blue 100%);
+      }
+
+      .btn-5:hover {
+        color: blue;
+        background: transparent;
+        box-shadow: none;
+      }
+
+      .btn-5:before,
+      .btn-5:after {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        height: 2px;
+        width: 0;
+        background: blue;
+        box-shadow:
+          -1px -1px 5px 0px #fff,
+          7px 7px 20px 0px #0003,
+          4px 4px 5px 0px #0002;
+        transition: 400ms ease all;
+      }
+
+      .btn-5:after {
+        right: inherit;
+        top: inherit;
+        left: 0;
+        bottom: 0;
+      }
+
+      .btn-5:hover:before,
+      .btn-5:hover:after {
+        width: 100%;
+        transition: 800ms ease all;
+      }
+
+
+      .filter {
+        width: 80%;
+        box-shadow: none;
+        margin-left: 10%;
+        margin-right: auto;
+        display: flex;
+        letter-spacing: 0;
+        font-family: proxima-nova, ProximaNova, noto, GESS, GE-SS, sans-serif;
+        font-weight: 400;
+        font-size: 1rem;
+        line-height: 1.5;
+        height: 8vh;
+        position: absolute;
+        z-index: 11;
+      }
+
+      .spec,
+      .year,
+      .prise,
+      .location,
+      .brand,
+      .mileage,
+      .model {
+        border-right: #8c8c8c 1px solid;
+        border-bottom: #8c8c8c 1px solid;
+        border-top: #434343 1px solid;
+        height: 100%;
+        width: 15%;
+        position: relative;
+        text-align: center;
+        color: #23262A;
+        letter-spacing: 0;
+        font-family: proxima-nova, ProximaNova, noto, GESS, GE-SS, sans-serif;
+        font-weight: 400;
+        box-shadow: rgb(99, 99, 103) 0px -1px 0px inset;
+
+
+      }
+
+      .location {
+        border-top-left-radius: 20px;
+        border-bottom-left-radius: 20px;
+        border-left: #8c8c8c 1px solid;
+
+      }
+
+
+      .spec:hover,
+      .year:hover,
+      .location:hover,
+      .model:hover,
+      .brand:hover,
+      .mileage:hover,
+      .prise:hover {
+        background: rgba(224, 225, 227, 0.525);
+      }
+
+      .inp {
+        border: 1px rgb(236, 236, 236);
+        border-radius: 5px;
+        width: 88%;
+        text-align: left;
+        font-size: 15px;
+      }
+
+      .inp_year,
+      .inp_kms,
+      .inp_price {
+        border: 1px rgb(236, 236, 236);
+        border-radius: 5px;
+        width: 45%;
+        text-align: left;
+      }
+
+      .spisok_year,
+      .spisok_price,
+      .spisok_mil {
+        width: 300px;
+        height: 100px;
+        text-align: center;
+        padding: 10px 5px;
+        margin-left: -40%;
+        position: absolute;
+        z-index: 10;
+        margin-top: 10px;
+        border: #8c8c8c 0.5px solid;
+        background-color: rgb(237, 241, 248);
+        box-shadow: rgb(99, 99, 103) 0px -1px 0px inset;
+        border-radius: 20px;
+      }
+
+      .invisible {
+        display: none;
+      }
+
+      .visible {
+        display: flex;
+      }
+
+      .visibleFil{
+        display: block;
+      }
+
+      .invisibleFil{
+        display: none;
+      }
+
+      .textfilter {
+        font-size: 15px;
+        font-weight: bold;
+        text-align: left;
+        margin-left: 7%;
+        margin-top: 5%;
+      }
+
+      .textfilter_under {
+        font-size: 15px;
+        text-align: left;
+        margin-left: 7%;
+        color: #858484;
+      }
+
+      .textfilter_menu {
+        font-size: 15px;
+        font-weight: bold;
+        text-align: left;
+      }
+
+      ::placeholder {
+        color: #858484;
+        font-size: 15px;
+      }
+
+      .btn {
+        background-color: #fff;
+        border-radius: 5px;
+        box-sizing: border-box;
+        cursor: pointer;
+        display: inline-block;
+        font-family: "Basier circle", -apple-system, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+        font-weight: 600;
+        line-height: 1;
+        text-align: center;
+        text-decoration: none #0d172a solid;
+        transition: all .1s cubic-bezier(.4, 0, .2, 1);
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+        height: 100%;
+        border: 0px solid;
+        margin-left: 3%;
+        margin-top: 2%;
+      }
+
+      .btn_filter {
+        background-color: #fff;
+        border-radius: 20px;
+        box-sizing: border-box;
+        cursor: pointer;
+        display: inline-block;
+        font-family: "Basier circle", -apple-system, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+        font-weight: 600;
+        line-height: 1;
+        font-size: 2vh;
+        text-align: center;
+        text-decoration: none #0d172a solid;
+        transition: all .1s cubic-bezier(.4, 0, .2, 1);
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+        height: 100%;
+        border: 0px solid;
+        width: 4vw;
+        height: 4vh;
+        position: absolute;
+        z-index: 12;
+      }
+
+      .btnsub {
+        cursor: pointer;
+        border-top-right-radius: 20px;
+        border-bottom-right-radius: 20px;
+        height: 100%;
+        width: 15%;
+        border: #8c8c8c 1px solid;
+        border-left: none;
+        background-color: rgb(49, 49, 49);
+        color: white;
+        font-family: "Basier circle", -apple-system, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+        font-weight: 600;
+        text-align: center;
+        font-size: 15px;
+
+      }
+
+      .btnsub:hover {
+        background-color: rgb(73, 73, 73);
+      }
+      .flag-new {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background-color: green;
+      color: white;
+      padding: 5px;
+      border-radius: 5px;
+      font-size: 14px;
+      font-weight: bold;
+      text-transform: uppercase;
+      }
+
+      .flag-sale {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background-color: red;
+      color: white;
+      padding: 5px;
+      border-radius: 5px;
+      font-size: 14px;
+      font-weight: bold;
+      text-transform: uppercase;
+      }
+    }
+  </style>
+</head>
+
+
+<body style="background-color: rgb(237, 241, 248)">
+  <button class="btn_filter" onclick="showFilter()" style="margin-top: 1vh; margin-left: 2vw;">Filters</button>
+
+  <form class="filter invisible" id="filter">
+    <div class="location">
+      <div class="textfilter">Location</div>
+      {{filter.location}}
+    </div>
+    <div class="model">
+      <div class="textfilter">Model</div>
+      {{filter.model}}
+    </div>
+
+    <div class="brand">
+      <div class="textfilter">Brand </div>{{filter.brand}}
+    </div>
+    <div class="spec">
+      <div class="textfilter">Specs </div>{{filter.regSpecs}}
+    </div>
+
+    <div class="mileage">
+      <div onclick="showFilterMil()" style="width: 100%; height: 100%;">
+        <div class="textfilter">Mileage</div>
+        <div class="textfilter_under">Select </div>
+      </div>
+
+      <div class="spisok_mil invisibleFil" id="spisok_mil123">
+        <div style="display: flex;">
+          <div style="margin-left: 3%; " class="textfilter_menu">From</div>
+          <div style="margin-left: 36%;" class="textfilter_menu">To</div>
+        </div>
+        {{filter.kms}}
+        <div style="text-align: left; height: 40%;">
+          <button class="btn"
+            style="margin-left: 3%; background-color: black; color: white; width: 30%;">Submit</button>
+          <script>
+          </script>
+        </div>
+      </div>
+    </div>
+
+    <div class=" prise">
+      <div onclick="showFilterPrice()" style="width: 100%; height: 100%;">
+        <div class="textfilter">Price</div>
+        <div class="textfilter_under">Select </div>
+      </div>
+
+      <div class="spisok_price invisibleFil" id="spisok_price123">
+        <div style="display: flex;">
+          <div style="margin-left: 3%; " class="textfilter_menu">From</div>
+          <div style="margin-left: 36%;" class="textfilter_menu">To</div>
+        </div>
+        {{filter.price}}
+        <div style="text-align: left; height: 40%;">
+          <button class="btn"
+            style="margin-left: 3%; background-color: black; color: white; width: 30%;">Submit</button>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="year">
+      <div onclick="showFilterYear()" style="width: 100%; height: 100%;">
+        <div class="textfilter">Year</div>
+        <div class="textfilter_under">Select </div>
+      </div>
+
+      <div class="spisok_year invisibleFil" id="spisok_year123">
+        <div style="display: flex;">
+          <div style="margin-left: 3%;" class="textfilter_menu">From</div>
+          <div style="margin-left: 36%;" class="textfilter_menu">To</div>
+        </div>
+        {{filter.year}}
+        <div style="text-align: left; height: 40%;">
+          <button class="btn"
+            style="margin-left: 3%; background-color: black; color: white; width: 30%;">Submit</button>
+        </div>
+      </div>
+
+    </div>
+    <button class="btnsub">Submit</button>
+  </form>
+
+
+  <div class="row">
+    <div class="cl" id="db">
+      <div id="names">Dubicars</div>
+      <div class="new-column" id="new-dubicars">
+      </div>
+      <div class="column" id="dubicars">
+        {%for car in dubicarsFilterQs%}
+        <div class="cardDb">
+
+          {% if car.listing_type == 'new' %}
+          <div class="flag-new">New</div>
+          {% elif car.listing_type == 'sale'%}
+          <div class="flag-sale">Sale</div>
+          {% endif %}
+
+          <div style=" display: flex; text-align: left;">
+            <div style="margin-left: 1%;">
+              <img src={{car.photo}} class="card-img-top"
+                style="width: 15vh; height: 15vh; object-fit: cover; object-position: center; margin-top: 5px;">
+            </div>
+            <div style="margin-left: 2vh;">
+              <div style="font-size: 2vh; width: 100%; height: 20%; margin-bottom: 2%;">
+                <b style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; text-align: center;">
+                  <a href={{car.url}}>{{car.brand}} {{car.model}}</a></b>
+              </div>
+
+              <div>
+                <b>AED {{car.price}}</b>
+              </div>
+              <div style="font-size: 2vh; margin-top: 2%; color: rgb(90, 90, 90);">
+                {{car.year}}, {{car.location}}, {{car.regSpecs}}, {{car.kms}} km, ({{car.activeListings}}) {{car.contact}}
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        {%endfor%}
+      </div>
+      <div>
+        <button type="button" id="btn_dubicars" class="custom-btn btn-5">Load more</button>
+      </div>
+    </div>
+    <!-- {{total_obj_dubicars|json_script:"json-total-dubicars"}} -->
+    <div class="cl" id="dz">
+      <div id="names">Dubizzle</div>
+      <div class="new-column" id="new-dubizzle">
+      </div>
+      <div class="column" id="dubizzle">
+        {%for car in dubizzleFilterQs%}
+        <div class="cardDz">
+
+          {% if car.listing_type == 'new' %}
+          <div class="flag-new">New</div>
+          {% elif car.listing_type == 'sale'%}
+          <div class="flag-sale">Sale</div>
+          {% endif %}
+
+          <div style=" display: flex; text-align: left;">
+            <div style="margin-left: 1%;">
+              <img src={{car.photo}} class="card-img-top"
+                style="width: 15vh; height: 15vh; object-fit: cover; object-position: center; margin-top: 5px;">
+            </div>
+            <div style="margin-left: 2vh;">
+              <div style="font-size: 2vh; width: 100%; height: 20%; margin-bottom: 2%;">
+                <b style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; text-align: center;">
+                  <a href={{car.url}}>{{car.brand}} {{car.model}}</a></b>
+              </div>
+
+              <div>
+                <b>AED {{car.price}}</b>
+              </div>
+              <div style="font-size: 2vh; margin-top: 2%; color: rgb(90, 90, 90);">
+                {{car.year}}, {{car.location}}, {{car.regSpecs}}, {{car.kms}} km, ({{car.activeListings}}) {{car.posted}}
+              </div>
+            </div>
+          </div>
+
+        </div>
+        {%endfor%}
+      </div>
+      <div>
+        <button type="button" id="btn_dubizzle" class="custom-btn btn-5">Load more</button>
+      </div>
+    </div>
+    <!-- {{total_obj_dubicars|json_script:"json-total-dubicars"}} -->
+    <div class="cl" id="yl">
+      <div id="names">Yallamotor</div>
+      <div class="new-column" id="new-yallamotor">
+      </div>
+      <div class="column" id="yallamotor">
+        {%for car in yallamotorFilterQs%}
+        <div class="cardYl">
+
+          {% if car.listing_type == 'new' %}
+          <div class="flag-new">New</div>
+          {% elif car.listing_type == 'sale'%}
+          <div class="flag-sale">Sale</div>
+          {% endif %}
+
+          <div style=" display: flex; text-align: left;">
+            <div style="margin-left: 1%;">
+              <img src={{car.photo}} class="card-img-top"
+                style="width: 15vh; height: 15vh; object-fit: cover; object-position: center; margin-top: 5px;">
+            </div>
+            <div style="margin-left: 2vh;">
+              <div style="font-size: 2vh; width: 100%; height: 20%; margin-bottom: 2%;">
+                <b style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; text-align: center;">
+                  <a href={{car.url}}>{{car.brand}} {{car.model}}</a></b>
+              </div>
+
+              <div>
+                <b>AED {{car.price}}</b>
+              </div>
+              <div style="font-size: 2vh; margin-top: 2%; color: rgb(90, 90, 90);">
+                {{car.year}}, {{car.location}}, {{car.regSpecs}}, {{car.kms}} km, ({{car.activeListings}}) tel:{{car.contact}}
+              </div>
+            </div>
+          </div>
+
+        </div>
+        {%endfor%}
+      </div>
+
+      <div>
+        <button type="button" id="btn_yallamotor" class="custom-btn btn-5">Load more</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- {{total_obj_dubicars|json_script:"json-total-dubicars"}} -->
+
+  <script>
+    const loadBtnDubicars = document.getElementById('btn_dubicars');
+    const loadBtnDubizzle = document.getElementById('btn_dubizzle');
+    const loadBtnYallamotor = document.getElementById('btn_yallamotor');
+    // const showBtn = document.getElementById('filters-visible');
+
+    function loadMoreCarsDubicars() {
+      var _current_item = $('.cardDb').length
+      const container = document.getElementById('dubicars');
+      var filter_data = $('.filter').serialize()
+      filter_data += "&total_item=" + _current_item;
+
+      $.ajax({
+        url: '{% url "load_dubicars" %}',
+        type: 'GET',
+        data: filter_data,
+        beforeSend: function () {
+
+        },
+        success: function (response) {
+          const data = response.dubicars
+
+          data.map(car => {
+            container.innerHTML += `<div class="cardDb">
+
+              ${car.listing_type == 'new' ? '<div class="flag-new">New</div>': car.listing_type == 'sale' ? '<div class="flag-sale">Sale</div>':''}
+
+              <div style=" display: flex; text-align: left;">
+                <div style="margin-left: 1%;">
+                  <img src=${car.photo} class="card-img-top"
+                    style="width: 15vh; height: 15vh; object-fit: cover; object-position: center; margin-top: 5px;">
+                </div>
+                <div style="margin-left: 2vh;">
+                  <div style="font-size: 2vh; width: 100%; height: 20%; margin-bottom: 2%;">
+                    <b style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; text-align: center;">
+                      <a href=${car.url}>${car.brand} ${car.model}</a></b>
+                  </div>
+
+                  <div>
+                    <b>AED ${car.price}</b>
+                  </div>
+                  <div style="font-size: 2vh; margin-top: 2%; color: rgb(90, 90, 90);">
+                    ${car.year}, ${car.location}, ${car.regSpecs}, ${car.kms} km, (${car.activeListings}) ${car.contact}
+                  </div>
+                </div>
+              </div>
+
+              </div>`
+          })
+        },
+        error: function (err) {
+          console.log(err)
+        }
+      });
+    }
+
+    function loadMoreCarsDubizzle() {
+      var _current_item = $('.cardDz').length
+      const container = document.getElementById('dubizzle');
+      var filter_data = $('.filter').serialize()
+      filter_data += "&total_item=" + _current_item;
+
+      $.ajax({
+        url: '{% url "load_dubizzle" %}',
+        type: 'GET',
+        data: filter_data,
+        beforeSend: function () {
+
+        },
+        success: function (response) {
+          const data = response.dubizzle
+
+          data.map(car => {
+            container.innerHTML += `<div class="cardDz">
+
+              ${car.listing_type == 'new' ? '<div class="flag-new">New</div>': car.listing_type == 'sale' ? '<div class="flag-sale">Sale</div>':''}
+
+              <div style=" display: flex; text-align: left;">
+                <div style="margin-left: 1%;">
+                  <img src=${car.photo} class="card-img-top"
+                    style="width: 15vh; height: 15vh; object-fit: cover; object-position: center; margin-top: 5px;">
+                </div>
+                <div style="margin-left: 2vh;">
+                  <div style="font-size: 2vh; width: 100%; height: 20%; margin-bottom: 2%;">
+                    <b style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; text-align: center;">
+                      <a href=${car.url}>${car.brand} ${car.model}</a></b>
+                  </div>
+
+                  <div>
+                    <b>AED ${car.price}</b>
+                  </div>
+                  <div style="font-size: 2vh; margin-top: 2%; color: rgb(90, 90, 90);">
+                    ${car.year}, ${car.location}, ${car.regSpecs}, ${car.kms} km, (${car.activeListings}) ${car.posted}
+                  </div>
+                </div>
+              </div>
+
+              </div>`
+          })
+        },
+        error: function (err) {
+          console.log(err)
+        }
+      });
+    }
+
+    function loadMoreCarsYallamotor() {
+      var _current_item = $('.cardYl').length
+      console.log(_current_item)
+      const container = document.getElementById('yallamotor');
+      var filter_data = $('.filter').serialize()
+      filter_data += "&total_item=" + _current_item;
+
+      $.ajax({
+        url: '{% url "load_yallamotor" %}',
+        type: 'GET',
+        data: filter_data,
+        beforeSend: function () {
+
+        },
+        success: function (response) {
+          const data = response.yallamotor
+
+          data.map(car => {
+            container.innerHTML += `<div class="cardYl">
+
+              ${car.listing_type == 'new' ? '<div class="flag-new">New</div>': car.listing_type == 'sale' ? '<div class="flag-sale">Sale</div>':''}
+
+              <div style=" display: flex; text-align: left;">
+                <div style="margin-left: 1%;">
+                  <img src=${car.photo} class="card-img-top"
+                    style="width: 15vh; height: 15vh; object-fit: cover; object-position: center; margin-top: 5px;">
+                </div>
+                <div style="margin-left: 2vh;">
+                  <div style="font-size: 2vh; width: 100%; height: 20%; margin-bottom: 2%;">
+                    <b style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; text-align: center;">
+                      <a href=${car.url}>${car.brand} ${car.model}</a></b>
+                  </div>
+
+                  <div>
+                    <b>AED ${car.price}</b>
+                  </div>
+                  <div style="font-size: 2vh; margin-top: 2%; color: rgb(90, 90, 90);">
+                    ${car.year}, ${car.location}, ${car.regSpecs}, ${car.kms} km, (${car.activeListings}) ${car.contact}
+                  </div>
+                </div>
+              </div>
+
+              </div>`
+          })
+        },
+        error: function (err) {
+          console.log(err)
+        }
+      });
+    }
+
+    function showFilter() {
+    const filter = document.getElementById('filter');
+    const db = document.getElementById('db');
+    const dz = document.getElementById('dz');
+    const yl = document.getElementById('yl');
+
+    if (filter.classList == "filter visible") {
+        filter.classList = "filter invisible";
+        db.style.height = '97vh';
+        db.style.margin = '1%';
+
+        dz.style.height = '97vh';
+        dz.style.margin = '1%';
+
+        yl.style.height = '97vh';
+        yl.style.margin = '1%';
+
+    } else {
+        filter.classList = "filter visible";
+        db.style.height = '88vh';
+        db.style.marginTop = '9vh';
+
+        dz.style.height = '88vh';
+        dz.style.marginTop = '9vh';
+
+        yl.style.height = '88vh';
+        yl.style.marginTop = '9vh';
+
+    }
+}
+
+function showFilterMil() {
+    const milliageDiv = document.getElementById('spisok_mil123');
+    const priceDiv = document.getElementById('spisok_price123');
+    const yearDiv = document.getElementById('spisok_year123');
+    if (milliageDiv.classList == "spisok_mil visibleFil") {
+        milliageDiv.classList = "spisok_mil invisibleFil";
+    } else {
+        milliageDiv.classList = "spisok_mil visibleFil";
+        priceDiv.classList = "spisok_price invisibleFil";
+        yearDiv.classList = "spisok_year invisibleFil";
+    }
+}
+
+function showFilterPrice() {
+    const priceDiv = document.getElementById('spisok_price123');
+    const milliageDiv = document.getElementById('spisok_mil123');
+    const yearDiv = document.getElementById('spisok_year123');
+    if (priceDiv.classList == "spisok_price visibleFil") {
+        priceDiv.classList = "spisok_price invisibleFil";
+    } else {
+        priceDiv.classList = "spisok_price visibleFil";
+        milliageDiv.classList = "spisok_mil invisibleFil";
+        yearDiv.classList = "spisok_year invisibleFil";
+    }
+}
+
+function showFilterYear() {
+    const priceDiv = document.getElementById('spisok_price123');
+    const milliageDiv = document.getElementById('spisok_mil123');
+    const yearDiv = document.getElementById('spisok_year123');
+    if (yearDiv.classList == "spisok_year visibleFil") {
+        yearDiv.classList = "spisok_year invisibleFil";
+    } else {
+        yearDiv.classList = "spisok_year visibleFil";
+        priceDiv.classList = "spisok_price invisibleFil";
+        milliageDiv.classList = "spisok_mil invisibleFil";
+    }
+}
+
+    loadBtnDubicars.addEventListener('click', () => {
+      loadMoreCarsDubicars()
+    });
+    loadBtnDubizzle.addEventListener('click', () => {
+      loadMoreCarsDubizzle()
+    });
+    loadBtnYallamotor.addEventListener('click', () => {
+      loadMoreCarsYallamotor()
+    });
+
+    const eventSource = new EventSource("{% url 'send_signal' %}");
+    eventSource.onmessage = function(event){
+      if (event.data === 'run_method'){
+        run_method()
+      }
+    }
+
+    function run_method(){
+      const container_dz = document.getElementById('new-dubizzle');
+      const container_db = document.getElementById('new-dubicars');
+      const container_yl = document.getElementById('new-yallamotor');
+      var data = 'db_total=' + $('.cardDb_new').length + '&dz_total=' + $('.cardDz_new').length + '&yl_total=' + $('.cardYl_new').length;
+
+      $.ajax({
+        url: '{% url "load_new" %}',
+        type: 'GET',
+        data: data,
+        beforeSend: function () {
+
+        },
+        success: function (response) {
+          const data_db = response.new_dubicars
+          const data_dz = response.new_dubizzle
+          const data_yl = response.new_yallamotor
+
+          console.log(data_db)
+          console.log(data_dz)
+          console.log(data_yl)
+
+          container_dz.innerHTML = ''
+          container_db.innerHTML = ''
+          container_yl.innerHTML = ''
+
+          data_dz.map(car => {
+            container_dz.innerHTML += `<div class="cardDz_new">
+              
+              ${car.listing_type == 'new' ? '<div class="flag-new">New</div>': car.listing_type == 'sale' ? '<div class="flag-sale">Sale</div>':''}
+
+              <div style=" display: flex; text-align: left;">
+                <div style="margin-left: 1%;">
+                  <img src=${car.photo} class="card-img-top"
+                    style="width: 15vh; height: 15vh; object-fit: cover; object-position: center; margin-top: 5px;">
+                </div>
+                <div style="margin-left: 2vh;">
+                  <div style="font-size: 2vh; width: 100%; height: 20%; margin-bottom: 2%;">
+                    <b style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; text-align: center;">
+                      <a href=${car.url}>${car.brand} ${car.model}</a></b>
+                  </div>
+
+                  <div>
+                    <b>AED ${car.price}</b>
+                  </div>
+                  <div style="font-size: 2vh; margin-top: 2%; color: rgb(90, 90, 90);">
+                    ${car.year}, ${car.location}, ${car.regSpecs}, ${car.kms} km, (${car.activeListings}) ${car.posted}
+                  </div>
+                </div>
+              </div>
+
+              </div>`
+          })
+
+          data_db.map(car => {
+            container_db.innerHTML += `<div class="cardDb_new">
+
+              ${car.listing_type == 'new' ? '<div class="flag-new">New</div>': car.listing_type == 'sale' ? '<div class="flag-sale">Sale</div>':''}
+              
+              <div style=" display: flex; text-align: left;">
+                <div style="margin-left: 1%;">
+                  <img src=${car.photo} class="card-img-top"
+                    style="width: 15vh; height: 15vh; object-fit: cover; object-position: center; margin-top: 5px;">
+                </div>
+                <div style="margin-left: 2vh;">
+                  <div style="font-size: 2vh; width: 100%; height: 20%; margin-bottom: 2%;">
+                    <b style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; text-align: center;">
+                      <a href=${car.url}>${car.brand} ${car.model}</a></b>
+                  </div>
+
+                  <div>
+                    <b>AED ${car.price}</b>
+                  </div>
+                  <div style="font-size: 2vh; margin-top: 2%; color: rgb(90, 90, 90);">
+                    ${car.year}, ${car.location}, ${car.regSpecs}, ${car.kms} km, (${car.activeListings}) ${car.contact}
+                  </div>
+                </div>
+              </div>
+
+              </div>`
+          })
+
+          data_yl.map(car => {
+            container_yl.innerHTML += `<div class="cardYl_new">
+
+              ${car.listing_type == 'new' ? '<div class="flag-new">New</div>': car.listing_type == 'sale' ? '<div class="flag-sale">Sale</div>':''}
+
+              <div style=" display: flex; text-align: left;">
+                <div style="margin-left: 1%;">
+                  <img src=${car.photo} class="card-img-top"
+                    style="width: 15vh; height: 15vh; object-fit: cover; object-position: center; margin-top: 5px;">
+                </div>
+                <div style="margin-left: 2vh;">
+                  <div style="font-size: 2vh; width: 100%; height: 20%; margin-bottom: 2%;">
+                    <b style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; text-align: center;">
+                      <a href=${car.url}>${car.brand} ${car.model}</a></b>
+                  </div>
+
+                  <div>
+                    <b>AED ${car.price}</b>
+                  </div>
+                  <div style="font-size: 2vh; margin-top: 2%; color: rgb(90, 90, 90);">
+                    ${car.year}, ${car.location}, ${car.regSpecs}, ${car.kms} km, (${car.activeListings}) ${car.contact}
+                  </div>
+                </div>
+              </div>
+
+              </div>`
+          })
+        },
+        error: function (err) {
+          console.log(err)
+        }
+      });
+    }
+  </script>
+</body>
+
+</html>

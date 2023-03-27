@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_filters',
     'main.apps.MainConfig',
+    'django_sse',
 ]
 
 MIDDLEWARE = [
@@ -49,6 +50,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_user_agents.middleware.UserAgentMiddleware',
 ]
 
 ROOT_URLCONF = 'cars_project.urls'
@@ -71,18 +73,40 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'cars_project.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-        'CONN_MAX_AGE': 180,
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'main_car_any',
+        'CONN_MAX_AGE': 600,
+        'USER': 'admin', 
+        'PASSWORD': '4vRes4^9mH',
+        'HOST': 'database-1.csn9ibijwsbt.eu-north-1.rds.amazonaws.com',
+        'PORT': '3306',
+        'OPTIONS':{
+            'sql_mode': 'STRICT_TRANS_TABLES',
+        },
     }
 }
 
+
+# 'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#         'CONN_MAX_AGE':180,
+
+
+        # 'ENGINE': 'django.db.backends.mysql',
+        # 'NAME': 'main_car_any',
+        # 'CONN_MAX_AGE': 600,
+        # 'USER': 'admin', 
+        # 'PASSWORD': '4vRes4^9mH',
+        # 'HOST': 'database-1.csn9ibijwsbt.eu-north-1.rds.amazonaws.com',
+        # 'PORT': '3306',
+        # 'OPTIONS':{
+        #     'sql_mode': 'STRICT_TRANS_TABLES',
+        # },
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators

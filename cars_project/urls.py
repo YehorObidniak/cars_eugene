@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path
 from . import settings
 from django.conf.urls.static import static
-from main.views import index, load_more_dubicars, load_more_dubizzle, load_more_yallamotor, dubicars, dubizzle, yallamotor
+from main.views import index, load_more_dubicars, load_more_dubizzle, load_more_yallamotor, dubicars, dubizzle, yallamotor, SendSignalView, load_new
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -28,6 +28,8 @@ urlpatterns = [
     path('load_dubicars/', load_more_dubicars, name='load_dubicars'),
     path('load_dubizzle/', load_more_dubizzle, name='load_dubizzle'),
     path('load_yallamotor/', load_more_yallamotor, name='load_yallamotor'),
+    path('load_new/', load_new, name='load_new'),
+    path('signal/', SendSignalView.as_view(), name='send_signal'),
 ]
 
 if settings.DEBUG:
