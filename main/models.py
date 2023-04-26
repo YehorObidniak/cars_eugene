@@ -1,4 +1,5 @@
 from django.db import models
+from time import time
 
 class Car_any(models.Model):
     url = models.CharField(max_length=255, primary_key=True)
@@ -18,17 +19,20 @@ class Car_any(models.Model):
     active = models.BooleanField(default=True)
     old_price = models.CharField(null=True, max_length=255)
     listing_type = models.CharField(max_length=255, null=True)
-    listing_type_changed = models.BooleanField(default=False)
+    listing_type_changed = models.IntegerField()
     notified = models.BooleanField(default=False)
     category_id_dubizzle = models.TextField(null=True)
+    post_created_at = models.IntegerField(default=time())
+    activeForSite = models.BooleanField(default=True)
 
 class Brands(models.Model):
-    name = models.CharField(max_length=25, unique=True)
+    name = models.CharField(max_length=25, primary_key=True)
 
 class regSpecs(models.Model):
     name = models.CharField(max_length=127, unique=True)
-    sites = []
     site = models.CharField(max_length=127, null=True)
 
-class Listers(models.Model):
-    id = models.CharField(max_length=127, unique=True, primary_key=True)
+class Sellers(models.Model):
+    contact = models.CharField(max_length=255, primary_key=True)
+    activeListings = models.IntegerField()
+    site = models.CharField(max_length=255)

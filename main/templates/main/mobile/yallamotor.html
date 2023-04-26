@@ -1,22 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 
+{% load main_extras %}
+
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
     <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
     {% load static %}
 
-   <style>
+    <style>
         @media screen and (max-width: 900px) {
+            .cl {
+                display: inline-block;
+                overflow-y: scroll;
+                overflow-x: hidden;
+                width: 98%;
+                height: 83vh;
+                text-align: center;
+                top: 5vh;
+            }
+
             * {
                 box-sizing: border-box;
                 font-family: "Basier circle", -apple-system, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
             }
 
             body {
-                overflow: scroll;
+                overflow: hidden;
                 background-color: rgb(237, 241, 248);
-
             }
 
             #header {
@@ -24,18 +35,19 @@
                 position: sticky;
                 width: 100%;
                 background-color: rgb(237, 241, 248);
-                height: 50px;
+                height: 5vh;
                 top: -3px;
 
 
 
             }
 
+            .new-column,
             #yallamotor {
                 width: 100%;
                 text-align: center;
                 top: 50px;
-
+                float: left;
             }
 
             .btn_filter {
@@ -81,9 +93,7 @@
             }
 
             /* Cards */
-
-            .cardDb,
-            .cardDz,
+            .cardYl_new,
             .cardYl {
                 position: relative;
                 width: 100%;
@@ -105,10 +115,11 @@
                 font-size: 25px;
                 background-color: rgb(237, 241, 248);
                 font-weight: bold;
-                margin-left: 30%;
-                top: 10px;
-                z-index: 15;
-
+                /*margin-left: 35%;*/
+                /*z-index: 15;*/
+                top: 1vh;
+                width: 100%;
+                text-align: center;
             }
 
             .card_text {
@@ -120,7 +131,6 @@
             }
 
             .car_names {
-                font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
                 text-align: center;
                 font-weight: bold;
                 text-align: left;
@@ -139,7 +149,6 @@
 
             .card_price {
                 font-weight: bold;
-                font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
                 margin-top: 3%;
                 text-align: left;
                 margin-left: 5%;
@@ -159,9 +168,6 @@
                 background-color: #5e78e7;
                 z-index: 1;
             }
-
-
-
 
             * {
                 margin: 0;
@@ -337,7 +343,7 @@
 
 
 
-             span {
+            span {
                 text-align: center;
                 color: rgb(0, 0, 0);
                 font-size: 1.2em;
@@ -403,19 +409,97 @@
                 width: 100%;
                 height: 100vh;
             }
+
+            .container.animate-left {
+                transform: translateX(-100%);
+            }
+
+            .container.animate-right {
+                transform: translateX(+100%);
+            }
+
+            .container {
+                transition: transform 0.5s ease-out;
+            }
+
+            .flag-new {
+                position: absolute;
+                top: 5px;
+                left: 5px;
+                background-color: green;
+                color: white;
+                padding: 5px;
+                border-radius: 5px;
+                font-size: 10px;
+                font-weight: bold;
+                text-transform: uppercase;
+            }
+
+            .flag-sale {
+                position: absolute;
+                top: 5px;
+                left: 5px;
+                background-color: red;
+                color: white;
+                padding: 5px;
+                border-radius: 5px;
+                font-size: 10px;
+                font-weight: bold;
+                text-transform: uppercase;
+            }
+
+            .lds-dual-ring {
+                position: absolute;
+                width: 35px;
+                height: 35px;
+                left: 45%;
+                visibility: hidden;
+                bottom: 0.8vh;
+            }
+            .lds-dual-ring:after {
+                content: " ";
+                display: block;
+                width: 20px;
+                height: 20px;
+                margin: 8px;
+                border-radius: 50%;
+                border: 6px solid blue;
+                border-color: blue transparent blue transparent;
+                animation: lds-dual-ring 1.2s linear infinite;
+            }
+            @keyframes lds-dual-ring {
+                0% {
+                transform: rotate(0deg);
+                }
+                100% {
+                transform: rotate(360deg);
+                }
+            }
+
+            .load-more-new-container,
+            .load-more-container{
+                width: 100%;
+                float: left;
+                padding: 10px;
+                text-align: center;
+                position: relative;
+            }
+
+            .img-div{
+                margin-right: 10px;
+            }
         }
     </style>
 </head>
 
-<body>
+<body id="body">
     <div id="header">
+        <button class="" onclick="offscroll()"
+            style="right:5px; top: 10px; width: 100px; height: 30px; position: absolute; z-index: 150;">Filters</button>
 
-
-       <button class="" onclick="offscroll()"
-            style="right:5px; top: 10px; width: 100px; height: 30px;position: absolute;">Filters</button>
         <div class="filters invisible" id="filters">
             <ul>
-                <form class="filter">
+                <form class="filter" class="container">
                     <li>
                         <div class="textfilter">Location</div>
                         <div>{{filter.location}}</div>
@@ -438,77 +522,186 @@
                     </li>
                     <li>
                         <div class="textfilter">Price</div>
-                        <div>{{filter.currentPrice}}</div>
+                        <div>{{filter.price}}</div>
                     </li>
                     <li>
                         <div class="textfilter">Year</div>
                         <div>{{filter.year}}</div>
                     </li>
-                    <li><button class="btnsub" onclick="onscroll()">Submit</button></li>
+                    <li><button class="btnsub">Submit</button></li>
                 </form>
             </ul>
 
         </div>
-        <div class="sites_names">Yallamotor</div>
-
-
-        <nav>
-
-            <label for="touch">
-                <span>Menu</span>
-            </label>
-            <input type="checkbox" id="touch">
-
-            <ul class="slide">
-                <li><a href="{% url 'dubicars' %}?{{ request.GET.urlencode }}">Dubicars</a></li>
-                <li><a href="{% url 'dubizzle' %}?{{ request.GET.urlencode }}">Dubizzle</a></li>
-
-            </ul>
-
-        </nav>
-    </div>
-
-
-
-    <div id="yallamotor">
-        {%for car in yallamotorFilterQs%}
-        <div class="cardYl" onclick="location.href='{{car.url}}'">
-
-            <div>
-                <img src={{car.photo}} class="card-img">
-            </div>
-
-            <div>
-                <div class="car_names">{{car.brand}} {{car.model}}</div>
-
-                <div class="card_price"> {{car.currentPrice}} AED</div>
-
-                <div class="card_text">
-                    {{car.year}}, {{car.location}}, {{car.regSpecs}}, {{car.kms}} km,
-                    ({{car.activeListings}}) {{car.contact}}
-
-                </div>
-            </div>
-
+        <div class="sites_names">Yallamotor
         </div>
 
-        {%endfor%}
-
-    </div>
-    <div id="loadmore">
-        <button type="button" onclick="loadMoreCarsYallamotor()" class="custom-btn ">Load more</button>
 
     </div>
 
 
 
+    <div class="cl" id="yl">
+        <div id="new-yallamotor" class="new-column">
+            {%for car in newYallamotor%}
 
+            <div class="cardYl_new" onclick="location.href='{{car.url}}'">
 
+                {% if car.listing_type == 'New' %}
+            <div class="flag-new">New</div>
+            {% elif car.listing_type == 'Sale'%}
+            <div class="flag-sale">Sale</div>
+            {% endif %}
 
+                <div class="img-div">
+                    <img src={{car.photo}} class="card-img">
+                </div>
+
+                <div>
+                    <div class="car_names">{{car.brand}} {{car.model}}</div>
+
+                    <div class="card_price"> {{car.price}} AED
+                        <i>
+                        {% if car.listing_type == 'Sale' %}
+                            {% with old_list=car.old_price|split:" " %}
+                            {% for old in old_list %}
+                            , ({{old}})
+                            {% endfor %}
+                            {% endwith %}
+                        {% endif %}
+                        </i>
+                    </div>
+
+                    <div class="card_text">
+                        {{car.year}}, {{car.location}}, {{car.regSpecs}}, {{car.kms}} km,
+                        ({{car.activeListings}}), {{car.contact}}
+
+                    </div>
+                </div>
+
+            </div>
+
+            {%endfor%}
+        </div>
+        <div class="load-more-new-container">
+            <div class="lds-dual-ring" id="spinner-new-yl" style="bottom: 0.9vh;"></div>
+            <button type="button" id="btn_new_yallamotor" class="custom-btn btn-5" onclick="load_more_new_yallamotor()">Load more</button>
+        </div>
+        <div id="yallamotor" class="container">
+            {%for car in yallamotorFilterQs%}
+
+            <div class=" cardYl" onclick="location.href='{{car.url}}'">
+
+            {% if car.listing_type == 'New' %}
+            <div class="flag-new">New</div>
+            {% elif car.listing_type == 'Sale'%}
+            <div class="flag-sale">Sale</div>
+            {% endif %}
+
+                <div>
+                    <img src={{car.photo}} class="card-img">
+                </div>
+
+                <div>
+                    <div class="car_names">{{car.brand}} {{car.model}}</div>
+
+                    <div class="card_price"> {{car.price}} AED
+                        <i>
+                        {% if car.listing_type == 'Sale' %}
+                            {% with old_list=car.old_price|split:" " %}
+                            {% for old in old_list %}
+                            , ({{old}})
+                            {% endfor %}
+                            {% endwith %}
+                        {% endif %}
+                        </i>
+                    </div>
+
+                    <div class="card_text">
+                        {{car.year}}, {{car.location}}, {{car.regSpecs}}, {{car.kms}} km, ({{car.activeListings}})
+                        {{car.posted}}
+
+                    </div>
+                </div>
+
+            </div>
+
+            {%endfor%}
+
+        </div>
+        <div class="load-more-container">
+            <button type="button"  onclick="loadMoreCarsYallamotor()" id="btn_yallamotor" class="custom-btn ">Load more</button>
+            <div class="lds-dual-ring" id="spinner-yl"></div>
+        </div>
+    </div>
 </body>
 
 <script>
- function offscroll() {
+    var container = document.querySelector('.cl');
+
+    // Detect swipe gesture
+    var xStart, yStart, xEnd, yEnd;
+    container.addEventListener('touchstart', function (e) {
+        xStart = e.touches[0].clientX;
+        yStart = e.touches[0].clientY;
+    });
+
+    container.addEventListener('touchmove', function (e) {
+        xEnd = e.touches[0].clientX;
+        yEnd = e.touches[0].clientY;
+    });
+
+    container.addEventListener('touchend', function () {
+        var xDiff = xStart - xEnd;
+        var yDiff = yStart - yEnd;
+
+        let params = new URLSearchParams(window.location.search);
+        let filter_params = {
+            '?location': params.get('location'),
+            '&model': params.get('model'),
+            '&brand': params.get('brand'),
+            '&regSpecs': params.get('regSpecs'),
+            '&kms_min': params.get('kms_min'),
+            '&kms_max': params.get('kms_max'),
+            '&price_min': params.get('price_min'),
+            '&price_max': params.get('price_max'),
+            '&year_min': params.get('year_min'),
+            '&year_max': params.get('year_max')
+        };
+
+        if (Math.abs(xDiff) > Math.abs(yDiff)) {
+            if (xDiff > 90) {
+                // Swipe left
+                let filteredUrl = "{% url 'dubicars' %}";
+                for (let param in filter_params) {
+                    if (filter_params[param] == null) {
+                        filteredUrl += param + "=";
+                    } else {
+                        filteredUrl += param + "=" + filter_params[param];
+                    }
+                }
+                window.location.href = filteredUrl;
+
+            }
+            else if (xDiff < -90) {
+                // Swipe right
+                let filteredUrl = "{% url 'dubizzle' %}";
+                for (let param in filter_params) {
+                    if (filter_params[param] == null) {
+                        filteredUrl += param + "=";
+                    } else {
+                        filteredUrl += param + "=" + filter_params[param];
+                    }
+                }
+
+                window.location.href = filteredUrl;
+            }
+        }
+    });
+
+
+
+    function offscroll() {
         const filter = document.getElementById('filters');
         if (filter.classList == "filters visible") {
             document.body.style.overflow = 'scroll';
@@ -519,15 +712,16 @@
         }
     }
 
-    function onscroll() {
-        document.body.style.overflow = 'scroll';
-    }
+
     function loadMoreCarsYallamotor() {
         var _current_item = $('.cardYl').length
         console.log(_current_item)
         const container = document.getElementById('yallamotor');
         var filter_data = $('.filter').serialize()
         filter_data += "&total_item=" + _current_item;
+
+        document.querySelector('#btn_yallamotor').style.visibility = 'hidden';
+        document.querySelector('#spinner-yl').style.visibility = 'visible';
 
         $.ajax({
             url: '{% url "load_yallamotor" %}',
@@ -540,32 +734,245 @@
                 const data = response.yallamotor
 
                 data.map(car => {
+                    let isSale = car.listing_type == 'Sale';
+                    let oldPricesString = '';
+                    if (isSale){
+                        let oldPrices = car.old_price.split(' ');
+                        for (let i = 0; i < oldPrices.length - 1; i++){
+                            oldPricesString += ", (" + oldPrices[i] + ")";
+                        }
+                    }
+
                     container.innerHTML += `<div class="cardYl" onclick="location.href='${car.url}'">
 
-<div>
-    <img src=${car.photo} class="card-img">
-</div>
+                    ${car.listing_type == 'New' ? '<div class="flag-new">New</div>': car.listing_type == 'Sale' ? '<div class="flag-sale">Sale</div>':''}
 
-<div>
-    <div class="car_names">${car.brand} ${car.model}</div>
+                    <div class="img-div">
+                        <img src=${car.photo} class="card-img">
+                    </div>
 
-    <div class="card_price"> ${car.currentPrice} AED</div>
+                    <div>
+                        <div class="car_names">${car.brand} ${car.model}</div>
 
-    <div class="card_text">
-        ${car.year}, ${car.location}, ${car.regSpecs}, ${car.kms} km,
-        (${car.activeListings}) ${car.contact}
+                        <div class="card_price"> ${car.price} AED<i class="old-price">${isSale ? oldPricesString : ''}</i></div>
 
-    </div>
-</div>
+                        <div class="card_text">
+                            ${car.year}, ${car.location}, ${car.regSpecs}, ${car.kms} km,
+                            (${car.activeListings}), ${car.contact}
 
-</div>`
+                        </div>
+                    </div>
+
+                    </div>`
                 })
+                document.querySelector('#btn_yallamotor').style.visibility = 'visible';
+                document.querySelector('#spinner-yl').style.visibility = 'hidden';
             },
             error: function (err) {
                 console.log(err)
             }
         });
     }
+
+    async function sleep(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    let lastsignal = Math.floor(Date.now() / 1000);
+    let eventSource = new EventSource(`{% url 'send_signal'%}?lastsignal=${encodeURIComponent(lastsignal)}`);
+    eventSource.onmessage = function(event){onMessage()}
+
+    function onMessage(){
+      lastsignal = event.data.split(';')[2]
+      console.log(lastsignal)
+      console.log(event.data)
+      createNextEventSource()
+      
+      if (event.data.split(';')[0] == 'run_method'){
+        run_method(event.data.split(';')[1], event.data.split(';')[2])
+      }
+    }
+
+    async function createNextEventSource(){
+      eventSource.close()
+      await sleep(4000)
+      console.log('update')
+      eventSource = new EventSource(`{% url 'send_signal'%}?lastsignal=${encodeURIComponent(lastsignal)}`);
+
+      eventSource.onmessage = function(event){onMessage()}
+    }
+
+    function run_method(time, curTime){
+      const container = document.getElementById('new-yallamotor');
+      var data = 'time=' + time + '&curTime=' + curTime;
+
+      $.ajax({
+        url: '{% url "load_new_yallamotor" %}',
+        type: 'GET',
+        data: data,
+        beforeSend: function () {
+
+        },
+        success: function (response) {
+          const data_dz = response.new_yallamotor
+
+          console.log(data_yl)
+
+          yl = container.innerHTML
+
+          container.innerHTML = "";
+ 
+          data_yl.map(car => {
+            let isSale = car.listing_type == 'Sale';
+            let oldPricesString = '';
+            if (isSale)
+            {
+              let oldPrices = car.old_price.split(' ');
+              for (let i = 0; i < oldPrices.length - 1; i++){
+                oldPricesString += ", (" + oldPrices[i] + ")";
+              }
+            }
+
+            container_dz.innerHTML += `<div class="cardYl_new" onclick="location.href='${car.url}'">
+
+            ${car.listing_type == 'New' ? '<div class="flag-new">New</div>': car.listing_type == 'Sale' ? '<div class="flag-sale">Sale</div>':''}
+
+            <div class="img-div">
+                <img src=${car.photo} class="card-img">
+            </div>
+
+            <div>
+                <div class="car_names">${car.brand} ${car.model}</div>
+
+                <div class="card_price"> ${car.price} AED<i class="old-price">${isSale ? oldPricesString : ''}</i></div>
+
+                <div class="card_text">
+                    ${car.year}, ${car.location}, ${car.regSpecs}, ${car.kms} km,
+                    (${car.activeListings}), ${car.contact}
+
+                </div>
+            </div>
+
+            </div>`
+          })
+
+          container_dz.innerHTML += yl;
+        },
+        error: function (err) {
+          console.log(err)
+        }
+      });
+    }
+
+    function load_more_new_yallamotor(){
+      document.querySelector('#btn_new_yallamotor').style.visibility = 'hidden';
+      document.querySelector('#spinner-new-yl').style.visibility = 'visible';
+
+      var _current_item = $('.cardYl_new').length
+      const container = document.getElementById('new-yallamotor');
+      let data = "&total_item=" + _current_item;
+
+      $.ajax({
+        url: '{% url "load_more_new_yallamotor" %}',
+        type: 'GET',
+        data: data,
+        beforeSend: function () {
+
+        },
+        success: function (response) {
+          const data = response.data
+
+          data.map(car => {
+            let isSale = car.listing_type == 'Sale';
+            let oldPricesString = '';
+            if (isSale)
+            { 
+              let oldPrices = car.old_price.split(' ');
+              for (let i = 0; i < oldPrices.length - 1; i++){
+                oldPricesString += ", (" + oldPrices[i] + ")";
+              }
+            }
+
+            container.innerHTML += `<div class="cardYl_new" onclick="location.href='${car.url}'">
+
+            ${car.listing_type == 'New' ? '<div class="flag-new">New</div>': car.listing_type == 'Sale' ? '<div class="flag-sale">Sale</div>':''}
+
+            <div class="img-div">
+                <img src=${car.photo} class="card-img">
+            </div>
+
+            <div>
+                <div class="car_names">${car.brand} ${car.model}</div>
+
+                <div class="card_price"> ${car.price} AED<i class="old-price">${isSale ? oldPricesString : ''}</i></div>
+
+                <div class="card_text">
+                    ${car.year}, ${car.location}, ${car.regSpecs}, ${car.kms} km,
+                    (${car.activeListings}), ${car.contact}
+
+                </div>
+            </div>
+
+            </div>`
+          })
+
+          document.querySelector('#btn_new_yallamotor').style.visibility = 'visible';
+          document.querySelector('#spinner-new-yl').style.visibility = 'hidden';
+          if (response.all){
+            document.querySelector('#btn_new_yallamotor').style.display = 'none'
+          }
+        },
+        error: function (err) {
+          console.log(err)
+        }
+      });
+    }
+
+    // function off_new_and_sale(){
+    //   filtersInputs = [document.querySelector("#id_price_0").value, 
+    //                    document.querySelector("#id_price_1").value,
+    //                    document.querySelector("#id_location").value,
+    //                    document.querySelector("#id_brand").value,
+    //                    document.querySelector("#id_regSpecs").value,
+    //                    document.querySelector("#id_model").value,
+    //                    document.querySelector("#id_kms_0").value,
+    //                    document.querySelector("#id_kms_1").value,
+    //                    document.querySelector("#id_year_0").value,
+    //                    document.querySelector("#id_year_1").value]
+
+    //   buttonsList = document.getElementsByClassName('load-more-new-container');
+    //   columnsList = document.getElementsByClassName('new-column')
+
+
+    //   for (let i = 0; i < filtersInputs.length; i++){
+    //     if (filtersInputs[i] != ''){
+    //       for (let j = 0; j < buttonsList.length; j++){
+    //         buttonsList[j].style.display = "none"
+    //       }
+
+    //       for (let j = 0; j < columnsList.length; j++){
+    //         columnsList[j].style.display = "none"
+    //       }
+
+    //       return
+    //     }
+    //   }
+
+    //   for (let j = 0; j < buttonsList.length; j++){
+    //     buttonsList[j].style.display = "block"
+    //   }
+
+    //   for (let j = 0; j < columnsList.length; j++){
+    //     columnsList[j].style.display = "block"
+    //   }
+    // }
+
+    // window.onload = function(){
+    //   console.log("loaded");
+    //   off_new_and_sale();
+      
+    //   document.body.style.display = "block"
+    // }
 </script>
 
 </html>

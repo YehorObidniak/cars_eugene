@@ -7,6 +7,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
+#ALLOWED_HOSTS = ['dmitrykarpov.pythonanywhere.com']
+
 from pathlib import Path
 import os
 
@@ -79,11 +81,10 @@ WSGI_APPLICATION = 'cars_project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'main_car_any',
-        'CONN_MAX_AGE': 600,
-        'USER': 'admin', 
+        'NAME': 'db',
+        'USER': 'yehor', 
         'PASSWORD': '4vRes4^9mH',
-        'HOST': 'database-1.csn9ibijwsbt.eu-north-1.rds.amazonaws.com',
+        'HOST': 'mysqlserver3.mysql.database.azure.com',
         'PORT': '3306',
         'OPTIONS':{
             'sql_mode': 'STRICT_TRANS_TABLES',
@@ -148,3 +149,6 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGIN_REDIRECT_URL = ''
+

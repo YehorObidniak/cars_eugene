@@ -198,8 +198,8 @@ class DataBaseManager:
         self.__add_methods["Yallamotor"]()
         self.__add_methods["Dubizzle"]()
             
-db_manager = DataBaseManager()
-db_manager.add_one_car('Yallamotor')
+# db_manager = DataBaseManager()
+# db_manager.add_one_car('Yallamotor')
 # db_manager.add_cars()
 # Car_any.objects.all().delete()
 
@@ -219,8 +219,10 @@ db_manager.add_one_car('Yallamotor')
 #     site = 'Dubizzle',
 #     active = 1,
 #     listing_type_changed = 0,
+#     notified=False,
 #     price = 14000,
-#     listing_type = 'sale'
+#     listing_type = 'sale',
+#     post_created_at = time(),
 # )
 # car.save()
 
