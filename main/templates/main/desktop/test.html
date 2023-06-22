@@ -292,12 +292,6 @@
       }
 
       .btn_filter {
-        width: 4vw;
-        height: 4vh;
-        position: absolute;
-        left: 1vw;
-        top: 1vh;
-        z-index: 100;
         background-color: #fff;
         border-radius: 20px;
         box-sizing: border-box;
@@ -313,7 +307,12 @@
         user-select: none;
         -webkit-user-select: none;
         touch-action: manipulation;
+        height: 100%;
         border: 0px solid;
+        width: 4vw;
+        height: 4vh;
+        position: absolute;
+        z-index: 12;
       }
 
       .btnsub {
@@ -330,6 +329,7 @@
         font-weight: 600;
         text-align: center;
         font-size: 15px;
+
       }
 
       .btnsub:hover {
@@ -418,45 +418,13 @@
         margin-bottom: 100px;
       }
 
-      .card-img-top{
-        width: 15vh; 
-        height: 15vh; 
-        object-fit: cover; 
-        object-position: center; 
-        margin-top: 5px;
-      }
-
       .logout{
-        width: 4vw;
-        height: 4vh;
         position: absolute;
-        right: 1vw;
-        top: 1vh;
+        width: 5vw;
+        height: 4vh;
+        right: 100px;
+        top: 10px;
         z-index: 100;
-        background-color: #fff;
-        border-radius: 20px;
-        box-sizing: border-box;
-        cursor: pointer;
-        display: inline-block;
-        font-family: "Basier circle", -apple-system, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-        font-weight: 600;
-        line-height: 1;
-        font-size: 2vh;
-        text-align: center;
-        text-decoration: none #0d172a solid;
-        transition: all .1s cubic-bezier(.4, 0, .2, 1);
-        user-select: none;
-        -webkit-user-select: none;
-        touch-action: manipulation;
-        border: 0px solid;
-      }
-
-      .btn_filter:hover{
-        background-color: #b6b6b6;
-      }
-
-      .logout:hover{
-        background-color: #b6b6b6;
       }
     }
   </style>
@@ -467,9 +435,9 @@
 
 <body style="background-color: rgb(237, 241, 248)">
 
-  <button class="logout" onclick="logout()">Logout</button>
+    <button class="logout btn_filter" onclick="logout()">Logout</button>
 
-  <button class="btn_filter" onclick="showFilter()">Filters</button>
+  <button class="btn_filter" style="margin-top: 1vh; margin-left: 2vw;" onclick="showFilter()">Filters</button>
 
   <form class="filter invisible" id="filter">
     <div class="location">
@@ -503,6 +471,8 @@
         <div style="text-align: left; height: 40%;">
           <button class="btn"
             style="margin-left: 3%; background-color: black; color: white; width: 30%;">Submit</button>
+          <script>
+          </script>
         </div>
       </div>
     </div>
@@ -573,7 +543,8 @@
 
           <div style=" display: flex; text-align: left;">
             <div style="margin-left: 1%;">
-              <img src={{car.photo}} class="card-img-top">
+              <img src={{car.photo}} class="card-img-top"
+                style="width: 15vh; height: 15vh; object-fit: cover; object-position: center; margin-top: 5px;">
             </div>
             <div style="margin-left: 2vh;">
               <div style="font-size: 2vh; width: 100%; height: 20%; margin-bottom: 2%;">
@@ -620,7 +591,8 @@
 
           <div style=" display: flex; text-align: left;">
             <div style="margin-left: 1%;">
-              <img src={{car.photo}} class="card-img-top">
+              <img src={{car.photo}} class="card-img-top"
+                style="width: 15vh; height: 15vh; object-fit: cover; object-position: center; margin-top: 5px;">
             </div>
             <div style="margin-left: 2vh;">
               <div style="font-size: 2vh; width: 100%; height: 20%; margin-bottom: 2%;">
@@ -661,7 +633,8 @@
 
           <div style=" display: flex; text-align: left;">
             <div style="margin-left: 1%;">
-              <img src={{car.photo}} class="card-img-top">
+              <img src={{car.photo}} class="card-img-top"
+                style="width: 15vh; height: 15vh; object-fit: cover; object-position: center; margin-top: 5px;">
             </div>
             <div style="margin-left: 2vh;">
               <div style="font-size: 2vh; width: 100%; height: 20%; margin-bottom: 2%;">
@@ -708,7 +681,8 @@
 
           <div style=" display: flex; text-align: left;">
             <div style="margin-left: 1%;">
-              <img src={{car.photo}} class="card-img-top">
+              <img src={{car.photo}} class="card-img-top"
+                style="width: 15vh; height: 15vh; object-fit: cover; object-position: center; margin-top: 5px;">
             </div>
             <div style="margin-left: 2vh;">
               <div style="font-size: 2vh; width: 100%; height: 20%; margin-bottom: 2%;">
@@ -748,7 +722,8 @@
 
           <div style=" display: flex; text-align: left;">
             <div style="margin-left: 1%;">
-              <img src={{car.photo}} class="card-img-top">
+              <img src={{car.photo}} class="card-img-top"
+                style="width: 15vh; height: 15vh; object-fit: cover; object-position: center; margin-top: 5px;">
             </div>
             <div style="margin-left: 2vh;">
               <div style="font-size: 2vh; width: 100%; height: 20%; margin-bottom: 2%;">
@@ -795,7 +770,8 @@
 
           <div style=" display: flex; text-align: left;">
             <div style="margin-left: 1%;">
-              <img src={{car.photo}} class="card-img-top">
+              <img src={{car.photo}} class="card-img-top"
+                style="width: 15vh; height: 15vh; object-fit: cover; object-position: center; margin-top: 5px;">
             </div>
             <div style="margin-left: 2vh;">
               <div style="font-size: 2vh; width: 100%; height: 20%; margin-bottom: 2%;">
@@ -867,7 +843,8 @@
 
               <div style=" display: flex; text-align: left;">
                 <div style="margin-left: 1%;">
-                  <img src=${car.photo} class="card-img-top">
+                  <img src=${car.photo} class="card-img-top"
+                    style="width: 15vh; height: 15vh; object-fit: cover; object-position: center; margin-top: 5px;">
                 </div>
                 <div style="margin-left: 2vh;">
                   <div style="font-size: 2vh; width: 100%; height: 20%; margin-bottom: 2%;">
@@ -930,7 +907,8 @@
 
               <div style=" display: flex; text-align: left;">
                 <div style="margin-left: 1%;">
-                  <img src=${car.photo} class="card-img-top">
+                  <img src=${car.photo} class="card-img-top"
+                    style="width: 15vh; height: 15vh; object-fit: cover; object-position: center; margin-top: 5px;">
                 </div>
                 <div style="margin-left: 2vh;">
                   <div style="font-size: 2vh; width: 100%; height: 20%; margin-bottom: 2%;">
@@ -993,7 +971,8 @@
 
               <div style=" display: flex; text-align: left;">
                 <div style="margin-left: 1%;">
-                  <img src=${car.photo} class="card-img-top">
+                  <img src=${car.photo} class="card-img-top"
+                    style="width: 15vh; height: 15vh; object-fit: cover; object-position: center; margin-top: 5px;">
                 </div>
                 <div style="margin-left: 2vh;">
                   <div style="font-size: 2vh; width: 100%; height: 20%; margin-bottom: 2%;">
@@ -1110,7 +1089,7 @@ function showFilterYear() {
     //   timer.style.backgroundColor = ''
     //   for(let i = s; i > 0; i--){
     //     timer.innerHTML = i;
-    //     await sleep(1000) 
+    //     await sleep(1000)
     //   }
     //   timer.innerHTML = ''
     //   timer.style.backgroundColor = 'blue'
@@ -1134,7 +1113,7 @@ function showFilterYear() {
       if (event.data.split(';')[0] == 'run_method'){
         run_method(event.data.split(';')[1], event.data.split(';')[2])
       }
-      
+
       createNextEventSource()
     }
 
@@ -1193,7 +1172,8 @@ function showFilterYear() {
 
               <div style=" display: flex; text-align: left;">
                 <div style="margin-left: 1%;">
-                  <img src=${car.photo} class="card-img-top">
+                  <img src=${car.photo} class="card-img-top"
+                    style="width: 15vh; height: 15vh; object-fit: cover; object-position: center; margin-top: 5px;">
                 </div>
                 <div style="margin-left: 2vh;">
                   <div style="font-size: 2vh; width: 100%; height: 20%; margin-bottom: 2%;">
@@ -1232,7 +1212,8 @@ function showFilterYear() {
 
               <div style=" display: flex; text-align: left;">
                 <div style="margin-left: 1%;">
-                  <img src=${car.photo} class="card-img-top">
+                  <img src=${car.photo} class="card-img-top"
+                    style="width: 15vh; height: 15vh; object-fit: cover; object-position: center; margin-top: 5px;">
                 </div>
                 <div style="margin-left: 2vh;">
                   <div style="font-size: 2vh; width: 100%; height: 20%; margin-bottom: 2%;">
@@ -1271,7 +1252,8 @@ function showFilterYear() {
 
               <div style=" display: flex; text-align: left;">
                 <div style="margin-left: 1%;">
-                  <img src=${car.photo} class="card-img-top">
+                  <img src=${car.photo} class="card-img-top"
+                    style="width: 15vh; height: 15vh; object-fit: cover; object-position: center; margin-top: 5px;">
                 </div>
                 <div style="margin-left: 2vh;">
                   <div style="font-size: 2vh; width: 100%; height: 20%; margin-bottom: 2%;">
@@ -1338,7 +1320,8 @@ function showFilterYear() {
 
               <div style=" display: flex; text-align: left;">
                 <div style="margin-left: 1%;">
-                  <img src=${car.photo} class="card-img-top">
+                  <img src=${car.photo} class="card-img-top"
+                    style="width: 15vh; height: 15vh; object-fit: cover; object-position: center; margin-top: 5px;">
                 </div>
                 <div style="margin-left: 2vh;">
                   <div style="font-size: 2vh; width: 100%; height: 20%; margin-bottom: 2%;">
@@ -1406,7 +1389,8 @@ function showFilterYear() {
 
               <div style=" display: flex; text-align: left;">
                 <div style="margin-left: 1%;">
-                  <img src=${car.photo} class="card-img-top">
+                  <img src=${car.photo} class="card-img-top"
+                    style="width: 15vh; height: 15vh; object-fit: cover; object-position: center; margin-top: 5px;">
                 </div>
                 <div style="margin-left: 2vh;">
                   <div style="font-size: 2vh; width: 100%; height: 20%; margin-bottom: 2%;">
@@ -1474,7 +1458,8 @@ function showFilterYear() {
 
               <div style=" display: flex; text-align: left;">
                 <div style="margin-left: 1%;">
-                  <img src=${car.photo} class="card-img-top">
+                  <img src=${car.photo} class="card-img-top"
+                    style="width: 15vh; height: 15vh; object-fit: cover; object-position: center; margin-top: 5px;">
                 </div>
                 <div style="margin-left: 2vh;">
                   <div style="font-size: 2vh; width: 100%; height: 20%; margin-bottom: 2%;">

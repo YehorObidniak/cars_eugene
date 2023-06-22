@@ -44,7 +44,7 @@
             }
 
             .new-column,
-            #all {
+            #dubicars {
                 width: 100%;
                 text-align: center;
                 top: 50px;
@@ -94,8 +94,8 @@
             }
 
             /* Cards */
-            .cardAll_new,
-            .cardAll {
+            .cardDb_new,
+            .cardDb {
                 position: relative;
                 width: 100%;
                 border-width: 0px;
@@ -534,18 +534,18 @@
             </ul>
 
         </div>
-        <div class="sites_names">All
+        <div class="sites_names">Dubicars
         </div>
 
         <!-- <button class="btn_filter">Menu</button> -->
 
     </div>
 
-    <div class="cl" id="all">
-        <div id="new-all" class="new-column">
-            {%for car in newAll%}
+    <div class="cl" id="db">
+        <div id="new-dubicars" class="new-column">
+            {%for car in newDubicars%}
 
-            <div class="cardAll_new" onclick="location.href='{{car.url}}'">
+            <div class="cardDb_new" onclick="location.href='{{car.url}}'">
 
                 {% if car.listing_type == 'New' %}
             <div class="flag-new">New</div>
@@ -563,8 +563,7 @@
                     <div class="card_price"> {{car.price}} AED
                         <i>
                         {% if car.listing_type == 'Sale' %}
-                            {% with old_list_=car.old_price|split:" " %}
-                            {% with old_list = old_list_|slice:"0:2" %}
+                            {% with old_list=car.old_price|split:" " %}
                             {% for old in old_list %}
                             , ({{old}})
                             {% endfor %}
@@ -585,13 +584,13 @@
             {%endfor%}
         </div>
         <div class="load-more-new-container">
-            <div class="lds-dual-ring" id="spinner-new-all" style="bottom: 0.9vh;"></div>
-            <button type="button" id="btn_new_all" class="custom-btn btn-5" onclick="load_more_new_all()">Load more</button>
+            <div class="lds-dual-ring" id="spinner-new-db" style="bottom: 0.9vh;"></div>
+            <button type="button" id="btn_new_dubicars" class="custom-btn btn-5" onclick="load_more_new_dubicars()">Load more</button>
         </div>
-        <div id="all_cars" class="container">
-            {%for car in allFilterQs%}
+        <div id="dubicars" class="container">
+            {%for car in dubicarsFilterQs%}
 
-            <div class=" cardAll" onclick="location.href='{{car.url}}'">
+            <div class=" cardDb" onclick="location.href='{{car.url}}'">
 
                 {% if car.listing_type == 'New' %}
             <div class="flag-new">New</div>
@@ -609,8 +608,7 @@
                     <div class="card_price"> {{car.price}} AED
                         <i>
                         {% if car.listing_type == 'Sale' %}
-                            {% with old_list_=car.old_price|split:" " %}
-                            {% with old_list = old_list_|slice:"0:2" %}
+                            {% with old_list=car.old_price|split:" " %}
                             {% for old in old_list %}
                             , ({{old}})
                             {% endfor %}
@@ -632,8 +630,8 @@
 
         </div>
         <div class="load-more-container">
-            <button type="button"  onclick="loadMoreCarsAll()" id="btn_all" class="custom-btn">Load more</button>
-            <div class="lds-dual-ring" id="spinner-all"></div>
+            <button type="button"  onclick="loadMoreCarsDubicars()" id="btn_dubicars" class="custom-btn ">Load more</button>
+            <div class="lds-dual-ring" id="spinner-db"></div>
         </div>
     </div>
 
@@ -717,23 +715,23 @@
     }
 
 
-    function loadMoreCarsAll() {
-        var _current_item = $('.cardAll').length
-        const container = document.getElementById('all_cars');
+    function loadMoreCarsDubicars() {
+        var _current_item = $('.cardDb').length
+        const container = document.getElementById('dubicars');
         var filter_data = $('.filter').serialize()
         filter_data += "&total_item=" + _current_item;
-        document.querySelector('#btn_all').style.visibility = 'hidden';
-        document.querySelector('#spinner-all').style.visibility = 'visible';
+        document.querySelector('#btn_dubicars').style.visibility = 'hidden';
+        document.querySelector('#spinner-db').style.visibility = 'visible';
 
         $.ajax({
-            url: '{% url "load_more" %}',
+            url: '{% url "load_dubicars" %}',
             type: 'GET',
             data: filter_data,
             beforeSend: function () {
 
             },
             success: function (response) {
-                const data = response.all
+                const data = response.dubicars
 
                 data.map(car => {
                     let isSale = car.listing_type == 'Sale';
@@ -744,7 +742,7 @@
                             oldPricesString += ", (" + oldPrices[i] + ")";
                         }
                     }
-                    container.innerHTML += ` <div class="cardAll" onclick="location.href='${car.url}'">
+                    container.innerHTML += ` <div class="cardDb" onclick="location.href='${car.url}'">
 
                         ${car.listing_type == 'New' ? '<div class="flag-new">New</div>': car.listing_type == 'Sale' ? '<div class="flag-sale">Sale</div>':''}
 
@@ -766,8 +764,8 @@
 
                         </div>`
                 })
-                document.querySelector('#btn_all').style.visibility = 'visible';
-                document.querySelector('#spinner-all').style.visibility = 'hidden';
+                document.querySelector('#btn_dubicars').style.visibility = 'visible';
+                document.querySelector('#spinner-db').style.visibility = 'hidden';
             },
             error: function (err) {
                 console.log(err)
@@ -804,26 +802,26 @@
     }
 
     function run_method(time, curTime){
-      const container = document.getElementById('new-all');
+      const container = document.getElementById('new-dubicars');
       var data = 'time=' + time + '&curTime=' + curTime;
 
       $.ajax({
-        url: '{% url "load_new_all" %}',
+        url: '{% url "load_new_dubicars" %}',
         type: 'GET',
         data: data,
         beforeSend: function () {
 
         },
         success: function (response) {
-          const data_all = response.new_all
+          const data_db = response.new_dubicars
 
-          console.log(data_all)
+          console.log(data_db)
 
-          all = container.innerHTML
+          db = container.innerHTML
 
           container.innerHTML = "";
  
-          data_all.map(car => {
+          data_db.map(car => {
             let isSale = car.listing_type == 'Sale';
             let oldPricesString = '';
             if (isSale)
@@ -834,7 +832,7 @@
               }
             }
             
-            container.innerHTML += ` <div class="cardAll_new" onclick="location.href='${car.url}'">
+            container.innerHTML += ` <div class="cardDb_new" onclick="location.href='${car.url}'">
 
             ${car.listing_type == 'New' ? '<div class="flag-new">New</div>': car.listing_type == 'Sale' ? '<div class="flag-sale">Sale</div>':''}
 
@@ -857,7 +855,7 @@
             </div>`
           })
 
-          container.innerHTML += all;
+          container.innerHTML += db;
         },
         error: function (err) {
           console.log(err)
@@ -865,16 +863,16 @@
       });
     }
 
-    function load_more_new_all(){
-      document.querySelector('#btn_new_all').style.visibility = 'hidden';
-      document.querySelector('#spinner-new-all').style.visibility = 'visible';
+    function load_more_new_dubicars(){
+      document.querySelector('#btn_new_dubicars').style.visibility = 'hidden';
+      document.querySelector('#spinner-new-db').style.visibility = 'visible';
 
-      var _current_item = $('.cardAll_new').length
-      const container = document.getElementById('new-all');
+      var _current_item = $('.cardDb_new').length
+      const container = document.getElementById('new-dubicars');
       let data = "&total_item=" + _current_item;
 
       $.ajax({
-        url: '{% url "load_more_new_all" %}',
+        url: '{% url "load_more_new_dubicars" %}',
         type: 'GET',
         data: data,
         beforeSend: function () {
@@ -882,7 +880,7 @@
         },
         success: function (response) {
           const data = response.data
-          console.log(response.isAll);
+          console.log(response.all);
 
           data.map(car => {
             let isSale = car.listing_type == 'Sale';
@@ -895,7 +893,7 @@
               }
             }
 
-            container.innerHTML += ` <div class="cardAll_new" onclick="location.href='${car.url}'">
+            container.innerHTML += ` <div class="cardDb_new" onclick="location.href='${car.url}'">
 
             ${car.listing_type == 'New' ? '<div class="flag-new">New</div>': car.listing_type == 'Sale' ? '<div class="flag-sale">Sale</div>':''}
 
@@ -918,10 +916,10 @@
             </div>`
           })
 
-          document.querySelector('#btn_new_all').style.visibility = 'visible';
-          document.querySelector('#spinner-new-all').style.visibility = 'hidden';
-          if (response.isAll){
-            document.querySelector('#btn_new_all').style.display = 'none'
+          document.querySelector('#btn_new_dubicars').style.visibility = 'visible';
+          document.querySelector('#spinner-new-db').style.visibility = 'hidden';
+          if (response.all){
+            document.querySelector('#btn_new_dubicars').style.display = 'none'
           }
         },
         error: function (err) {

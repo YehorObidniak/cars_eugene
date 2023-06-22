@@ -6,7 +6,7 @@ class Car_any(models.Model):
     brand = models.CharField(max_length=255)
     model = models.CharField(max_length=255)
     color = models.CharField(max_length=255)
-    photo = models.CharField(max_length=255)
+    photo = models.CharField(max_length=1024)
     price = models.IntegerField()
     kms = models.IntegerField()
     contact = models.CharField(max_length=255, null=True)
@@ -24,6 +24,7 @@ class Car_any(models.Model):
     category_id_dubizzle = models.TextField(null=True)
     post_created_at = models.IntegerField(default=time())
     activeForSite = models.BooleanField(default=True)
+    descriptionFaceBook = models.TextField(default=None, null=True)
 
 class Brands(models.Model):
     name = models.CharField(max_length=25, primary_key=True)

@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 from . import settings
 from django.conf.urls.static import static
-from main.views import index, load_more_dubicars, load_more_dubizzle, load_more_yallamotor, dubicars, dubizzle, yallamotor, SendSignalView, load_new, load_more_new_dubicars, load_more_new_dubizzle, load_more_new_yallamotor, load_new_dubicars, load_new_dubizzle, load_new_yallamotor, login
+from main.views import index, load_more_dubicars, load_more_dubizzle, load_more_yallamotor, dubicars, dubizzle, yallamotor, SendSignalView, load_new, load_more_new_dubicars, load_more_new_dubizzle, load_more_new_yallamotor, load_new_dubicars, load_new_dubizzle, load_new_yallamotor, login, custom_logout, load_more, load_new_all, load_more_new_all
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -37,6 +37,10 @@ urlpatterns = [
     path('load_more_new_dubizzle/', load_more_new_dubizzle, name='load_more_new_dubizzle'),
     path('load_more_new_yallamotor/', load_more_new_yallamotor, name='load_more_new_yallamotor'),
     path('login/', login, name='login'),
+    path('logout/', custom_logout, name='logout'),
+    path('load_more/', load_more, name='load_more'),
+    path('load_new_all/', load_new_all, name='load_new_all'),
+    path('load_more_new_all/', load_more_new_all, name='load_more_new_all')
 ]
 
 if settings.DEBUG:
